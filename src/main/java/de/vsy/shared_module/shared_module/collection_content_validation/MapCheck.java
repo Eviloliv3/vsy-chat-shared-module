@@ -10,6 +10,7 @@ import de.vsy.shared_transmission.shared_transmission.packet.content.relation.El
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import static de.vsy.shared_module.shared_module.collection_content_validation.SetCheck.checkMessageDataSet;
@@ -30,47 +31,41 @@ class MapCheck {
      * @return the string
      */
     public static
-    String checkMessageHistory (
+    Optional<String> checkMessageHistory (
             final Map<Integer, List<TextMessageDTO>> mapToCheck) {
-        String checkString;
         var deadInfo = new StringBuilder();
 
         for (var contactMessages : mapToCheck.entrySet()) {
-            checkString = checkData(contactMessages.getKey());
+            var checkString = checkData(contactMessages.getKey());
 
-            if (checkString != null) {
-                deadInfo.append(checkString);
-            }
+            checkString.ifPresent(deadInfo::append);
             checkString = checkMessageDataSet(contactMessages.getValue());
 
-            if (checkString != null) {
-                deadInfo.append("\nFehlerhafte Nachrichtendaten: ")
-                        .append(checkString);
-            }
+            checkString.ifPresent(
+                    s -> deadInfo.append("\nFehlerhafte Nachrichtendaten: ")
+                                 .append(s));
         }
-        return (deadInfo.length() > 0) ? deadInfo.toString() : null;
+        return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
     }
 
     public static
-    String checkActiveContacts (
+    Optional<String> checkActiveContacts (
             final Map<EligibleContactEntity, Set<CommunicatorDTO>> mapToCheck) {
         var deadInfo = new StringBuilder();
 
         for (var contactEntrySet : mapToCheck.entrySet()) {
-            if (contactEntrySet == null) {
+            if (contactEntrySet.getKey() == null) {
                 deadInfo.append(
-                        "\nKontaktliste enthaelt ungültiges Schluessel (null).");
+                        "\nKontaktliste enthaelt ungültigen Schluessel (null).");
             } else {
                 for (var currentContact : contactEntrySet.getValue()) {
-                    var checkString = BeanChecker.checkBean(currentContact);
+                    final var checkString = BeanChecker.checkBean(currentContact);
 
-                    if (checkString != null) {
-                        deadInfo.append("\n").append(checkString);
-                    }
+                    checkString.ifPresent(s -> deadInfo.append("\n").append(s));
                 }
             }
         }
 
-        return (deadInfo.length() > 0) ? deadInfo.toString() : null;
+        return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
     }
 }

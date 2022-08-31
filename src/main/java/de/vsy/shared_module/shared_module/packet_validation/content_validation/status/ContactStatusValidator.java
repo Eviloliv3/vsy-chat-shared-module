@@ -24,7 +24,6 @@ class ContactStatusValidator
     public
     ContactMessengerStatusDTO castAndValidateContent (PacketContent inputContent)
     throws PacketValidationException {
-        String checkString;
         final var errorStrings = new ArrayList<String>();
         final var contactStatusContent = super.castContent(
                 ContactMessengerStatusDTO.class, inputContent);
@@ -32,6 +31,7 @@ class ContactStatusValidator
         final var contactType = contactStatusContent.getContactType();
         final var contactData = contactStatusContent.getContactData();
         final var messageHistory = contactStatusContent.getMessages();
+        var checkString = BeanChecker.checkBean(contactData);
 
         if (serviceType == null) {
             errorStrings.add("Kein Servicetyp angegeben. ");
@@ -40,16 +40,12 @@ class ContactStatusValidator
         if (contactType == null) {
             errorStrings.add("Kein Kontakttyp angegeben. ");
         }
-        checkString = BeanChecker.checkBean(contactData);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
+
         checkString = ListCheck.checkMessageDataList(messageHistory);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

@@ -30,14 +30,11 @@ class TextMessageValidator extends BasePacketContentValidator<TextMessageDTO> {
         final var chatMessage = textContent.getMessage();
         var checkString = checkData(textContent.getOriginatorId());
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
+
         checkString = checkString(chatMessage);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

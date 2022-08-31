@@ -3,7 +3,9 @@ package de.vsy.shared_module.shared_module.collection_content_validation;
 import de.vsy.shared_module.shared_module.data_element_validation.BeanChecker;
 import de.vsy.shared_transmission.shared_transmission.packet.content.chat.TextMessageDTO;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 public
 class SetCheck {
@@ -19,22 +21,21 @@ class SetCheck {
      * @return the string
      */
     public static
-    String checkMessageDataSet (final List<TextMessageDTO> listData) {
+    Optional<String> checkMessageDataSet (final List<TextMessageDTO> listData) {
         var deadInfo = new StringBuilder();
-        String checkString;
 
         if (listData != null) {
 
             for (var currentMessage : listData) {
-                checkString = BeanChecker.checkBean(currentMessage);
+                final var checkString = BeanChecker.checkBean(currentMessage);
 
-                if (checkString != null) {
-                    deadInfo.append("\nFehlerhafte Nachricht: ").append(checkString);
+                if (checkString.isPresent()) {
+                    deadInfo.append("\nFehlerhafte Nachricht: ").append(checkString.get());
                 }
             }
         } else {
             deadInfo.append("Nachrichtenliste nicht vorhanden.");
         }
-        return (deadInfo.length() > 0) ? deadInfo.toString() : null;
+        return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
     }
 }

@@ -10,7 +10,9 @@ import de.vsy.shared_transmission.shared_transmission.packet.property.communicat
 import de.vsy.shared_transmission.shared_transmission.packet.property.communicator.EligibleCommunicationEntity;
 import de.vsy.shared_transmission.shared_transmission.packet.property.packet_identifier.ContentIdentifier;
 
+import javax.swing.text.html.Option;
 import java.time.Instant;
+import java.util.Optional;
 
 import static de.vsy.shared_module.shared_module.data_element_validation.IdCheck.checkData;
 
@@ -32,9 +34,9 @@ class SimplePacketChecker implements PacketCheck {
 
     @Override
     public
-    String checkPacket (final Packet toCheck)
+    Optional<String> checkPacket (final Packet toCheck)
     throws NullPointerException {
-        String response;
+        Optional<String> response;
         PacketProperties properties;
         ContentIdentifier identifier;
         PacketContent content;
@@ -43,47 +45,49 @@ class SimplePacketChecker implements PacketCheck {
 
         response = checkPacketProperties(properties);
 
-        if (response == null) {
+        if (response.isEmpty()) {
             content = toCheck.getPacketContent();
 
             response = checkPacketContent(content);
 
-            if (response == null) {
+            if (response.isEmpty()) {
                 identifier = properties.getContentIdentifier();
 
                 response = checkContentTypeValidity(identifier, content);
             }
 
-            if (response == null) {
+            if (response.isEmpty()) {
                 response = checkTimeStamp(toCheck.getPacketCreationTimeStamp());
             }
         }
-
         return response;
     }
 
     @Override
     public
-    String checkPacketContent (final PacketContent toCheck) {
-        String response = null;
+    Optional<String> checkPacketContent (final PacketContent toCheck) {
 
         if (toCheck == null) {
-            response = "Paketdaten sind nicht vorhanden.";
+            return Optional.of("Paketdaten sind nicht vorhanden.");
+        } else {
+            //TODO hier sollte Semantik von Paketinhalten geprüft werden
+            // Beispiel: Nachricht vom Klienten darf nicht als "Empfangen"
+            // gekennzeichnet sein
+            return Optional.empty();
         }
-        return response;
     }
 
     @Override
     public
-    String checkPacketProperties (final PacketProperties toCheck) {
-        String response;
+    Optional<String> checkPacketProperties (final PacketProperties toCheck) {
+        Optional<String> response;
 
         if (toCheck != null) {
             final var identifier = toCheck.getContentIdentifier();
 
             response = checkIdentifier(identifier);
 
-            if (response == null) {
+            if (response.isEmpty()) {
 
                 final CommunicationEndpoint[] entities = {toCheck.getSenderEntity(),
                                                           toCheck.getRecipientEntity()};
@@ -91,7 +95,7 @@ class SimplePacketChecker implements PacketCheck {
                 response = checkEntities(entities);
             }
         } else {
-            response = "Keine Paketeigenschaften gefunden.";
+            response = Optional.of("Keine Paketeigenschaften gefunden.");
         }
         return response;
     }
@@ -105,27 +109,27 @@ class SimplePacketChecker implements PacketCheck {
      * @return the string
      */
     private
-    String checkContentTypeValidity (final ContentIdentifier identifier,
+    Optional<String> checkContentTypeValidity (final ContentIdentifier identifier,
                                      final PacketContent toCheck) {
-        StringBuilder response;
-        String checkMessage;
+        Optional<String> checkMessage;
+        final var response = new StringBuilder();
 
-        response = new StringBuilder();
+        checkMessage = checkIdentifier(identifier);
 
-        if ((checkMessage = checkIdentifier(identifier)) == null) {
+        if (checkMessage.isEmpty()) {
 
             if (!this.validityCheckProvider.contentMatchesIdentifier(identifier,
                                                                      toCheck)) {
-                response.append("Paketinhalt passt nicht zum angegebenen " +
+                return Optional.of(response.append("Paketinhalt passt nicht zum angegebenen " +
                                 "Paketidentifizierer:\n")
                         .append(identifier)
-                        .append(toCheck);
+                        .append(toCheck)
+                                           .toString());
             }
-        } else {
-            response.append(checkMessage);
+        }else{
+            return checkMessage;
         }
-
-        return response.length() > 0 ? response.toString() : null;
+        return Optional.empty();
     }
 
     /**
@@ -136,13 +140,12 @@ class SimplePacketChecker implements PacketCheck {
      * @return the string
      */
     private
-    String checkTimeStamp (final Instant timeStamp) {
-        String response = null;
+    Optional<String> checkTimeStamp (final Instant timeStamp) {
 
         if (timeStamp.isAfter(Instant.now())) {
-            response = "Erstellungszeitpunkt des Pakets ungültig (nach dieser Prüfung)";
+            return Optional.of("Erstellungszeitpunkt des Pakets ungültig (nach dieser Prüfung)");
         }
-        return response;
+        return Optional.empty();
     }
 
     /**
@@ -153,23 +156,22 @@ class SimplePacketChecker implements PacketCheck {
      * @return the string
      */
     private
-    String checkIdentifier (final ContentIdentifier identifier) {
+    Optional<String> checkIdentifier (final ContentIdentifier identifier) {
         final var response = new StringBuilder();
 
         if (identifier != null) {
 
             if (!this.validityCheckProvider.typeMatchesCategory(identifier)) {
-                response.append("Ungültige Kombination von Paketkategorie (")
+                return Optional.of(response.append("Ungültige Kombination von Paketkategorie (")
                         .append(identifier.getPacketType())
                         .append(") Pakettyp (")
                         .append(identifier.getPacketCategory())
-                        .append(").");
+                        .append(").").toString());
             }
         } else {
-            response.append(" Kein Paketidentifizierer vorhanden.");
+            return Optional.of(response.append(" Kein Paketidentifizierer vorhanden.").toString());
         }
-
-        return response.length() > 0 ? response.toString() : null;
+        return Optional.empty();
     }
 
     /**
@@ -180,8 +182,8 @@ class SimplePacketChecker implements PacketCheck {
      * @return the string
      */
     private
-    String checkEntities (final CommunicationEndpoint[] entities) {
-        String response = null;
+    Optional<String> checkEntities (final CommunicationEndpoint[] entities) {
+        Optional<String> response;
 
         for (var i = (entities.length - 1); i >= 0; i--) {
             final var entity = entities[i];
@@ -189,26 +191,24 @@ class SimplePacketChecker implements PacketCheck {
             if (entity != null) {
                 response = checkEntity(entity);
 
-                if (response != null) {
+                if (response.isPresent()) {
                     return response;
                 }
             } else {
-                response = "Ungültiger Kommunikationspartner: null";
-                break;
+                return Optional.of("Ungültiger Kommunikationspartner: null");
             }
         }
-        return response;
+        return Optional.empty();
     }
 
     private
-    String checkEntity (final CommunicationEndpoint entity) {
-        String response = null;
+    Optional<String> checkEntity (final CommunicationEndpoint entity) {
         final var entityId = entity.getEntityId();
 
         if (entity.getEntity().equals(EligibleCommunicationEntity.CLIENT) &&
-            (checkData(entityId) != null)) {
-            response = "Ungültige Id verwendet (" + entityId + ").";
+            checkData(entityId).isPresent()) {
+            return Optional.of("Ungültige Id verwendet (" + entityId + ").");
         }
-        return response;
+        return Optional.empty();
     }
 }

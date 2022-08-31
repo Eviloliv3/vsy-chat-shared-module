@@ -7,6 +7,8 @@ import de.vsy.shared_transmission.shared_transmission.packet.Packet;
 import de.vsy.shared_transmission.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.shared_transmission.packet.property.PacketProperties;
 
+import java.util.Optional;
+
 /**
  * Erlaubt die Ueberpruefung von eines ganzen Pakets oder den einzelnen Eigenschaften
  * bzw. des Inhaltes.
@@ -21,7 +23,7 @@ interface PacketCheck {
      *
      * @return the string
      */
-    String checkPacket (Packet toCheck);
+    Optional<String> checkPacket (Packet toCheck);
 
     /**
      * Check PacketDataManagement.
@@ -30,7 +32,7 @@ interface PacketCheck {
      *
      * @return the string
      */
-    String checkPacketContent (PacketContent toCheck);
+    Optional<String> checkPacketContent (PacketContent toCheck);
 
     /**
      * Check PacketProperties.
@@ -39,5 +41,5 @@ interface PacketCheck {
      *
      * @return the string
      */
-    String checkPacketProperties (PacketProperties toCheck);
+    Optional<String> checkPacketProperties (PacketProperties toCheck);
 }

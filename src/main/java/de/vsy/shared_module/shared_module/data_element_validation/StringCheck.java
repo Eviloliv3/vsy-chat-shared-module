@@ -5,6 +5,8 @@ package de.vsy.shared_module.shared_module.data_element_validation;
 
 import de.vsy.shared_utility.string_manipulation.StringShortener;
 
+import java.util.Optional;
+
 /**
  * Simple tool: checks String for null-value or length less than 4 charachters.
  */
@@ -26,11 +28,11 @@ class StringCheck {
      * @return the error string
      */
     public static
-    String checkString (final String toCheck) {
+    Optional<String> checkString (final String toCheck) {
         final var deadInfo = new StringBuilder();
 
         if (toCheck == null || toCheck.isEmpty()) {
-            deadInfo.append("null oder leer");
+            return Optional.of("null oder leer");
         } else {
             final var illegalChars = new StringBuilder();
 
@@ -44,8 +46,9 @@ class StringCheck {
                 StringShortener.cutTrailingChars(illegalChars, 2);
                 deadInfo.append("Enthaelt ungültige(s) Zeichen: ")
                         .append(illegalChars);
+                return Optional.of(deadInfo.toString());
             }
         }
-        return (deadInfo.length() > 0) ? deadInfo.toString() : null;
+        return Optional.empty();
     }
 }

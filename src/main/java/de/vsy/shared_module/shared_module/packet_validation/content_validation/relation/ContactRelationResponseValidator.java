@@ -34,23 +34,18 @@ class ContactRelationResponseValidator
         final var originatorId = relationResponseContent.getOriginatorId();
         var checkString = BeanChecker.checkBean(contactData);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (contactType == null) {
             errorStrings.add("Kein Empfängertyp angegeben. ");
         }
         checkString = checkData(recipientId);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
+
         checkString = checkData(originatorId);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

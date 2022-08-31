@@ -28,14 +28,11 @@ class MessengerSetupValidator extends BasePacketContentValidator<MessengerSetupD
         final var contacts = setupContent.getActiveContacts();
         var checkString = MapCheck.checkMessageHistory(messageHistory);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
+
         checkString = MapCheck.checkActiveContacts(contacts);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

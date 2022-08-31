@@ -28,9 +28,7 @@ class LoginResponseValidator extends BasePacketContentValidator<LoginResponseDTO
         final var communicatorData = loginContent.getClientData();
         var checkString = BeanChecker.checkBean(communicatorData);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

@@ -22,10 +22,6 @@ class InvalidContentMessageCreator {
     static
     String createIllegalTypeMessage (Class<? extends PacketContent> expectedType,
                                      PacketContent actualContent) {
-        if (expectedType == null) {
-            throw new IllegalArgumentException(
-                    "Es wurde kein erwarteter Typ spezifiziert");
-        }
         var actualContentString = "null";
 
         if (actualContent != null) {

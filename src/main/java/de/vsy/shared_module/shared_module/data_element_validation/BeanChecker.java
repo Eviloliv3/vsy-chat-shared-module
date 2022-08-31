@@ -8,6 +8,9 @@ import de.vsy.shared_transmission.shared_transmission.dto.authentication.Authent
 import de.vsy.shared_transmission.shared_transmission.dto.authentication.PersonalData;
 import de.vsy.shared_transmission.shared_transmission.packet.content.chat.TextMessageDTO;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 import static de.vsy.shared_module.shared_module.data_element_validation.IdCheck.checkData;
 
 /** Simple tool: dataManagement bean checker. */
@@ -25,75 +28,78 @@ class BeanChecker {
      * @return the string
      */
     public static
-    String checkBean (final CommunicatorDTO data) {
-        String checkString;
+    Optional<String> checkBean (final CommunicatorDTO data) {
+        Optional<String> checkString;
         var deadInfo = new StringBuilder();
 
         if (data != null) {
             checkString = checkData(data.getCommunicatorId());
 
-            if (checkString != null) {
-                deadInfo.append(checkString);
-            }
+            checkString.ifPresent(deadInfo::append);
+
             checkString = StringCheck.checkString(data.getDisplayLabel());
 
-            if (checkString != null) {
-                deadInfo.append(" Ungültiger Anzeigename: ").append(checkString);
-            }
+            checkString.ifPresent(
+                    s -> deadInfo.append(" Ungültiger Anzeigename: ").append(s));
         } else {
             deadInfo.append("Es sind keine Kommunikatordaten vorhanden.");
         }
         return (deadInfo.length() > 0) ?
-                "Fehlerhafte Kommunikatordaten: " + deadInfo : null;
+                Optional.of("Fehlerhafte Kommunikatordaten: " + deadInfo) :
+                Optional.empty();
     }
 
     public static
-    String checkBean (AuthenticationDTO authenticationData) {
-        String checkString;
+    Optional<String> checkBean (AuthenticationDTO authenticationData) {
+        Optional<String> checkString;
         var deadInfo = new StringBuilder();
 
         if (authenticationData != null) {
             checkString = StringCheck.checkString(authenticationData.getLogin());
 
-            if (checkString != null) {
-                deadInfo.append("Fehlerhafter Loginname: ").append(checkString);
-            }
+            checkString.ifPresent(
+                    s -> deadInfo.append("Fehlerhafter Loginname: ").append(s));
             checkString = StringCheck.checkString(authenticationData.getPassword());
 
-            if (checkString != null) {
-                deadInfo.append("Fehlerhaftes Passwort: ").append(checkString);
-            }
+            checkString.ifPresent(
+                    s -> deadInfo.append("Fehlerhaftes Passwort: ").append(s));
         } else {
             deadInfo.append("Keine Authentifizierungsdaten enthalten.");
         }
         return (deadInfo.length() > 0) ?
-                "Fehlerhafte Klientendaten:" + deadInfo : null;
+                Optional.of("Fehlerhafte Klientendaten:" + deadInfo) :
+                Optional.empty();
     }
 
     public static
-    String checkBean (PersonalData personalData) {
-        String checkString;
+    Optional<String> checkBean (PersonalData personalData) {
+        Optional<String> checkString;
         var deadInfo = new StringBuilder();
 
         if (personalData != null) {
             checkString = StringCheck.checkString(personalData.getForename());
-            if (checkString != null) {
-                deadInfo.append("Fehlerhafter Vorname: ").append(checkString);
-            }
 
-            checkString = StringCheck.checkString(personalData.getSurname());
+            if (checkString.isPresent()) {
+                return Optional.of(deadInfo.append("Fehlerhafter Vorname: ")
+                                           .append(checkString.get())
+                                           .toString());
+            }else {
+                checkString = StringCheck.checkString(personalData.getSurname());
 
-            if (checkString != null) {
-                deadInfo.append("Fehlerhafter Nachname: ").append(checkString);
+                if (checkString.isPresent()) {
+                    return Optional.of(deadInfo.append("Fehlerhafter Nachname: ")
+                                               .append(checkString.get())
+                                               .toString());
+                }
             }
         } else {
-            deadInfo.append("Keine Klientendaten enthalten.");
+            return Optional.of("Keine Klientendaten enthalten.");
         }
-        return (deadInfo.length() > 0) ? deadInfo.toString() : null;
+        return Optional.empty();
     }
 
     public static
-    String checkBean (final TextMessageDTO data) {
+    Optional<String> checkBean (final TextMessageDTO data) {
         throw new UnsupportedOperationException(
                 "TextMessageDTO wird noch nicht geprueft.");
     }

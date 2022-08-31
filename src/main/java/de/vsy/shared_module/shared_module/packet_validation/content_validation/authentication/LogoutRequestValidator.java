@@ -26,9 +26,7 @@ class LogoutRequestValidator extends BasePacketContentValidator<LogoutRequestDTO
         final var errorStrings = new ArrayList<String>(1);
         var checkString = BeanChecker.checkBean(logoutContent.getClientData());
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

@@ -3,6 +3,8 @@
  */
 package de.vsy.shared_module.shared_module.data_element_validation;
 
+import java.util.Optional;
+
 import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_CLIENT_ID;
 import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_SERVER_ID;
 
@@ -21,15 +23,13 @@ class IdCheck {
      * @return the string
      */
     public static
-    String checkData (final Integer toCheck) {
-        final String errorMessage;
+    Optional<String> checkData (final Integer toCheck) {
 
         if (toCheck != null && (toCheck > 15000 || toCheck == STANDARD_SERVER_ID ||
                                 toCheck == STANDARD_CLIENT_ID)) {
-            errorMessage = null;
+            return Optional.empty();
         } else {
-            errorMessage = "Fehlerhafte Entitäts-Id: " + toCheck;
+            return Optional.of("Fehlerhafte Entitäts-Id: " + toCheck);
         }
-        return errorMessage;
     }
 }

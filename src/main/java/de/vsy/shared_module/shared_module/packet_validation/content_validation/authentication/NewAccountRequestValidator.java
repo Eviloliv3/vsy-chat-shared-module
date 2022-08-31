@@ -36,14 +36,11 @@ class NewAccountRequestValidator
             final var authenticationData = accountCreation.getAuthenticationData();
             var checkString = BeanChecker.checkBean(personalData);
 
-            if (checkString != null) {
-                errorStrings.add(checkString);
-            }
+            checkString.ifPresent(errorStrings::add);
+
             checkString = BeanChecker.checkBean(authenticationData);
 
-            if (checkString != null) {
-                errorStrings.add(checkString);
-            }
+            checkString.ifPresent(errorStrings::add);
         }
 
         if (!errorStrings.isEmpty()) {

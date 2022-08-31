@@ -23,21 +23,18 @@ class ClientStatusValidator
     public
     ClientStatusChangeDTO castAndValidateContent (PacketContent inputContent)
     throws PacketValidationException {
-        String checkString;
         final var errorStrings = new ArrayList<String>();
         final var statusContent = super.castContent(ClientStatusChangeDTO.class,
                                                     inputContent);
         final var serviceType = statusContent.getServiceType();
         final var contactData = statusContent.getContactData();
+        final var checkString = BeanChecker.checkBean(contactData);
 
         if (serviceType == null) {
             errorStrings.add("Kein Servicetyp angegeben. ");
         }
-        checkString = BeanChecker.checkBean(contactData);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

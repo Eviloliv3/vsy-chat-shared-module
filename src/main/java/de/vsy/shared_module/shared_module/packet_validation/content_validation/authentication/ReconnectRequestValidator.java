@@ -29,9 +29,7 @@ class ReconnectRequestValidator
         final var communicatorData = reconnectContent.getClientData();
         var checkString = BeanChecker.checkBean(communicatorData);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

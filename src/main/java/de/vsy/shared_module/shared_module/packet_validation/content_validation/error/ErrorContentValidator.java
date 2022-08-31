@@ -28,9 +28,7 @@ class ErrorContentValidator extends BasePacketContentValidator<ErrorDTO> {
         final var errorMessage = errorContent.getMessage();
         final var checkString = checkString(errorMessage);
 
-        if (checkString != null) {
-            errorStrings.add(checkString);
-        }
+        checkString.ifPresent(errorStrings::add);
 
         if (!errorStrings.isEmpty()) {
             throw new PacketValidationException(

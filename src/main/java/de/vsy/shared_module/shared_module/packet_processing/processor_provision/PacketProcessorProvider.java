@@ -6,6 +6,7 @@ import de.vsy.shared_transmission.shared_transmission.packet.property.packet_cat
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 
 public
 class PacketProcessorProvider {
@@ -24,14 +25,13 @@ class PacketProcessorProvider {
     }
 
     public
-    PacketProcessor getProcessor (PacketCategory category,
-                                  Class<? extends PacketContent> contentType) {
-        PacketProcessor contentProcessor = null;
+    Optional<PacketProcessor> getProcessor (PacketCategory category,
+                                            Class<? extends PacketContent> contentType) {
         var categoryProcessing = this.typeProcessingProvider.get(category);
 
         if (categoryProcessing != null) {
-            contentProcessor = categoryProcessing.getProcessor(contentType);
+            return categoryProcessing.getProcessor(contentType);
         }
-        return contentProcessor;
+        return Optional.empty();
     }
 }
