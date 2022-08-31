@@ -73,7 +73,6 @@ class PacketReadThread extends ThreadContextRunnable {
             Packet input = readNextPacket();
 
             if (input != null) {
-                LOGGER.debug("Gelesen: {}", input);
                 processIncomingPacket(input);
             }
         }
