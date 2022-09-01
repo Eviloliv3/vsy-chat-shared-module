@@ -64,7 +64,6 @@ class PacketHandlingExceptionProcessor {
     private
     String createErrorLog (final PacketHandlingException phe,
                            final Packet affectedPacket) {
-        return "\nMeldung: " + phe.getMessage() + "\n-> Paket\n" + affectedPacket +
-               "\n wird verworfen.";
+        return "\nMeldung: " + phe.getMessage() + "\n-> Paket wird verworfen:\n" + affectedPacket;
     }
 }
