@@ -8,15 +8,16 @@ class ContactRelationResponseTranslator extends PacketContentTranslatorBase {
     public
     String translate (ContactRelationResponseDTO relationDTO) {
         var friendshipResponse = new StringBuilder();
-        var contactData = relationDTO.getContactData();
+        var contactData = relationDTO.getRespondingClient();
 
         if (contactData != null) {
             var contactName = contactData.getDisplayLabel();
+            final var requestData = relationDTO.getRequestData();
 
-            if (relationDTO.getDesiredState() && !relationDTO.getDecision()) {
+            if (requestData.getDesiredState() && !relationDTO.getDecision()) {
                 friendshipResponse.append(contactName)
                                   .append(" möchte nicht mit Ihnen befreundet sein.");
-            } else if (relationDTO.getDesiredState() && relationDTO.getDecision()) {
+            } else if (requestData.getDesiredState() && relationDTO.getDecision()) {
                 friendshipResponse.append("Sie sind jetzt mit ")
                                   .append(contactName)
                                   .append(" befreundet");

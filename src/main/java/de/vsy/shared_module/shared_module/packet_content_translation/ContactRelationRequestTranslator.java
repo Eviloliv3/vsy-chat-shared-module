@@ -13,7 +13,7 @@ class ContactRelationRequestTranslator extends PacketContentTranslatorBase {
     public
     String translate (ContactRelationRequestDTO relationDTO) {
         var friendshipRequest = new StringBuilder();
-        var contactData = relationDTO.getContactData();
+        var contactData = relationDTO.getRequestingClient();
 
         if (contactData != null) {
             var contactName = contactData.getDisplayLabel();

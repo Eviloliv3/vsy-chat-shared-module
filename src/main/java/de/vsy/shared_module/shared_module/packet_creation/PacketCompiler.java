@@ -52,7 +52,7 @@ class PacketCompiler {
     Packet createResponse (PacketContent data, Packet request) {
         var properties = request.getPacketProperties();
         var sender = PacketCompiler.originatorProvider.getOriginatorEntity();
-        var recipient = properties.getSenderEntity();
+        var recipient = properties.getSender();
         var requestPacketHash = request.getPacketHash();
 
         return compilePacket(sender, recipient, data, requestPacketHash);
@@ -125,7 +125,7 @@ class PacketCompiler {
     public static
     Packet createFollowUpRequest (CommunicationEndpoint recipient,
                                   PacketContent data, Packet request) {
-        var sender = request.getPacketProperties().getSenderEntity();
+        var sender = request.getPacketProperties().getSender();
         var requestHash = request.getRequestPacketHash();
 
         return compilePacket(sender, recipient, data, requestHash);

@@ -25,7 +25,7 @@ class ErrorContentValidator extends BasePacketContentValidator<ErrorDTO> {
     throws PacketValidationException {
         final var errorContent = super.castContent(ErrorDTO.class, inputContent);
         final var errorStrings = new ArrayList<String>();
-        final var errorMessage = errorContent.getMessage();
+        final var errorMessage = errorContent.getErrorMessage();
         final var checkString = checkString(errorMessage);
 
         checkString.ifPresent(errorStrings::add);

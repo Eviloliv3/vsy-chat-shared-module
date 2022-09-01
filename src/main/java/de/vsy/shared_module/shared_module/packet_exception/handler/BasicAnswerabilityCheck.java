@@ -18,11 +18,11 @@ class BasicAnswerabilityCheck {
         var properties = toCheck.getPacketProperties();
 
         if (properties != null) {
-            senderEntity = properties.getSenderEntity();
+            senderEntity = properties.getSender();
 
             if ((senderEntity != null) && (senderEntity.getEntity()
                                                        .equals(EligibleCommunicationEntity.CLIENT))) {
-                identifier = properties.getContentIdentifier();
+                identifier = properties.getPacketIdentificationProvider();
 
                 if ((identifier != null) &&
                     (identifier.getPacketCategory().equals(ERROR))) {

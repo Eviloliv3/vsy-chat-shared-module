@@ -43,7 +43,7 @@ class NonStaticPacketCompiler {
     public
     Packet createResponse (PacketContent data, Packet request) {
         var properties = request.getPacketProperties();
-        var recipient = properties.getSenderEntity();
+        var recipient = properties.getSender();
         var requestPacketHash = request.getPacketHash();
 
         return compilePacket(recipient, data, requestPacketHash);

@@ -28,10 +28,11 @@ class ContactRelationResponseValidator
         final var errorStrings = new ArrayList<String>();
         final var relationResponseContent = super.castContent(
                 ContactRelationResponseDTO.class, inputContent);
-        final var contactData = relationResponseContent.getContactData();
-        final var contactType = relationResponseContent.getContactType();
-        final var recipientId = relationResponseContent.getRecipientId();
-        final var originatorId = relationResponseContent.getOriginatorId();
+        final var contactData = relationResponseContent.getRespondingClient();
+        final var requestData = relationResponseContent.getRequestData();
+        final var contactType = requestData.getContactType();
+        final var recipientId = requestData.getRecipientId();
+        final var originatorId = requestData.getOriginatorId();
         var checkString = BeanChecker.checkBean(contactData);
 
         checkString.ifPresent(errorStrings::add);

@@ -28,7 +28,7 @@ class ContactRelationRequestValidator
         final var errorStrings = new ArrayList<String>();
         final var relationRequestContent = super.castContent(
                 ContactRelationRequestDTO.class, inputContent);
-        final var contactData = relationRequestContent.getContactData();
+        final var contactData = relationRequestContent.getRequestingClient();
         final var contactType = relationRequestContent.getContactType();
         final var recipientId = relationRequestContent.getRecipientId();
         final var originatorId = relationRequestContent.getOriginatorId();

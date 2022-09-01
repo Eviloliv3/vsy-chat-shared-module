@@ -14,9 +14,9 @@ class AcknowledgementPacketCreator {
     Packet createAcknowledgement (Packet receivedPacket) {
         var receivedProperties = receivedPacket.getPacketProperties();
         var properties = new PacketPropertiesBuilder().withSender(
-                                                              receivedProperties.getRecipientEntity())
+                                                              receivedProperties.getRecipient())
                                                       .withRecipient(
-                                                              receivedProperties.getSenderEntity())
+                                                              receivedProperties.getSender())
                                                       .withIdentifier(
                                                               new AcknowledgementIdentifier(
                                                                       AcknowledgementType.PACKET_RECEIVED))

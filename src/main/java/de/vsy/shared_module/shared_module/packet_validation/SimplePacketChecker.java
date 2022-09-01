@@ -10,7 +10,6 @@ import de.vsy.shared_transmission.shared_transmission.packet.property.communicat
 import de.vsy.shared_transmission.shared_transmission.packet.property.communicator.EligibleCommunicationEntity;
 import de.vsy.shared_transmission.shared_transmission.packet.property.packet_identifier.ContentIdentifier;
 
-import javax.swing.text.html.Option;
 import java.time.Instant;
 import java.util.Optional;
 
@@ -51,13 +50,13 @@ class SimplePacketChecker implements PacketCheck {
             response = checkPacketContent(content);
 
             if (response.isEmpty()) {
-                identifier = properties.getContentIdentifier();
+                identifier = properties.getPacketIdentificationProvider();
 
                 response = checkContentTypeValidity(identifier, content);
             }
 
             if (response.isEmpty()) {
-                response = checkTimeStamp(toCheck.getPacketCreationTimeStamp());
+                response = checkTimeStamp(toCheck.getPacketCreationTimestamp());
             }
         }
         return response;
@@ -83,14 +82,14 @@ class SimplePacketChecker implements PacketCheck {
         Optional<String> response;
 
         if (toCheck != null) {
-            final var identifier = toCheck.getContentIdentifier();
+            final var identifier = toCheck.getPacketIdentificationProvider();
 
             response = checkIdentifier(identifier);
 
             if (response.isEmpty()) {
 
-                final CommunicationEndpoint[] entities = {toCheck.getSenderEntity(),
-                                                          toCheck.getRecipientEntity()};
+                final CommunicationEndpoint[] entities = {toCheck.getSender(),
+                                                          toCheck.getRecipient()};
 
                 response = checkEntities(entities);
             }
