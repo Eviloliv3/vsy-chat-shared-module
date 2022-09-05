@@ -102,7 +102,7 @@ class ConnectionThreadControl implements ConnectionThreadSynchronizer {
             connThread.interrupt();
 
             while (connThread.isAlive()) {
-                LOGGER.info("Warte auf Thread: {} / {}", connThread.getName(),
+                LOGGER.info("Warte auf Thread: {}/{}", connThread.getName(),
                             connThread.getId());
                 Thread.yield();
             }

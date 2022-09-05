@@ -37,7 +37,7 @@ class ListCheck {
 
                 checkString.ifPresent(s -> deadInfo.append("\nListenPosition: ")
                                                    .append(currentCommunicator)
-                                                   .append(" / ")
+                                                   .append("/")
                                                    .append(s));
             }
         } else {

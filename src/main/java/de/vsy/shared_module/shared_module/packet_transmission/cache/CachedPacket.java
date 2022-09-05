@@ -30,8 +30,8 @@ class CachedPacket {
         if (toCache == null || cachingCycleMillis <= 0) {
             var errorMessage = "";
             errorMessage += "Ungültiger Parameter! Packet: " + toCache +
-                            " / Caching Cycle:" + cachingCycleMillis +
-                            " (ms) / Passed Cycles: " + cyclesPassed;
+                            "/Caching Cycle:" + cachingCycleMillis +
+                            " (ms)/Passed Cycles: " + cyclesPassed;
             throw new IllegalArgumentException(errorMessage);
         }
         this.cache = toCache;
