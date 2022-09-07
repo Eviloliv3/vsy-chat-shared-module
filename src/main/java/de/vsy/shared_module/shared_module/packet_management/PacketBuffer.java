@@ -4,6 +4,8 @@
 package de.vsy.shared_module.shared_module.packet_management;
 
 import de.vsy.shared_transmission.shared_transmission.packet.Packet;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -16,7 +18,12 @@ import java.util.concurrent.TimeUnit;
 public
 class PacketBuffer implements InputBuffer, OutputBuffer {
 
+    protected static final Logger LOGGER;
     private final BlockingDeque<Packet> buffer;
+
+    static {
+        LOGGER = LogManager.getLogger();
+    }
 
     /** Instantiates a new PacketBuffer. */
     public
@@ -26,26 +33,22 @@ class PacketBuffer implements InputBuffer, OutputBuffer {
 
     @Override
     public
-    boolean appendPacket (final Packet input) {
-        final var packetAdded = true;
-
-        if (input != null && !this.buffer.contains(input)) {
+    void appendPacket (final Packet input) {
+        if (!this.buffer.contains(input)) {
             this.buffer.addLast(input);
-            return packetAdded;
+        }else{
+            LOGGER.error("Paket leer oder bereits im Puffer: {}", input);
         }
-        return false;
     }
 
     @Override
     public
-    boolean prependPacket (final Packet input) {
-        final var packetAdded = true;
-
-        if (input != null && !this.buffer.contains(input)) {
+    void prependPacket (final Packet input) {
+        if (!this.buffer.contains(input)) {
             this.buffer.addFirst(input);
-            return packetAdded;
+        }else {
+            LOGGER.error("Paket leer oder bereits im Puffer: {}", input);
         }
-        return false;
     }
 
     @Override

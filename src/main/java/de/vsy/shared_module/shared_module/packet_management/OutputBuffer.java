@@ -5,25 +5,24 @@ package de.vsy.shared_module.shared_module.packet_management;
 
 import de.vsy.shared_transmission.shared_transmission.packet.Packet;
 
-/** Provides Packetdispatching interface. */
+/** Bietet die Moeglichkeiten ein Paket einem Puffer anzuhaengen oder
+ *  voranzustellen. */
 public
 interface OutputBuffer {
 
     /**
-     * Adds the Packet
+     * Haengt das Paket dem Puffer hinzu, sofern das Paket nicht null oder bereits
+     * gepuffert ist.
      *
-     * @param output the output
-     *
-     * @return true, if successful
+     * @param output das zu puffernde Paket
      */
-    boolean appendPacket (Packet output);
+    void appendPacket (Packet output);
 
     /**
-     * Prepend Packet
+     * Stellt das uebergebene Paket dem Puffer voran, sofern das Paket nicht null
+     * oder bereits gepuffert ist.
      *
-     * @param output the output
-     *
-     * @return true, if successful
+     * @param output das zu puffernde Paket
      */
-    boolean prependPacket (Packet output);
+    void prependPacket (Packet output);
 }
