@@ -45,14 +45,14 @@ class CachedPacketResendTimer extends ThreadContextTimerTask {
     private
     void checkForDuePackets () {
 
-        do {
+        while (this.threadState.areThreadsToTerminate()) {
             var duePacket = this.packetCache.getNextDueTransmissionPacket(5);
 
-            if (duePacket != null) {
-                this.resendBuffer.appendPacket(duePacket);
-            } else {
+            if (duePacket == null) {
                 break;
+            } else {
+                this.resendBuffer.appendPacket(duePacket);
             }
-        } while (this.threadState.areThreadsToTerminate());
+        }
     }
 }

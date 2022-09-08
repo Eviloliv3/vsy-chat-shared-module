@@ -51,16 +51,10 @@ class ThreadPacketBufferManager {
      * hinzu; sofern kein PacketBuffer hinterlegt ist.
      *
      * @param bufferLabel the buffer label
-     *
-     * @return the PacketBuffer
      */
     public
-    PacketBuffer registerPackerBuffer (final ThreadPacketBufferLabel bufferLabel) {
-        final var newBuffer = new PacketBuffer();
-        boolean bufferAdded;
-        bufferAdded = this.bufferMap.putIfAbsent(bufferLabel, newBuffer) == null;
-
-        return bufferAdded ? newBuffer : null;
+    void registerPackerBuffer (final ThreadPacketBufferLabel bufferLabel) {
+        this.bufferMap.putIfAbsent(bufferLabel, new PacketBuffer());
     }
 
     /**
