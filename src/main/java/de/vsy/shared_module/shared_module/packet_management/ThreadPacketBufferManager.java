@@ -30,7 +30,7 @@ class ThreadPacketBufferManager {
      * @return the PacketBuffer
      */
     public
-    PacketBuffer deregisterPackerBuffer (final ThreadPacketBufferLabel bufferLabel) {
+    PacketBuffer deregisterPacketBuffer (final ThreadPacketBufferLabel bufferLabel) {
         return this.bufferMap.remove(bufferLabel);
     }
 
@@ -53,7 +53,7 @@ class ThreadPacketBufferManager {
      * @param bufferLabel the buffer label
      */
     public
-    void registerPackerBuffer (final ThreadPacketBufferLabel bufferLabel) {
+    void registerPacketBuffer (final ThreadPacketBufferLabel bufferLabel) {
         this.bufferMap.putIfAbsent(bufferLabel, new PacketBuffer());
     }
 
