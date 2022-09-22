@@ -95,6 +95,7 @@ class PacketWriteThread extends ThreadContextRunnable {
         try {
             this.outStream.writeObject(output);
             this.outStream.flush();
+            LOGGER.trace("Paket geschrieben: {}", output);
         } catch (final IOException ioe) {
             Thread.currentThread().interrupt();
             LOGGER.error("IOException: Verbindung abgebrochen.");
