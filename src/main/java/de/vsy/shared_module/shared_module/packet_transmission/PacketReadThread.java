@@ -120,7 +120,7 @@ class PacketReadThread extends ThreadContextRunnable {
 
         if (input.getPacketContent() != null) {
             final var confirmationPacket = AcknowledgementPacketCreator.createAcknowledgement(input);
-            this.outboundBuffer.appendPacket(confirmationPacket);
+            this.outboundBuffer.prependPacket(confirmationPacket);
             LOGGER.trace("Antwort erstellt: {}", confirmationPacket.getRequestPacketHash());
             this.inboundBuffer.appendPacket(input);
             LOGGER.trace("Paket gelesen: {}", input);

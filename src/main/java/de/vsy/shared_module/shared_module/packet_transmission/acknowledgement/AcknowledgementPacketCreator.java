@@ -1,6 +1,7 @@
 package de.vsy.shared_module.shared_module.packet_transmission.acknowledgement;
 
 import de.vsy.shared_transmission.shared_transmission.packet.Packet;
+import de.vsy.shared_transmission.shared_transmission.packet.PacketBuilder;
 import de.vsy.shared_transmission.shared_transmission.packet.PacketImpl;
 import de.vsy.shared_transmission.shared_transmission.packet.property.PacketPropertiesBuilder;
 
@@ -21,6 +22,8 @@ class AcknowledgementPacketCreator {
                                                               new AcknowledgementIdentifier(
                                                                       AcknowledgementType.PACKET_RECEIVED))
                                                       .build();
-        return new PacketImpl(properties, null, receivedPacket.getPacketHash());
+        return new PacketBuilder().withProperties(properties)
+                                  .withRequestPacket(receivedPacket.getPacketHash())
+                                  .build();
     }
 }
