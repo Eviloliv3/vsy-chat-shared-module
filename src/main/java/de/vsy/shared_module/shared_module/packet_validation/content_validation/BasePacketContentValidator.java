@@ -1,44 +1,38 @@
 package de.vsy.shared_module.shared_module.packet_validation.content_validation;
 
-import de.vsy.shared_module.shared_module.packet_exception.PacketValidationException;
-import de.vsy.shared_transmission.shared_transmission.packet.content.PacketContent;
-
-import java.util.List;
-
 import static de.vsy.shared_module.shared_module.packet_validation.content_validation.InvalidContentMessageCreator.createIllegalTypeMessage;
 
-public abstract
-class BasePacketContentValidator<T extends PacketContent>
-        implements PacketContentValidator<T> {
+import de.vsy.shared_module.shared_module.packet_exception.PacketValidationException;
+import de.vsy.shared_transmission.shared_transmission.packet.content.PacketContent;
+import java.util.List;
 
-    protected final String standardErrorMessage;
+public abstract class BasePacketContentValidator<T extends PacketContent> implements
+    PacketContentValidator<T> {
 
-    protected
-    BasePacketContentValidator (final String standardErrorMessage) {
-        this.standardErrorMessage = standardErrorMessage;
+  protected final String standardErrorMessage;
+
+  protected BasePacketContentValidator(final String standardErrorMessage) {
+    this.standardErrorMessage = standardErrorMessage;
+  }
+
+  protected T castContent(Class<? extends T> expectedClass, PacketContent inputContent)
+      throws PacketValidationException {
+
+    if (expectedClass.isInstance(inputContent)) {
+      return expectedClass.cast(inputContent);
+    } else {
+      throw new PacketValidationException(createIllegalTypeMessage(expectedClass, inputContent));
     }
+  }
 
-    protected
-    T castContent (Class<? extends T> expectedClass, PacketContent inputContent)
-    throws PacketValidationException {
+  protected String createErrorMessage(final List<String> failureMessages) {
+    var errorMessageBuilder = new StringBuilder();
 
-        if (expectedClass.isInstance(inputContent)) {
-            return expectedClass.cast(inputContent);
-        } else {
-            throw new PacketValidationException(
-                    createIllegalTypeMessage(expectedClass, inputContent));
-        }
+    errorMessageBuilder.append(standardErrorMessage);
+
+    for (final var currentMessage : failureMessages) {
+      errorMessageBuilder.append(currentMessage);
     }
-
-    protected
-    String createErrorMessage (final List<String> failureMessages) {
-        var errorMessageBuilder = new StringBuilder();
-
-        errorMessageBuilder.append(standardErrorMessage);
-
-        for (final var currentMessage : failureMessages) {
-            errorMessageBuilder.append(currentMessage);
-        }
-        return errorMessageBuilder.toString();
-    }
+    return errorMessageBuilder.toString();
+  }
 }

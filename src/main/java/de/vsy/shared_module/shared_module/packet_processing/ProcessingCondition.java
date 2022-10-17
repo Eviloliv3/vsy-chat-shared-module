@@ -1,9 +1,8 @@
 package de.vsy.shared_module.shared_module.packet_processing;
 
-public
-interface ProcessingCondition {
+public interface ProcessingCondition {
 
-    boolean checkCondition ();
+  boolean checkCondition();
 
-    String getErrorMessage ();
+  String getErrorMessage();
 }

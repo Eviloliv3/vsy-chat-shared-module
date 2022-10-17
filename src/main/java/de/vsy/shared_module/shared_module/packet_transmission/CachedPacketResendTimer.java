@@ -10,49 +10,46 @@ import de.vsy.shared_utility.logging.ThreadContextTimerTask;
  *
  * @author Frederic Heath
  */
-public
-class CachedPacketResendTimer extends ThreadContextTimerTask {
+public class CachedPacketResendTimer extends ThreadContextTimerTask {
 
-    private final UnconfirmedPacketTransmissionCache packetCache;
-    private final ThreadStatusManipulator threadState;
-    private final OutputBuffer resendBuffer;
+  private final UnconfirmedPacketTransmissionCache packetCache;
+  private final ThreadStatusManipulator threadState;
+  private final OutputBuffer resendBuffer;
 
-    /**
-     * Instantiates a new cache Packetresend timer.
-     *
-     * @param transmissionCache the transmission cache
-     * @param threadManipulator the thread manipulator
-     * @param outputBuffer the output buffer
-     */
-    public
-    CachedPacketResendTimer (final UnconfirmedPacketTransmissionCache transmissionCache,
-                             final ThreadStatusManipulator threadManipulator,
-                             final OutputBuffer outputBuffer) {
-        super();
-        this.packetCache = transmissionCache;
-        this.threadState = threadManipulator;
-        this.resendBuffer = outputBuffer;
+  /**
+   * Instantiates a new cache Packetresend timer.
+   *
+   * @param transmissionCache the transmission cache
+   * @param threadManipulator the thread manipulator
+   * @param outputBuffer      the output buffer
+   */
+  public CachedPacketResendTimer(final UnconfirmedPacketTransmissionCache transmissionCache,
+      final ThreadStatusManipulator threadManipulator, final OutputBuffer outputBuffer) {
+    super();
+    this.packetCache = transmissionCache;
+    this.threadState = threadManipulator;
+    this.resendBuffer = outputBuffer;
+  }
+
+  @Override
+  public void runWithContext() {
+    this.packetCache.addCycle();
+    checkForDuePackets();
+  }
+
+  /**
+   * Check for due Packet.
+   */
+  private void checkForDuePackets() {
+
+    while (this.threadState.areThreadsToTerminate()) {
+      var duePacket = this.packetCache.getNextDueTransmissionPacket(5);
+
+      if (duePacket == null) {
+        break;
+      } else {
+        this.resendBuffer.appendPacket(duePacket);
+      }
     }
-
-    @Override
-    public
-    void runWithContext () {
-        this.packetCache.addCycle();
-        checkForDuePackets();
-    }
-
-    /** Check for due Packet. */
-    private
-    void checkForDuePackets () {
-
-        while (this.threadState.areThreadsToTerminate()) {
-            var duePacket = this.packetCache.getNextDueTransmissionPacket(5);
-
-            if (duePacket == null) {
-                break;
-            } else {
-                this.resendBuffer.appendPacket(duePacket);
-            }
-        }
-    }
+  }
 }
