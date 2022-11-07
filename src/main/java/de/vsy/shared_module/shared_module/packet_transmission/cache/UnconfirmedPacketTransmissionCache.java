@@ -87,7 +87,7 @@ public class UnconfirmedPacketTransmissionCache {
           this.cachedPackets.remove();
           toTransmit = nextDuePacket.getCachedPacket();
           appendPacket(toTransmit);
-          LOGGER.info("Wird erneut gesandt {}", toTransmit);
+          LOGGER.info("Will be sent anew: {}", toTransmit);
         }
       }
     } finally {

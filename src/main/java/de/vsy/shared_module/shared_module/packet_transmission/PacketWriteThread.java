@@ -73,7 +73,7 @@ class PacketWriteThread extends ThreadContextRunnable {
       input = this.queueAccess.getPacket();
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
-      LOGGER.error("Beim Holen des naechsten Pakets unterbrochen.");
+      LOGGER.error("Interrupted while waiting for next Packet.");
     }
     return input;
   }
@@ -88,10 +88,10 @@ class PacketWriteThread extends ThreadContextRunnable {
     try {
       this.outStream.writeObject(output);
       this.outStream.flush();
-      LOGGER.trace("Paket geschrieben: {}", output);
+      LOGGER.trace("Packet written: {}", output);
     } catch (final IOException ioe) {
       Thread.currentThread().interrupt();
-      LOGGER.error("IOException: Verbindung abgebrochen.");
+      LOGGER.error("IOException: connection aborted.");
     }
   }
 }

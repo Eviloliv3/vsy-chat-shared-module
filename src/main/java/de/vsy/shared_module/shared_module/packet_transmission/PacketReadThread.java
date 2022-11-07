@@ -84,11 +84,10 @@ public class PacketReadThread extends ThreadContextRunnable {
         readObject = this.inStream.readObject();
       } catch (final IOException ioe) {
         Thread.currentThread().interrupt();
-        LOGGER.error("IOException: Verbindung abgebrochen.");
+        LOGGER.error("IOException: connection aborted.");
         break;
       } catch (final ClassNotFoundException cnf) {
-        LOGGER.error("Fehlermeldung! Eigentlich sollte hier ein Antwortpaket an den Klienten "
-            + "erstellt werden. Gelesenes Paket hat unbekannte Form.\n{}", cnf.getMessage());
+        LOGGER.error("Error! Invalid Packet type.\n{}", cnf.getMessage());
       }
 
       if (readObject instanceof Packet readPacket) {
@@ -109,12 +108,12 @@ public class PacketReadThread extends ThreadContextRunnable {
     if (input.getPacketContent() != null) {
       final var confirmationPacket = AcknowledgementPacketCreator.createAcknowledgement(input);
       this.outboundBuffer.prependPacket(confirmationPacket);
-      LOGGER.trace("Antwort erstellt: {}", confirmationPacket.getRequestPacketHash());
+      LOGGER.trace("Response created: {}", confirmationPacket.getRequestPacketHash());
       this.inboundBuffer.appendPacket(input);
-      LOGGER.trace("Paket gelesen: {}", input);
+      LOGGER.trace("Packet received: {}", input);
     } else {
       this.packetCache.removePacket(input.getRequestPacketHash());
-      LOGGER.trace("Antwort erhalten: {}", input.getRequestPacketHash());
+      LOGGER.trace("Response received: {}", input.getRequestPacketHash());
     }
   }
 }

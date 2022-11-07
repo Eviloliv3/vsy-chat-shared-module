@@ -78,7 +78,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
    * Close this.connectionSocket.
    */
   public void closeConnection() {
-    LOGGER.info("Klientenverbindung wird geschlossen.");
+    LOGGER.info("Client connection termination initiated.");
     this.connectionSocketManipulator.terminateThreads();
     this.cachedPacketResender.cancel();
 
@@ -86,7 +86,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
       this.connectionSocket.close();
     } catch (IOException ioe) {
       Thread.currentThread().interrupt();
-      LOGGER.error("Socket konnte nicht geschlossen werden. " + "Fehlernachricht:\n{}: {}",
+      LOGGER.error("Socket could not be closed. Error:\n{}: {}",
           ioe.getClass().getSimpleName(), ioe.getMessage());
     }
 
@@ -94,12 +94,12 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
       connThread.interrupt();
 
       while (connThread.isAlive()) {
-        LOGGER.info("Warte auf Thread: {}/{}", connThread.getName(), connThread.getId());
+        LOGGER.info("Waiting for thread: {}/{}", connThread.getName(), connThread.getId());
         Thread.yield();
       }
     }
     this.connectionSocketThreads.clear();
-    LOGGER.info("Klientenverbindung beendet.");
+    LOGGER.info("Client connection terminated.");
   }
 
   /**
@@ -141,7 +141,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
         setupReadThread();
       }
     } catch (final IOException ioe) {
-      LOGGER.error("Verbindung fehlgeschlagen. Input/OutputStreams ungültig. Connection: {}",
+      LOGGER.error("Connection setup failed. Input/outputStream invalid. Connection: {}",
           this.connectionSocket);
       return !connected;
     }

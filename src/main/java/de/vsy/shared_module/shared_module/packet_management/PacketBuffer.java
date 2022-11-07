@@ -36,7 +36,7 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
     if (!this.buffer.contains(input)) {
       this.buffer.addLast(input);
     } else {
-      LOGGER.error("Paket leer oder bereits im Puffer: {}", input);
+      LOGGER.error("Packet empty or already buffered: {}", input);
     }
   }
 
@@ -45,7 +45,7 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
     if (!this.buffer.contains(input)) {
       this.buffer.addFirst(input);
     } else {
-      LOGGER.error("Paket leer oder bereits im Puffer: {}", input);
+      LOGGER.error("Packet empty or already buffered: {}", input);
     }
   }
 
