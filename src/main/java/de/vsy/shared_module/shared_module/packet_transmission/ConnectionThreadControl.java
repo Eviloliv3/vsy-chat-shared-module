@@ -132,6 +132,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
     final var connected = true;
 
     try {
+      setupPacketResendTimer();
       if (this.leaderRole) {
         setupReadThread();
         setupWriteThread();
@@ -139,9 +140,8 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
         setupWriteThread();
         setupReadThread();
       }
-      setupPacketResendTimer();
     } catch (final IOException ioe) {
-      LOGGER.error("Verbindung fehlgeschlagen. Input/OutputStreams" + " ungültig. Connection: {}",
+      LOGGER.error("Verbindung fehlgeschlagen. Input/OutputStreams ungültig. Connection: {}",
           this.connectionSocket);
       return !connected;
     }
@@ -182,7 +182,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
         this.connectionSocketManipulator,
         this.bufferManager.getPacketBuffer(ThreadPacketBufferLabel.OUTSIDE_BOUND));
     this.cachedPacketResender = new Timer("ResendUnansweredPackets");
-    this.cachedPacketResender.scheduleAtFixedRate(resenderTask, 0, 500);
+    this.cachedPacketResender.scheduleAtFixedRate(resenderTask, 100, 500);
   }
 
   public UnconfirmedPacketTransmissionCache getPacketCache() {
