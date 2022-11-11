@@ -93,7 +93,6 @@ public class PacketReadThread extends ThreadContextRunnable {
       if (readObject instanceof Packet readPacket) {
         return readPacket;
       }
-      Thread.yield();
     }
     return null;
   }

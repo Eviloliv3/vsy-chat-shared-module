@@ -92,11 +92,13 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
 
     for (var connThread : this.connectionSocketThreads) {
       connThread.interrupt();
-
-      while (connThread.isAlive()) {
-        LOGGER.info("Waiting for thread: {}/{}", connThread.getName(), connThread.getId());
-        Thread.yield();
+      LOGGER.info("Waiting for thread: {}:{}", connThread.getName(), connThread.getId());
+      try{
+        connThread.join(500);
+      } catch (InterruptedException e) {
+        LOGGER.error("{}:{} shutdown failed.", connThread.getName(), connThread.getId(), e);
       }
+      LOGGER.error("{}:{} shutdown successfully.", connThread.getName(), connThread.getId());
     }
     this.connectionSocketThreads.clear();
     LOGGER.info("Client connection terminated.");
