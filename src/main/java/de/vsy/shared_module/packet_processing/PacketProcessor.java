@@ -18,5 +18,5 @@ public interface PacketProcessor {
    *
    * @param input Paket das verarbeitet wird
    */
-  Packet processPacket(Packet input) throws PacketValidationException, PacketProcessingException;
+  void processPacket(Packet input) throws PacketValidationException, PacketProcessingException;
 }

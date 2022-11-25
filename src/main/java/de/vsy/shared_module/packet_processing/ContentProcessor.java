@@ -5,5 +5,5 @@ import de.vsy.shared_transmission.packet.content.PacketContent;
 
 public interface ContentProcessor<T extends PacketContent> {
 
-  PacketContent processContent(T toProcess) throws PacketProcessingException;
+  void processContent(T toProcess) throws PacketProcessingException;
 }
