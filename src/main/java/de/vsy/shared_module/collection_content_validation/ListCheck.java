@@ -33,7 +33,7 @@ public class ListCheck {
         final var checkString = BeanChecker.checkBean(currentCommunicator);
 
         checkString.ifPresent(
-            s -> deadInfo.append("\nListenPosition: ").append(currentCommunicator).append("/")
+            s -> deadInfo.append("; ListenPosition: ").append(currentCommunicator).append("/")
                 .append(s));
       }
     } else {

@@ -1,6 +1,5 @@
 package de.vsy.shared_module.packet_management;
 
-import de.vsy.shared_module.packet_management.PacketDispatcher;
 import de.vsy.shared_transmission.packet.Packet;
 import java.util.Deque;
 

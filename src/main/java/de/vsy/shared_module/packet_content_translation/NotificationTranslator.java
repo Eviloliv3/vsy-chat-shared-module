@@ -27,6 +27,6 @@ public class NotificationTranslator {
     if (translator != null) {
       return translator.apply(request);
     }
-    return "Keinen gültigen Uebersetzer gefunden für: \n" + request;
+    return "Keinen gültigen Uebersetzer gefunden für: " + request;
   }
 }

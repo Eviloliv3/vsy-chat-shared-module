@@ -2,8 +2,6 @@ package de.vsy.shared_module.packet_processing;
 
 import de.vsy.shared_module.packet_exception.PacketProcessingException;
 import de.vsy.shared_module.packet_exception.PacketValidationException;
-import de.vsy.shared_module.packet_processing.AbstractPacketProcessorLink;
-import de.vsy.shared_module.packet_processing.PacketProcessor;
 import de.vsy.shared_module.packet_validation.PacketCheck;
 import de.vsy.shared_transmission.packet.Packet;
 

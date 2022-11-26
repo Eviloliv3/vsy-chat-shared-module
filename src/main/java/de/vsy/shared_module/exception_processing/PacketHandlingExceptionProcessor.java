@@ -57,6 +57,6 @@ public class PacketHandlingExceptionProcessor {
    * @return Log-Eintrag zu der übergebenen Exception.
    */
   private String createErrorLog(final PacketHandlingException phe, final Packet affectedPacket) {
-    return "\nMeldung: " + phe.getMessage() + "\n-> Paket wird verworfen:\n" + affectedPacket;
+    return "Meldung: " + phe.getMessage() + "\n-> Paket wird verworfen:\n" + affectedPacket;
   }
 }
