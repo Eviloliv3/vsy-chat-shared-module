@@ -19,7 +19,7 @@ public class NotificationTranslator {
     translators.put(ErrorDTO.class, ErrorTranslator::translate);
   }
 
-  private NotificationTranslator() {
+  protected NotificationTranslator() {
   }
 
   public static String translate(Translatable request) {
