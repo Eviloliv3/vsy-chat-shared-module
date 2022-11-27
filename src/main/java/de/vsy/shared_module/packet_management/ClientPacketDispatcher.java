@@ -64,6 +64,6 @@ public class ClientPacketDispatcher implements MultiplePacketDispatcher {
    */
   private boolean isClientBound(final int recipientId) {
     final int clientId = this.clientDataManager.getClientId();
-    return recipientId == clientId || recipientId == STANDARD_CLIENT_ID;
+    return clientId == STANDARD_CLIENT_ID || recipientId == clientId || recipientId == STANDARD_CLIENT_ID;
   }
 }
