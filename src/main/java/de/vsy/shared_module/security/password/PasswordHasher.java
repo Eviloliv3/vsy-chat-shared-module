@@ -1,6 +1,7 @@
 package de.vsy.shared_module.security.password;
 
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Berechnet Hashwerte aus Passwörtern und versalzt bestehende Hashwerte. Es werden
@@ -11,7 +12,11 @@ public class PasswordHasher {
   private static final MessageDigest passwordDigester;
 
   static {
-    passwordDigester = null;
+    try {
+      passwordDigester = MessageDigest.getInstance("SHA-1");
+    } catch (NoSuchAlgorithmException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
