@@ -10,23 +10,18 @@ import java.util.Deque;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ClientPacketDispatcher implements MultiplePacketDispatcher {
+public abstract class BasicClientPacketDispatcher implements MultiplePacketDispatcher {
 
   private static final Logger LOGGER = LogManager.getLogger();
-  private final ClientDataProvider clientDataManager;
   private final PacketBuffer serverBoundBuffer;
   private final PacketBuffer clientBoundBuffer;
 
   /**
    * Instantiates a new ClientPacketdispatcher.
-   *
-   * @param clientData        the client data provider
    * @param clientBoundBuffer the client bound buffer
    * @param serverBoundBuffer the server bound buffer
    */
-  public ClientPacketDispatcher(final ClientDataProvider clientData,
-      final PacketBuffer clientBoundBuffer, final PacketBuffer serverBoundBuffer) {
-    this.clientDataManager = clientData;
+  public BasicClientPacketDispatcher(final PacketBuffer clientBoundBuffer, final PacketBuffer serverBoundBuffer) {
     this.clientBoundBuffer = clientBoundBuffer;
     this.serverBoundBuffer = serverBoundBuffer;
   }
@@ -62,8 +57,5 @@ public class ClientPacketDispatcher implements MultiplePacketDispatcher {
    * @param recipientId the recipient id
    * @return true if client is recipient, else false
    */
-  private boolean isClientBound(final int recipientId) {
-    final int clientId = this.clientDataManager.getClientId();
-    return clientId == STANDARD_CLIENT_ID || recipientId == clientId || recipientId == STANDARD_CLIENT_ID;
-  }
+  protected abstract boolean isClientBound(final int recipientId);
 }
