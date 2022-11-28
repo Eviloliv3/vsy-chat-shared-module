@@ -61,7 +61,7 @@ public class PacketReadThread extends ThreadContextRunnable {
   @Override
   public void runWithContext() {
 
-    while (!Thread.currentThread().isInterrupted()) {
+    while (!Thread.interrupted()) {
       Packet input = readNextPacket();
 
       if (input != null) {

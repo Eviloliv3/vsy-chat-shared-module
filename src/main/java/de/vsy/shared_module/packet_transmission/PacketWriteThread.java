@@ -53,7 +53,7 @@ class PacketWriteThread extends ThreadContextRunnable {
   public void runWithContext() {
     Packet input;
 
-    while (!Thread.currentThread().isInterrupted()) {
+    while (!Thread.interrupted()) {
       input = readNextPacket();
 
       if (input != null) {
