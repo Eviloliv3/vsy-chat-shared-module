@@ -4,10 +4,12 @@
 package de.vsy.shared_module.data_element_validation;
 
 import static de.vsy.shared_module.data_element_validation.IdCheck.checkData;
+import static de.vsy.shared_module.data_element_validation.StringCheck.checkString;
 
 import de.vsy.shared_transmission.dto.CommunicatorDTO;
 import de.vsy.shared_transmission.dto.authentication.AuthenticationDTO;
 import de.vsy.shared_transmission.dto.authentication.PersonalData;
+import de.vsy.shared_transmission.packet.content.chat.ChatPacketDTO;
 import de.vsy.shared_transmission.packet.content.chat.TextMessageDTO;
 import java.util.Optional;
 
@@ -26,68 +28,87 @@ public class BeanChecker {
    * @return the string
    */
   public static Optional<String> checkBean(final CommunicatorDTO data) {
-    Optional<String> checkString;
+    Optional<String> checkResult;
     var deadInfo = new StringBuilder();
 
     if (data != null) {
-      checkString = checkData(data.getCommunicatorId());
+      checkResult= checkData(data.getCommunicatorId());
 
-      checkString.ifPresent(deadInfo::append);
+      checkResult.ifPresent(s -> deadInfo.append("Invalid communicator id").append(s).append(". "));
 
-      checkString = StringCheck.checkString(data.getDisplayLabel());
+      checkResult= StringCheck.checkString(data.getDisplayLabel());
 
-      checkString.ifPresent(s -> deadInfo.append(" Ungültiger Anzeigename: ").append(s));
+      checkResult.ifPresent(s -> deadInfo.append("Invalid display name: ").append(s).append(". "));
     } else {
-      deadInfo.append("Es sind keine Kommunikatordaten vorhanden.");
+      deadInfo.append("No communicator data found.");
     }
-    return (deadInfo.length() > 0) ? Optional.of("Fehlerhafte Kommunikatordaten: " + deadInfo)
+    return (deadInfo.length() > 0) ? Optional.of("Invalid communicator data: " + deadInfo)
         : Optional.empty();
   }
 
   public static Optional<String> checkBean(AuthenticationDTO authenticationData) {
-    Optional<String> checkString;
+    Optional<String> checkResult;
     var deadInfo = new StringBuilder();
 
     if (authenticationData != null) {
-      checkString = StringCheck.checkString(authenticationData.getLogin());
+      checkResult= StringCheck.checkString(authenticationData.getLogin());
 
-      checkString.ifPresent(s -> deadInfo.append("Fehlerhafter Loginname: ").append(s));
-      checkString = StringCheck.checkString(authenticationData.getPassword());
+      checkResult.ifPresent(s -> deadInfo.append("Invalid login name: ").append(s).append(". "));
+      checkResult= StringCheck.checkString(authenticationData.getPassword());
 
-      checkString.ifPresent(s -> deadInfo.append("Fehlerhaftes Passwort: ").append(s));
+      checkResult.ifPresent(s -> deadInfo.append("Invalid password: ").append(s).append(". "));
     } else {
-      deadInfo.append("Keine Authentifizierungsdaten enthalten.");
+      deadInfo.append("No authentication data found.");
     }
-    return (deadInfo.length() > 0) ? Optional.of("Fehlerhafte Klientendaten:" + deadInfo)
+    return (deadInfo.length() > 0) ? Optional.of("Invalid credentials: " + deadInfo)
         : Optional.empty();
   }
 
   public static Optional<String> checkBean(PersonalData personalData) {
-    Optional<String> checkString;
+    Optional<String> checkResult;
     var deadInfo = new StringBuilder();
 
     if (personalData != null) {
-      checkString = StringCheck.checkString(personalData.getForename());
+      checkResult= StringCheck.checkString(personalData.getForename());
+      checkResult.ifPresent(s -> deadInfo.append("Invalid first name: ").append(s).append(". "));
 
-      if (checkString.isPresent()) {
-        return Optional.of(
-            deadInfo.append("Fehlerhafter Vorname: ").append(checkString.get()).toString());
-      } else {
-        checkString = StringCheck.checkString(personalData.getSurname());
-
-        if (checkString.isPresent()) {
-          return Optional.of(
-              deadInfo.append("Fehlerhafter Nachname: ").append(checkString.get()).toString());
-        }
-      }
+      checkResult= StringCheck.checkString(personalData.getSurname());
+      checkResult.ifPresent(s-> deadInfo.append("Fehlerhafter Nachname: ").append(s).append(". "));
     } else {
-      return Optional.of("Keine Klientendaten enthalten.");
+      return Optional.of("No client data found.");
     }
-    return Optional.empty();
+    return deadInfo.length() > 0 ? Optional.of("Invalid personal data: " + deadInfo) : Optional.empty();
   }
 
-  public static Optional<String> checkBean(final TextMessageDTO data) {
-    throw new UnsupportedOperationException("TextMessageDTO wird noch nicht geprueft.");
+  public static Optional<String> checkBean(final TextMessageDTO textMessage){
+    Optional<String> checkResult = checkBean((ChatPacketDTO) textMessage);
+    final var deadInfo = new StringBuilder();
+
+    checkResult.ifPresent(deadInfo::append);
+
+    checkResult = checkString(textMessage.getMessage());
+    checkResult.ifPresent(s -> deadInfo.append("Invalid text message: ").append(s).append(". "));
+    return deadInfo.length() > 0 ? Optional.of("Invalid text message: " + deadInfo) : Optional.empty();
+  }
+
+  public static Optional<String> checkBean(final ChatPacketDTO chatMessage){
+    Optional<String> checkResult;
+    final var deadInfo = new StringBuilder();
+
+    if(chatMessage != null) {
+      checkResult= checkData(chatMessage.getOriginatorId());
+      checkResult.ifPresent(s -> deadInfo.append("Invalid originator id: ").append(s).append(". "));
+
+      checkResult= checkData(chatMessage.getRecipientId());
+      checkResult.ifPresent(s -> deadInfo.append("Invalid recipient id: ").append(s).append(". "));
+
+      if(chatMessage.getContactType() == null){
+        deadInfo.append("Missing contact type. ");
+      }
+    }else{
+      return Optional.of("No chat message found.");
+    }
+    return deadInfo.length() > 0 ? Optional.of("Invalid chat message: " + deadInfo) : Optional.empty();
   }
 
   /**

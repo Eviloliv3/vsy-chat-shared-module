@@ -1,6 +1,7 @@
 package de.vsy.shared_module.collection_content_validation;
 
 import de.vsy.shared_module.data_element_validation.BeanChecker;
+import de.vsy.shared_module.packet_validation.content_validation.chat.TextMessageValidator;
 import de.vsy.shared_transmission.packet.content.chat.TextMessageDTO;
 import java.util.List;
 import java.util.Optional;

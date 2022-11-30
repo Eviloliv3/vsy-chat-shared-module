@@ -30,7 +30,7 @@ public class IdCheck {
         || toCheck == STANDARD_CLIENT_BROADCAST_ID)) {
       return Optional.empty();
     } else {
-      return Optional.of("Fehlerhafte Entitäts-Id: " + toCheck);
+      return Optional.of("Id not in valid integer interval: " + toCheck);
     }
   }
 }
