@@ -91,7 +91,7 @@ public class BeanChecker {
     return deadInfo.length() > 0 ? Optional.of("Invalid text message: " + deadInfo) : Optional.empty();
   }
 
-  public static Optional<String> checkBean(final ChatPacketDTO chatMessage){
+  private static Optional<String> checkBean(final ChatPacketDTO chatMessage){
     Optional<String> checkResult;
     final var deadInfo = new StringBuilder();
 
