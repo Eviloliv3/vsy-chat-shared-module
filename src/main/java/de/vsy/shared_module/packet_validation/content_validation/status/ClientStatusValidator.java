@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ClientStatusValidator extends BasePacketContentValidator<ClientStatusChangeDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Klientenstatusmitteilung. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid client status notification. ";
 
   public ClientStatusValidator() {
     super(STANDARD_VALIDATION_MESSAGE);
@@ -25,7 +25,7 @@ public class ClientStatusValidator extends BasePacketContentValidator<ClientStat
     final var checkString = BeanChecker.checkBean(contactData);
 
     if (serviceType == null) {
-      errorStrings.add("Kein Servicetyp angegeben. ");
+      errorStrings.add("No service type specified. ");
     }
 
     checkString.ifPresent(errorStrings::add);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ContactStatusValidator extends BasePacketContentValidator<ContactMessengerStatusDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Kontaktstatusmitteilung. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid contact status notification. ";
 
   public ContactStatusValidator() {
     super(STANDARD_VALIDATION_MESSAGE);
@@ -29,11 +29,11 @@ public class ContactStatusValidator extends BasePacketContentValidator<ContactMe
     var checkString = BeanChecker.checkBean(contactData);
 
     if (serviceType == null) {
-      errorStrings.add("Kein Servicetyp angegeben. ");
+      errorStrings.add("No service type specified. ");
     }
 
     if (contactType == null) {
-      errorStrings.add("Kein Kontakttyp angegeben. ");
+      errorStrings.add("No contact type specified. ");
     }
 
     checkString.ifPresent(errorStrings::add);

@@ -8,30 +8,29 @@ import de.vsy.shared_transmission.packet.property.communicator.CommunicationEndp
 
 public class NonStaticPacketCompiler {
 
-  /* Der Anbieter für die Absenderinstanz */
   private OriginatingEntityProvider originator;
-  /* Liefert den Identifikator für Paketdaten */
-  private ContentIdentificationProvider contentIdentificator;
+  private ContentIdentificationProvider contentIdentificationProvider;
 
   public void addOriginatorEntityProvider(OriginatingEntityProvider originator) {
     this.originator = originator;
   }
 
-  public void addContentIdentificator(ContentIdentificationProvider contentIdentificator) {
-    this.contentIdentificator = contentIdentificator;
+  public void addContentIdentificationProvider(ContentIdentificationProvider identificationProvider) {
+    this.contentIdentificationProvider = identificationProvider;
   }
 
   /**
-   * Erstellt ein versandfertiges Antwortpaket mit den angegebenen Daten. Der Absender steht für
-   * jede paketerstellende Instanz fest. Als Empfänger wird der Absender des Anfragepaket verwendet.
-   * Der Datenidentifikator sollte von den Daten abgeleitet werden.
+   * Creates a response Packet ready for dispatch, from the specified data. The recipient will be
+   * determined by examining the specified request Packet. Best practice is to derive the
+   * ContentIdentifier from the PacketContent.
    *
-   * @param data die Paketdaten (PacketContent)
-   * @return das fertige Paket
-   * @throws NullPointerException  wenn einer der Parameter, kein Absender oder kein Anfragehashwert
-   *                               vorhanden ist.
-   * @throws IllegalStateException wenn kein Anbieter für die Absenderinstanz oder die
-   *                               Identifikationsbestimmung angegeben wurden
+   * @param data the PacketContent
+   * @param request the request
+   * @return Packet
+   * @throws NullPointerException   if one of the arguments is null or the request argument has no
+   *                                 properties/sender entity/packet hash
+   * @throws IllegalStateException  if no OriginatingEntityProvider was set or no
+   *                                 ContentIdentificationProvider was set
    */
   public Packet createResponse(PacketContent data, Packet request) {
     var properties = request.getPacketProperties();
@@ -42,52 +41,51 @@ public class NonStaticPacketCompiler {
   }
 
   /**
-   * Hilfsfunktion die übergebenen Daten in einem neuen Paket zusammenführt.
+   * Helper that compiles the specified arguments in a Packet.
    *
-   * @param recipient         der Empfänger (CommunicationEndpoint)
-   * @param data              die Paketdaten (PacketContent)
-   * @param requestPacketHash der Anfragehashwert (String)
-   * @return das neue Paket
-   * @throws IllegalStateException wenn kein Anbieter für die Absenderinstanz oder die
-   *                               Identifikationsbestimmung angegeben wurden
+   * @param recipient         CommunicationEndpoint
+   * @param data              PacketContent
+   * @param requestPacketHash String
+   * @return Packet
+   * @throws IllegalStateException if no OriginatingEntityProvider was set or no
+   *                                ContentIdentificationProvider was set
    */
   private Packet compilePacket(CommunicationEndpoint recipient, PacketContent data,
       String requestPacketHash) {
     var sender = originator.getOriginatorEntity();
     var props = new PacketPropertiesBuilder().withSender(sender).withRecipient(recipient)
-        .withIdentifier(contentIdentificator.getContentIdentifier(data)).build();
+        .withIdentifier(contentIdentificationProvider.getContentIdentifier(data)).build();
     return new PacketBuilder().withContent(data).withProperties(props)
         .withRequestPacket(requestPacketHash).build();
   }
 
   /**
-   * Erstellt ein versandfertiges Anfragepaket mit dem angegebenen Empfänger und den angegebenen
-   * Daten. Der Absender steht für jede paketerstellende Instanz fest. Der Datenidentifikator sollte
-   * von den Daten abgeleitet werden.
+   * Creates a request Packet ready for dispatch, from the specified data. The originator will be
+   * set per instance.
+   * Best practice is to derive the ContentIdentifier from the PacketContent.
    *
-   * @param recipient der Empfänger (CommunicationEndpoint)
-   * @param data      die Paketdaten (PacketContent)
-   * @return das fertige Paket
-   * @throws NullPointerException  wenn einer der Parameter nicht vorhanden ist
-   * @throws IllegalStateException wenn kein Anbieter für die Absenderinstanz oder die
-   *                               Identifikationsbestimmung angegeben wurden
+   * @param recipient CommunicationEndpoint
+   * @param data      PacketContent
+   * @return Packet
+   * @throws NullPointerException  if one of the arguments is null
+   * @throws IllegalStateException if no OriginatingEntityProvider was set or no
+   *                                 ContentIdentificationProvider was set
    */
   public Packet createRequest(CommunicationEndpoint recipient, PacketContent data) {
     return compilePacket(recipient, data, null);
   }
 
   /**
-   * Erstellt ein versandfertiges Antwortpaket mit dem angegebenen Empfänger und den angegebenen
-   * Daten. Der Absender steht für jede paketerstellende Instanz fest. Der Datenidentifikator kann
-   * von den Daten abgeleitet werden. Der Anfragehashwert wird aus dem Anfragepaket geholt.
+   * Creates a response Packet ready for dispatch, from specified data. The request Packet hash
+   * value will be determined by examining the request packet.
    *
-   * @param recipient der Empfänger (CommunicationEndpoint)
-   * @param data      die Paketdaten (PacketContent)
-   * @param request   das zu beantwortende Paket (Packet)
-   * @return das fertige Paket
-   * @throws NullPointerException  wenn einer der Parameter nicht vorhanden ist
-   * @throws IllegalStateException wenn kein Anbieter für die Absenderinstanz oder die
-   *                               Identifikationsbestimmung angegeben wurden
+   * @param recipient CommunicationEndpoint
+   * @param data      PacketContent
+   * @param request   Packet
+   * @return Paket
+   * @throws NullPointerException  if one of the parameters is null.
+   * @throws IllegalStateException if no OriginatingEntityProvider was set or no
+   *                                ContentIdentificationProvider was set
    */
   public Packet createCustomRecipientResponse(CommunicationEndpoint recipient, PacketContent data,
       Packet request) {

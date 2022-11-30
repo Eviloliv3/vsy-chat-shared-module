@@ -33,11 +33,11 @@ public class ListCheck {
         final var checkString = BeanChecker.checkBean(currentCommunicator);
 
         checkString.ifPresent(
-            s -> deadInfo.append("; ListenPosition: ").append(currentCommunicator).append("/")
+            s -> deadInfo.append("; list position: ").append(currentCommunicator).append("/")
                 .append(s));
       }
     } else {
-      deadInfo.append("Kontaktliste ist nicht vorhanden.");
+      deadInfo.append("Contact list not specified.");
     }
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }
@@ -57,12 +57,12 @@ public class ListCheck {
         final var checkString = BeanChecker.checkBean(listData.get(msgPos));
 
         if (checkString.isPresent()) {
-          deadInfo.append("Position der fehlerhaften " + "Nachricht: ").append(msgPos)
+          deadInfo.append("Erroneous message list position: ").append(msgPos)
               .append(checkString.get());
         }
       }
     } else {
-      deadInfo.append("Nachrichtenliste nicht vorhanden.");
+      deadInfo.append("No message list specified.");
     }
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }

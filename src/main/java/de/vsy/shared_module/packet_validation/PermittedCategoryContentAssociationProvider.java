@@ -1,11 +1,8 @@
 package de.vsy.shared_module.packet_validation;
 
 
-import static de.vsy.shared_transmission.packet.property.packet_type.RelationType.CONTACT_RELATION;
 import static java.util.Set.of;
 
-import de.vsy.shared_module.packet_validation.content_validation.authentication.LoginRequestValidator;
-import de.vsy.shared_transmission.dto.authentication.AccountCreationDTO;
 import de.vsy.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.packet.content.authentication.LoginRequestDTO;
 import de.vsy.shared_transmission.packet.content.authentication.LoginResponseDTO;

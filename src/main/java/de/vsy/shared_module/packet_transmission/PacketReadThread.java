@@ -17,7 +17,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Reads Packet from an ObjectInputstream and writes them to a PacketBuffer.
+ * Reads Packet from an ObjectInputStream and writes them to a PacketBuffer.
  */
 public class PacketReadThread extends ThreadContextRunnable {
 

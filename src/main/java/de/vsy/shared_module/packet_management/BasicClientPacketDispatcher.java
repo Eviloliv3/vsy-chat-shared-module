@@ -3,8 +3,6 @@
  */
 package de.vsy.shared_module.packet_management;
 
-import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_CLIENT_ID;
-
 import de.vsy.shared_transmission.packet.Packet;
 import java.util.Deque;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +15,7 @@ public abstract class BasicClientPacketDispatcher implements MultiplePacketDispa
   private final PacketBuffer clientBoundBuffer;
 
   /**
-   * Instantiates a new ClientPacketdispatcher.
+   * Instantiates a new ClientPacketDispatcher.
    * @param clientBoundBuffer the client bound buffer
    * @param serverBoundBuffer the server bound buffer
    */
@@ -38,7 +36,7 @@ public abstract class BasicClientPacketDispatcher implements MultiplePacketDispa
   @Override
   public void dispatchPacket(final Packet toAppend) {
     if (toAppend == null) {
-      throw new IllegalArgumentException("Leeres Paket wird nicht gepuffert.");
+      throw new IllegalArgumentException("Empty Packets cannot be buffered.");
     }
     final var recipient = toAppend.getPacketProperties().getRecipient();
     final var recipientId = recipient.getEntityId();

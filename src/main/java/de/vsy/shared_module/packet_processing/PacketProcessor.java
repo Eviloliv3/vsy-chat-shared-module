@@ -13,10 +13,11 @@ import de.vsy.shared_transmission.packet.Packet;
 public interface PacketProcessor {
 
   /**
-   * Verarbeitet das übergebene Paket entsprechend der, in den Eigenschaften des Pakets angegebenen,
-   * Typ und Kategorie.
+   * Processes the specified Packet
    *
-   * @param input Paket das verarbeitet wird
+   * @param input Packet
+   * @throws PacketValidationException if packet syntax or semantics are erroneous
+   * @throws PacketProcessingException if any local state prevents the processing of the Packet
    */
   void processPacket(Packet input) throws PacketValidationException, PacketProcessingException;
 }

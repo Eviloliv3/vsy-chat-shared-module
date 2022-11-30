@@ -17,7 +17,7 @@ public class CachedPacketResendTimer extends ThreadContextTimerTask {
   private final OutputBuffer resendBuffer;
 
   /**
-   * Instantiates a new cache Packetresend timer.
+   * Instantiates a new Packet resend timer.
    *
    * @param transmissionCache the transmission cache
    * @param threadManipulator the thread manipulator

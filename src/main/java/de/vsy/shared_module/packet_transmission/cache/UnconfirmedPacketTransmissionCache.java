@@ -26,11 +26,6 @@ public class UnconfirmedPacketTransmissionCache {
   private final Queue<CachedPacket> cachedPackets;
   private final int cycleTimeMillis;
 
-  /**
-   * Instantiates a new Packettransmission cache.
-   *
-   * @param cycleTimeMillis the cycle time millis
-   */
   public UnconfirmedPacketTransmissionCache(final int cycleTimeMillis) {
     this.accessLock = new ReentrantReadWriteLock();
     this.cachedPackets = new LinkedList<>();
@@ -38,7 +33,7 @@ public class UnconfirmedPacketTransmissionCache {
     if (cycleTimeMillis > 0) {
       this.cycleTimeMillis = cycleTimeMillis;
     } else {
-      throw new IllegalArgumentException("Ungültige Wartezeit für Zyklen (<=0)");
+      throw new IllegalArgumentException("Invalid cycle time (<=0)");
     }
   }
 
@@ -122,7 +117,7 @@ public class UnconfirmedPacketTransmissionCache {
   /**
    * Removes the Packet
    *
-   * @param packetHash the Packethash
+   * @param packetHash String
    */
   public void removePacket(final String packetHash) {
 

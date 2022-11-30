@@ -9,32 +9,31 @@ import de.vsy.shared_transmission.packet.property.PacketProperties;
 import java.util.Optional;
 
 /**
- * Erlaubt die Ueberpruefung von eines ganzen Pakets oder den einzelnen Eigenschaften bzw. des
- * Inhaltes.
+ * Provides checks for a Packet or Packet components like the content or the properties
  */
 public interface PacketCheck {
 
   /**
-   * Check Packet
+   * Checks the whole Packet, using the other specified methods.
    *
-   * @param toCheck the to check
-   * @return the string
+   * @param toCheck Packet
+   * @return Optional<String> if error found; empty Optional otherwise
    */
   Optional<String> checkPacket(Packet toCheck);
 
   /**
-   * Check PacketDataManagement.
+   * Checks PacketContent.
    *
-   * @param toCheck the to check
-   * @return the string
+   * @param toCheck PacketContent
+   * @return Optional<String> if error found; empty Optional otherwise
    */
   Optional<String> checkPacketContent(PacketContent toCheck);
 
   /**
-   * Check PacketProperties.
+   * Checks PacketProperties.
    *
-   * @param toCheck the to check
-   * @return the string
+   * @param toCheck PacketProperties
+   * @return Optional<String> if error found; empty Optional otherwise
    */
   Optional<String> checkPacketProperties(PacketProperties toCheck);
 }

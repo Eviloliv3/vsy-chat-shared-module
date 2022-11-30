@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class LoginRequestValidator extends BasePacketContentValidator<LoginRequestDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Login-Anfrage. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid login request. ";
 
   public LoginRequestValidator() {
     super(STANDARD_VALIDATION_MESSAGE);

@@ -40,7 +40,7 @@ public class BeanChecker {
 
       checkResult.ifPresent(s -> deadInfo.append("Invalid display name: ").append(s).append(". "));
     } else {
-      deadInfo.append("No communicator data found.");
+      deadInfo.append("No communicator data specified.");
     }
     return (deadInfo.length() > 0) ? Optional.of("Invalid communicator data: " + deadInfo)
         : Optional.empty();
@@ -58,7 +58,7 @@ public class BeanChecker {
 
       checkResult.ifPresent(s -> deadInfo.append("Invalid password: ").append(s).append(". "));
     } else {
-      deadInfo.append("No authentication data found.");
+      deadInfo.append("No authentication data specified.");
     }
     return (deadInfo.length() > 0) ? Optional.of("Invalid credentials: " + deadInfo)
         : Optional.empty();
@@ -73,9 +73,9 @@ public class BeanChecker {
       checkResult.ifPresent(s -> deadInfo.append("Invalid first name: ").append(s).append(". "));
 
       checkResult= StringCheck.checkString(personalData.getSurname());
-      checkResult.ifPresent(s-> deadInfo.append("Fehlerhafter Nachname: ").append(s).append(". "));
+      checkResult.ifPresent(s-> deadInfo.append("Invalid last name: ").append(s).append(". "));
     } else {
-      return Optional.of("No client data found.");
+      return Optional.of("No client data specified.");
     }
     return deadInfo.length() > 0 ? Optional.of("Invalid personal data: " + deadInfo) : Optional.empty();
   }
@@ -106,7 +106,7 @@ public class BeanChecker {
         deadInfo.append("Missing contact type. ");
       }
     }else{
-      return Optional.of("No chat message found.");
+      return Optional.of("No chat message specified.");
     }
     return deadInfo.length() > 0 ? Optional.of("Invalid chat message: " + deadInfo) : Optional.empty();
   }
@@ -118,6 +118,6 @@ public class BeanChecker {
    * @return the string
    */
   public static String checkBean(final Object data) {
-    return "Unbekanntes Datenobjekt";
+    return "Unknown bean";
   }
 }

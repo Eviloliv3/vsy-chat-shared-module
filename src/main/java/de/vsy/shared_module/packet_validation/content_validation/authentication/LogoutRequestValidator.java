@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public final class LogoutRequestValidator extends BasePacketContentValidator<LogoutRequestDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Logout-Anfrage. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid logout request. ";
 
   public LogoutRequestValidator() {
     super(STANDARD_VALIDATION_MESSAGE);

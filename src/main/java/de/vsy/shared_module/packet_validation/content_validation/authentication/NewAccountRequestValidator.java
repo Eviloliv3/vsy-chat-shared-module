@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class NewAccountRequestValidator extends BasePacketContentValidator<NewAccountRequestDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Kontörstellungsanfrage. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid account creation request. ";
 
   public NewAccountRequestValidator() {
     super(STANDARD_VALIDATION_MESSAGE);
@@ -24,7 +24,7 @@ public class NewAccountRequestValidator extends BasePacketContentValidator<NewAc
     var accountCreation = newAccountContent.getAccountCreationData();
 
     if (accountCreation == null) {
-      errorStrings.add("Keine Daten gefunden.");
+      errorStrings.add("No credentials or personal data specified.");
     } else {
       final var personalData = accountCreation.getPersonalData();
       final var authenticationData = accountCreation.getAuthenticationData();

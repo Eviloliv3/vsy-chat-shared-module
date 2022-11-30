@@ -19,10 +19,9 @@ public class ContactRelationResponseTranslator {
         final var requestData = responseDTO.getRequestData();
 
         if (requestData.getDesiredState() && !(responseDTO.getDecision())) {
-          friendshipResponse.append(contactName).append(" möchte nicht mit Ihnen befreundet sein.");
+          friendshipResponse.append(contactName).append(" has upended your friendship.");
         } else if (requestData.getDesiredState() && responseDTO.getDecision()) {
-          friendshipResponse.append("Sie sind jetzt mit ").append(contactName)
-              .append(" befreundet");
+          friendshipResponse.append("You are now friends with ").append(contactName);
         }
       } else {
         friendshipResponse = null;

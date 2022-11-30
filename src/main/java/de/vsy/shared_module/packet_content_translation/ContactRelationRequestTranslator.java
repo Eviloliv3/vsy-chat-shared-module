@@ -22,10 +22,9 @@ public class ContactRelationRequestTranslator {
         var contactName = contactData.getDisplayLabel();
 
         if (requestDTO.getDesiredState()) {
-          friendshipRequest.append(contactName).append(" möchte mit Ihnen befreundet sein.");
+          friendshipRequest.append(contactName).append(" wants to be your friend.");
         } else {
-          friendshipRequest.append("Sie sind nicht mehr mit ").append(contactName)
-              .append(" befreundet");
+          friendshipRequest.append(contactName).append(" has upended your friendship.");
         }
       } else {
         friendshipRequest = null;

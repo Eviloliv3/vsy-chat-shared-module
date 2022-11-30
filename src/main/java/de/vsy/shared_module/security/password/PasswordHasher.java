@@ -4,8 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Berechnet Hashwerte aus Passwörtern und versalzt bestehende Hashwerte. Es werden
- * Standardcharsets.UTF_8 kodierte Zeichen vorausgesetzt.
+ * Calculates hash values from char arrays and provides methods to salt those hash values.
+ * Input will be treated as UTF_8 coded chars. Standard hash algorithm is SHA-1, but can be adjusted.
  */
 public class PasswordHasher {
 
@@ -20,12 +20,12 @@ public class PasswordHasher {
   }
 
   /**
-   * Berechnet einen Hashwert für das ubergebene Passwort, mittels der intern vorgegebenen
-   * Hashfunktion. Der Hashwert wird in Hexadezimaldarstellung als String ausgegeben.
+   * Calculates a hex String hash value for the specified char array, using the standard hash
+   * algorithm SHA-1.
    *
-   * @param passwordChars das zu hashende Passwort (char [])
-   * @return der Hashwert (String)
-   * @throws NullPointerException wenn kein Passwort Charakterarray übergeben wurde
+   * @param passwordChars char[]
+   * @return String
+   * @throws NullPointerException if char array is empty or null
    */
   public static String calculateHash(char[] passwordChars) {
 
@@ -36,12 +36,11 @@ public class PasswordHasher {
   }
 
   /**
-   * Hilfsfunktion! Berechnet den Hashwert für die aktuell im this.passwordDigester eingetragenen
-   * Werte. Dann wird das erhaltenen Bytearray in einen vorzeichenbehafteten BigInteger-Wert
-   * umgewandelt. Abschließend wird der Wert zur Basis 16 als String erstellt und, nach der
-   * Umwandlung aller Buchstaben zu Grossbuchstaben, ausgegeben.
+   * Helper function calculates the hash value for all currently existing values in MessageDigest.
+   * The returned byte array values are then converted to hex values by twos. The resulting hex
+   * char values are concatenated by a StringBuilder and then returned as a single String.
    *
-   * @return der Hashwert in Hexadezimaldarstellung
+   * @return String
    */
   private static String getHexString(MessageDigest digester) {
     StringBuilder packetHash = new StringBuilder();
@@ -57,13 +56,12 @@ public class PasswordHasher {
   }
 
   /**
-   * Berechnet einen Hashwert für das ubergebene Passwort, mittels des uebergebenen
-   * Hashwertberechners. Der Hashwert wird in Hexadezimaldarstellung als String ausgegeben.
+   * Calculates a hex String hash value for the specified char array, using the specified algorithm.
    *
-   * @param passwordChars das zu hashende Passwort (char [])
-   * @param digester      der Hashwertberechner
-   * @return der Hashwert (String)
-   * @throws NullPointerException wenn kein Passwort Charakterarray übergeben wurde
+   * @param passwordChars char[]
+   * @param digester      MessageDigest
+   * @return String
+   * @throws NullPointerException if one of the arguments is null
    */
   public static String calculateHash(char[] passwordChars, MessageDigest digester) {
 
@@ -74,14 +72,14 @@ public class PasswordHasher {
   }
 
   /**
-   * Berechnet einen Hashwert aus dem ubergebene Passworthashwert und einem übergebenen Salz,
-   * mittels der intern vorgegebenen Hashfunktion. Der Hashwert wird in Hexadezimaldarstellung als
-   * String ausgegeben.
+   * Calculates a salted hex String hash value for the specified char array and salt, using the
+   * specified algorithm.
    *
-   * @param hashedPassword das gehashte Passwort (byte [])
-   * @param salt           das einzurechnende Salz (byte [])
-   * @return der Hashwert (String)
-   * @throws NullPointerException wenn kein Passwort oder Salz übergeben wurde
+   * @param hashedPassword byte[]
+   * @param salt          byte []
+   * @param digester      MessageDigest
+   * @return String
+   * @throws NullPointerException if one of the arguments is null
    */
   public String calculateSaltedHash(byte[] hashedPassword, byte[] salt, MessageDigest digester) {
     digester.update(hashedPassword);

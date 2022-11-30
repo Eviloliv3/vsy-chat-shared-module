@@ -7,7 +7,7 @@ import de.vsy.shared_transmission.packet.content.authentication.LogoutResponseDT
 
 public class LogoutResponseValidator extends BasePacketContentValidator<LogoutResponseDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Logout-Antwort. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid logout response. ";
 
   public LogoutResponseValidator() {
     super(STANDARD_VALIDATION_MESSAGE);

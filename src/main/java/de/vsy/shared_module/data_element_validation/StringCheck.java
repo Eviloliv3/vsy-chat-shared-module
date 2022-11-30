@@ -7,7 +7,7 @@ import de.vsy.shared_utility.string_manipulation.StringShortener;
 import java.util.Optional;
 
 /**
- * Simple tool: checks String for null-value or length less than 4 charachters.
+ * Simple tool: checks String for null-value or length less than 4 characters.
  */
 public class StringCheck {
 
@@ -41,7 +41,7 @@ public class StringCheck {
       }
       if (illegalChars.length() > 2) {
         StringShortener.cutTrailingChars(illegalChars, 2);
-        deadInfo.append("Enthaelt ungültige(s) Zeichen: ").append(illegalChars);
+        deadInfo.append("Contains invalid characters: ").append(illegalChars);
         return Optional.of(deadInfo.toString());
       }
     }

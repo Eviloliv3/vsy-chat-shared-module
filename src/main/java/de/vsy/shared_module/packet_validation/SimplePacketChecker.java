@@ -63,11 +63,10 @@ public class SimplePacketChecker implements PacketCheck {
   public Optional<String> checkPacketContent(final PacketContent toCheck) {
 
     if (toCheck == null) {
-      return Optional.of("Paketdaten sind nicht vorhanden.");
+      return Optional.of("No PacketContent specified.");
     } else {
-      // TODO hier sollte Semantik von Paketinhalten geprüft werden
-      // Beispiel: Nachricht vom Klienten darf nicht als "Empfangen"
-      // gekennzeichnet sein
+      //TODO PacketContents semantics should be checked here
+      // e.g.: Messages sent by the connected client cannot have the reception state set.
       return Optional.empty();
     }
   }
@@ -88,7 +87,7 @@ public class SimplePacketChecker implements PacketCheck {
         response = checkEntities(entities);
       }
     } else {
-      response = Optional.of("Keine Paketeigenschaften gefunden.");
+      response = Optional.of("No PacketProperties specified.");
     }
     return response;
   }
@@ -111,8 +110,7 @@ public class SimplePacketChecker implements PacketCheck {
 
       if (!this.validityCheckProvider.contentMatchesIdentifier(identifier, toCheck)) {
         return Optional
-            .of(response.append(
-                    "Paketinhalt passt nicht zum angegebenen " + "Paketidentifizierer:\n")
+            .of(response.append("PacketContent does not match ContentIdentifier:\n")
                 .append(identifier).append(toCheck).toString());
       }
     } else {
@@ -130,7 +128,7 @@ public class SimplePacketChecker implements PacketCheck {
   private Optional<String> checkTimeStamp(final Instant timeStamp) {
 
     if (timeStamp.isAfter(Instant.now())) {
-      return Optional.of("Erstellungszeitpunkt des Pakets ungültig (nach dieser Prüfung)");
+      return Optional.of("PacketCreationTimestamp is invalid");
     }
     return Optional.empty();
   }
@@ -148,13 +146,13 @@ public class SimplePacketChecker implements PacketCheck {
 
       if (!this.validityCheckProvider.typeMatchesCategory(identifier)) {
         return Optional.of(
-            response.append("Ungültige Kombination von Paketkategorie (")
+            response.append("Invalid combination of PacketCategory (")
                 .append(identifier.getPacketType())
-                .append(") Pakettyp (").append(identifier.getPacketCategory()).append(").")
+                .append(") PacketType (").append(identifier.getPacketCategory()).append(").")
                 .toString());
       }
     } else {
-      return Optional.of(response.append(" Kein Paketidentifizierer vorhanden.").toString());
+      return Optional.of(response.append(" No ContentIdentifier specified.").toString());
     }
     return Optional.empty();
   }
@@ -178,7 +176,7 @@ public class SimplePacketChecker implements PacketCheck {
           return response;
         }
       } else {
-        return Optional.of("Ungültiger Kommunikationspartner: null");
+        return Optional.of("No CommunicationEndpoint specified.");
       }
     }
     return Optional.empty();
@@ -189,7 +187,7 @@ public class SimplePacketChecker implements PacketCheck {
 
     if (entity.getEntity().equals(EligibleCommunicationEntity.CLIENT) && checkData(
         entityId).isPresent()) {
-      return Optional.of("Ungültige Id verwendet (" + entityId + ").");
+      return Optional.of("Invalid id :" + entityId + ".");
     }
     return Optional.empty();
   }

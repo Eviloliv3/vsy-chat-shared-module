@@ -55,9 +55,9 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
   }
 
   /**
-   * Gibt an, ob die Queue leer ist.
+   * Checks whether the PacketBuffer is empty.
    *
-   * @return true, if is empty
+   * @return true, if empty; false otherwise
    */
   public boolean containsPackets() {
     return !this.buffer.isEmpty();

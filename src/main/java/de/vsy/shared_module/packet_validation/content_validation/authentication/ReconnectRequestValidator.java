@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ReconnectRequestValidator extends BasePacketContentValidator<ReconnectRequestDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Reconnect-Anfrage. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid reconnect request. ";
 
   public ReconnectRequestValidator() {
     super(STANDARD_VALIDATION_MESSAGE);

@@ -4,7 +4,7 @@
 package de.vsy.shared_module.packet_management;
 
 /**
- * Labels used to create constistently manageable PacketBuffers.
+ * Labels used to create consistently manageable PacketBuffers.
  */
 public enum ThreadPacketBufferLabel {
   /**

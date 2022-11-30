@@ -8,20 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Uebernimmt die Verarbeitung von PacketProcessingExceptions.
+ * Processes PacketHandlingExceptions.
  */
 public class PacketHandlingExceptionProcessor {
 
-  /**
-   * The LOGGER.
-   */
   private static final Logger LOGGER = LogManager.getLogger();
   private final PacketAnswerabilityCheck answerableCheck;
   private final ErrorResponseCreator responseCreator;
 
-  /**
-   * Instantiates a new PacketHandling exception handler.
-   */
   public PacketHandlingExceptionProcessor(final PacketAnswerabilityCheck answerableCheck,
       ErrorResponseCreator responseCreator) {
     this.answerableCheck = answerableCheck;
@@ -29,11 +23,11 @@ public class PacketHandlingExceptionProcessor {
   }
 
   /**
-   * Erstellt ein Fehlerpaket oder einen Log-Eintrag aus den angegebenen Parametern.
+   * Creates an error Packet or log entry from the specified data.
    *
-   * @param phe            PacketProcessingException, die Fehlermeldung und -ursache enthaelt
-   * @param affectedPacket Paket, bei dessen Verarbeitung der Fehler auftrat
-   * @return Ein Fehler-Paket vom Typ Packet wenn das Paket erstellt werden konnte; sonst null
+   * @param phe            PacketProcessingException
+   * @param affectedPacket Packet
+   * @return Packet if ErrorDTO could be created; null otherwise
    */
   public Packet processException(final PacketHandlingException phe, final Packet affectedPacket) {
     Packet errorResponse = null;
@@ -48,15 +42,13 @@ public class PacketHandlingExceptionProcessor {
   }
 
   /**
-   * Erstellt einen einheitlichen Log-Eintrag für Fehler, die nicht an einen Client gemeldet werden
-   * können.
+   * Creates uniform log entries for exceptions, that cannot or should not be reported to clients.
    *
-   * @param phe            Die Exception, die während der ursprünglichen Paketverarbeitung geworfen
-   *                       wurde.
-   * @param affectedPacket the affected packet
-   * @return Log-Eintrag zu der übergebenen Exception.
+   * @param phe            PacketHandlingException
+   * @param affectedPacket Packet
+   * @return Loggable String message
    */
   private String createErrorLog(final PacketHandlingException phe, final Packet affectedPacket) {
-    return "Meldung: " + phe.getMessage() + "\n-> Paket wird verworfen:\n" + affectedPacket;
+    return "Exception: " + phe.getMessage() + "\n-> Packet will be discarded:\n" + affectedPacket;
   }
 }

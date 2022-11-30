@@ -26,7 +26,7 @@ public class CachedPacket {
     if (toCache == null || cachingCycleMillis <= 0) {
       var errorMessage = "";
       errorMessage +=
-          "Ungültiger Parameter! Packet: " + toCache + "/Caching Cycle:" + cachingCycleMillis;
+          "Invalid argument: Packet - " + toCache + " / Caching Cycle - " + cachingCycleMillis;
       throw new IllegalArgumentException(errorMessage);
     }
     this.cache = toCache;
@@ -36,9 +36,9 @@ public class CachedPacket {
   }
 
   /**
-   * Gets the cached Packethash.
+   * Gets the cached Packet hash.
    *
-   * @return the cached Packethash
+   * @return the cached Packet hash
    */
   public String getCachedPacketHash() {
     return this.cache.getPacketHash();

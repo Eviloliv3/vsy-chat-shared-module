@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ErrorContentValidator extends BasePacketContentValidator<ErrorDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Fehlernachricht. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid error content. ";
 
   public ErrorContentValidator() {
     super(STANDARD_VALIDATION_MESSAGE);

@@ -37,7 +37,7 @@ public class MapCheck {
       checkString.ifPresent(deadInfo::append);
       checkString = SetCheck.checkMessageDataSet(contactMessages.getValue());
 
-      checkString.ifPresent(s -> deadInfo.append("\nFehlerhafte Nachrichtendaten: ").append(s));
+      checkString.ifPresent(s -> deadInfo.append("\nErroneous messages: ").append(s));
     }
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }
@@ -48,7 +48,7 @@ public class MapCheck {
 
     for (var contactEntrySet : mapToCheck.entrySet()) {
       if (contactEntrySet.getKey() == null) {
-        deadInfo.append("\nKontaktliste enthaelt ungültigen Schluessel (null).");
+        deadInfo.append("\nContact list contains invalid null-value.");
       } else {
         for (var currentContact : contactEntrySet.getValue()) {
           final var checkString = BeanChecker.checkBean(currentContact);

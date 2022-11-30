@@ -6,22 +6,20 @@ package de.vsy.shared_module.packet_management;
 import de.vsy.shared_transmission.packet.Packet;
 
 /**
- * Bietet die Moeglichkeiten ein Paket einem Puffer anzuhaengen oder voranzustellen.
+ * Allows for the appending or prepending of a unique Packet.
  */
 public interface OutputBuffer {
 
   /**
-   * Haengt das Paket dem Puffer hinzu, sofern das Paket nicht null oder bereits gepuffert ist.
+   * Appends the specified packet, if it is not null and not already present.
    *
-   * @param output das zu puffernde Paket
+   * @param output Packet
    */
   void appendPacket(Packet output);
 
   /**
-   * Stellt das uebergebene Paket dem Puffer voran, sofern das Paket nicht null oder bereits
-   * gepuffert ist.
-   *
-   * @param output das zu puffernde Paket
+   * Prepends the specified Packet, if it is not null and not already present.
+   * @param output Packet
    */
   void prependPacket(Packet output);
 }

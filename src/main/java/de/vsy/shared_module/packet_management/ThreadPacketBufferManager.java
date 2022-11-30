@@ -7,28 +7,21 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * PacketBuffer Manager using ThreadPacketBufferLabel as Key. /** Verwaltet bis zu drei threadeigene
- * PacketBuffer.
+ * Manages PacketBuffers using  ThreadPacketBufferLabel as Key.
  */
 public class ThreadPacketBufferManager {
 
-  /**
-   * The buffer map.
-   */
   private final Map<ThreadPacketBufferLabel, PacketBuffer> bufferMap;
 
-  /**
-   * Instantiates a new thread PacketBuffer manager.
-   */
   public ThreadPacketBufferManager() {
     this.bufferMap = new EnumMap<>(ThreadPacketBufferLabel.class);
   }
 
   /**
-   * Entfernt den, unter dem Label hinterlegten, PacketBuffer.
+   * Removes and returns the PacketBuffer identified by the specified bufferLabel.
    *
-   * @param bufferLabel the buffer label
-   * @return the PacketBuffer
+   * @param bufferLabel ThreadPacketBufferLabel
+   * @return PacketBuffer
    */
   public PacketBuffer deregisterPacketBuffer(final ThreadPacketBufferLabel bufferLabel) {
     return this.bufferMap.remove(bufferLabel);
@@ -37,29 +30,27 @@ public class ThreadPacketBufferManager {
   /**
    * Gets the PacketBuffer.
    *
-   * @param bufferLabel the buffer label
-   * @return the PacketBuffer
+   * @param bufferLabel ThreadPacketBufferLabel
+   * @return PacketBuffer
    */
   public PacketBuffer getPacketBuffer(final ThreadPacketBufferLabel bufferLabel) {
     return this.bufferMap.get(bufferLabel);
   }
 
   /**
-   * Erstellt einen neuen PacketBuffer und fügt diesen der, nicht leeren, Map hinzu; sofern kein
-   * PacketBuffer hinterlegt ist.
-   *
-   * @param bufferLabel the buffer label
+   * Registers a new PacketBuffer for the specified bufferLabel, if no PacketBuffer exists.
+   * @param bufferLabel ThreadPacketBufferLabel
    */
   public void registerPacketBuffer(final ThreadPacketBufferLabel bufferLabel) {
     this.bufferMap.putIfAbsent(bufferLabel, new PacketBuffer());
   }
 
   /**
-   * Ersetzt einen bestehenden PacketBuffer durch den übergebenen neuen.
+   * Sets the PacketBuffer for the specified bufferLabel.
    *
-   * @param bufferLabel the buffer label
-   * @param buffer      the buffer
-   * @return the old PacketBuffer
+   * @param bufferLabel ThreadPacketBufferLabel
+   * @param buffer      PacketBuffer
+   * @return PacketBuffer if old PacketBuffer existed; null otherwise
    */
   public PacketBuffer setPacketBuffer(final ThreadPacketBufferLabel bufferLabel,
       final PacketBuffer buffer) {

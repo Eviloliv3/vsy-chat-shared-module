@@ -7,7 +7,7 @@ import de.vsy.shared_transmission.packet.content.status.MessengerTearDownDTO;
 
 public class MessengerTearDownValidator extends BasePacketContentValidator<MessengerTearDownDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Messenger-Abbruchsantwort. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid messenger tear down object. ";
 
   public MessengerTearDownValidator() {
     super(STANDARD_VALIDATION_MESSAGE);

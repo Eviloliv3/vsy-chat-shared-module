@@ -10,7 +10,7 @@ public class PacketSyntaxCheckLink extends AbstractPacketProcessorLink {
   private static final String SYNTAX_ERROR_STRING;
 
   static {
-    SYNTAX_ERROR_STRING = "Paket aufgrund eines Syntaxfehlers nicht bearbeitet.";
+    SYNTAX_ERROR_STRING = "Packet was not processed, because of a syntax error.";
   }
 
   private final PacketCheck packetValidator;

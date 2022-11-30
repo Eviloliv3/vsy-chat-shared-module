@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public final class TextMessageValidator extends BasePacketContentValidator<TextMessageDTO> {
 
   private static final String STANDARD_ERROR_MESSAGE =
-      "Textnachricht wurde " + "nicht verarbeitet. ";
+      "Text message was not processed. ";
 
   public TextMessageValidator() {
     super(STANDARD_ERROR_MESSAGE);

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MessengerSetupValidator extends BasePacketContentValidator<MessengerSetupDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültiges Messenger-Einrichtungs-Anfrage. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid messenger setup object. ";
 
   public MessengerSetupValidator() {
     super(STANDARD_VALIDATION_MESSAGE);

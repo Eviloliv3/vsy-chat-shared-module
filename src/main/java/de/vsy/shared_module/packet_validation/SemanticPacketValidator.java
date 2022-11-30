@@ -17,9 +17,6 @@ public class SemanticPacketValidator implements SemanticPacketValidationProvider
 
   private final Map<PacketCategory, Map<PacketType, Set<Class<? extends PacketContent>>>> contentTypeValidator;
 
-  /**
-   * Instantiates a new Packetidentification validator.
-   */
   public SemanticPacketValidator() {
     this.contentTypeValidator = new EnumMap<>(PacketCategory.class);
   }
@@ -34,8 +31,7 @@ public class SemanticPacketValidator implements SemanticPacketValidationProvider
       Map<PacketType, Set<Class<? extends PacketContent>>> associationsToAdd) {
     if (category == null || associationsToAdd == null) {
       throw new IllegalArgumentException(
-          "Parameter fehlen angegeben: " + "Kategorie (" + category + ") "
-              + "oder Assoziationen (" + associationsToAdd + ")");
+          "Argument null: category - " + category + "; associations - " + associationsToAdd);
     }
     var existingAssociations = this.contentTypeValidator.computeIfAbsent(category,
         cat -> new HashMap<>());

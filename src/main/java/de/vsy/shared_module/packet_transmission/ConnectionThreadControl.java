@@ -13,8 +13,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Manages Setup and destruction of a single reading thread operating on an objectinputstream and a
- * single writing thread operating on an objectoutputstream. Packetare read from and written to
+ * Manages Setup and destruction of a single reading thread operating on an ObjectInputStream and a
+ * single writing thread operating on an ObjectOutputStream. Packets are read from and written to
  * PacketBuffers, to be provided.
  */
 public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
@@ -23,13 +23,11 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
   private final ThreadPacketBufferManager bufferManager;
   private final Socket connectionSocket;
   private final ThreadStatusManipulator connectionSocketManipulator;
-  /**
-   * Signalisiert, ob der aktuelle Thread die Führungsrolle bei einer Socketverbindung einnimmt.
-   */
+  /** Signals leader role on socket connection, resulting in inverted setup of read and write threads */
   private final boolean leaderRole;
   private final UnconfirmedPacketTransmissionCache packetCache;
   private final List<Thread> connectionSocketThreads;
-  private Timer cachedPacketResender;
+  private Timer cachedPacketResentTimer;
 
   /**
    * Instantiates a new this.connectionSocket control.
@@ -80,7 +78,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
   public void closeConnection() {
     LOGGER.info("Client connection termination initiated.");
     this.connectionSocketManipulator.terminateThreads();
-    this.cachedPacketResender.cancel();
+    this.cachedPacketResentTimer.cancel();
 
     try {
       this.connectionSocket.close();
@@ -180,11 +178,11 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
   }
 
   private void setupPacketResendTimer() {
-    final var resenderTask = new CachedPacketResendTimer(this.packetCache,
+    final var resendTask = new CachedPacketResendTimer(this.packetCache,
         this.connectionSocketManipulator,
         this.bufferManager.getPacketBuffer(ThreadPacketBufferLabel.OUTSIDE_BOUND));
-    this.cachedPacketResender = new Timer("ResendUnansweredPackets");
-    this.cachedPacketResender.scheduleAtFixedRate(resenderTask, 100, 500);
+    this.cachedPacketResentTimer = new Timer("ResendUnansweredPackets");
+    this.cachedPacketResentTimer.scheduleAtFixedRate(resendTask, 100, 500);
   }
 
   public UnconfirmedPacketTransmissionCache getPacketCache() {

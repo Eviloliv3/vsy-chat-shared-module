@@ -1,7 +1,6 @@
 package de.vsy.shared_module.collection_content_validation;
 
 import de.vsy.shared_module.data_element_validation.BeanChecker;
-import de.vsy.shared_module.packet_validation.content_validation.chat.TextMessageValidator;
 import de.vsy.shared_transmission.packet.content.chat.TextMessageDTO;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +24,10 @@ public class SetCheck {
       for (var currentMessage : listData) {
         final var checkString = BeanChecker.checkBean(currentMessage);
 
-        if (checkString.isPresent()) {
-          deadInfo.append("\nFehlerhafte Nachricht: ").append(checkString.get());
-        }
+        checkString.ifPresent(s ->deadInfo.append("\nErroneous message: ").append(s).append(". "));
       }
     } else {
-      deadInfo.append("Nachrichtenliste nicht vorhanden.");
+      deadInfo.append("No messages specified.");
     }
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }

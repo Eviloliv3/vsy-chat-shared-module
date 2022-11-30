@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class ContactRelationRequestValidator extends
     BasePacketContentValidator<ContactRelationRequestDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Ungültige Kontaktanfrage. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid friendship request. ";
 
   public ContactRelationRequestValidator() {
     super(STANDARD_VALIDATION_MESSAGE);
@@ -33,7 +33,7 @@ public class ContactRelationRequestValidator extends
     checkString.ifPresent(errorStrings::add);
 
     if (contactType == null) {
-      errorStrings.add("Kein Empfängertyp angegeben. ");
+      errorStrings.add("No contact type specified. ");
     }
     checkString = checkData(recipientId);
 
