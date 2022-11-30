@@ -103,7 +103,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
   }
 
   /**
-   * Gets the keep alive state.
+   * Returns the keep alive state.
    *
    * @return the keep alive state
    */

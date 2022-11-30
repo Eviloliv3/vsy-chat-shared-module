@@ -8,7 +8,7 @@ import de.vsy.shared_utility.logging.ThreadContextTimerTask;
 /**
  * The Class CachePacketResendTimer.
  *
- * @author Frederic Heath
+ *
  */
 public class CachedPacketResendTimer extends ThreadContextTimerTask {
 

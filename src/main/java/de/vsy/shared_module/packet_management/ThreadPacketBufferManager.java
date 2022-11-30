@@ -28,7 +28,7 @@ public class ThreadPacketBufferManager {
   }
 
   /**
-   * Gets the PacketBuffer.
+   * Returns the PacketBuffer.
    *
    * @param bufferLabel ThreadPacketBufferLabel
    * @return PacketBuffer

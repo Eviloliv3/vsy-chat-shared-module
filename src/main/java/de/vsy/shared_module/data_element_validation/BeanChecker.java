@@ -51,9 +51,9 @@ public class BeanChecker {
     var deadInfo = new StringBuilder();
 
     if (authenticationData != null) {
-      checkResult= StringCheck.checkString(authenticationData.getLogin());
+      checkResult= StringCheck.checkString(authenticationData.getUsername());
 
-      checkResult.ifPresent(s -> deadInfo.append("Invalid login name: ").append(s).append(". "));
+      checkResult.ifPresent(s -> deadInfo.append("Invalid username: ").append(s).append(". "));
       checkResult= StringCheck.checkString(authenticationData.getPassword());
 
       checkResult.ifPresent(s -> deadInfo.append("Invalid password: ").append(s).append(". "));
