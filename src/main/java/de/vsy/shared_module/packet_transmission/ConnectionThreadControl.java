@@ -98,7 +98,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
       } catch (InterruptedException e) {
         LOGGER.error("{}:{} shutdown failed.", connThread.getName(), connThread.getId(), e);
       }
-      LOGGER.error("{}:{} shutdown successfully.", connThread.getName(), connThread.getId());
+      LOGGER.info("{}:{} shutdown successfully.", connThread.getName(), connThread.getId());
     }
     this.connectionSocketThreads.clear();
     LOGGER.info("Client connection terminated.");
