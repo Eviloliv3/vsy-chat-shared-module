@@ -20,8 +20,8 @@ public class LoginRequestValidator extends BasePacketContentValidator<LoginReque
       throws PacketValidationException {
     final var loginContent = super.castContent(LoginRequestDTO.class, inputContent);
     final var errorStrings = new ArrayList<String>();
-    final var loginData = loginContent.getAuthenticationData();
-    var checkString = BeanChecker.checkBean(loginData);
+    final var authenticationData = loginContent.getAuthenticationData();
+    var checkString = BeanChecker.checkBean(authenticationData);
 
     checkString.ifPresent(errorStrings::add);
 
