@@ -29,14 +29,14 @@ public class StringCheck {
     final var deadInfo = new StringBuilder();
 
     if (toCheck == null || toCheck.isEmpty()) {
-      return Optional.of("null oder leer");
+      return Optional.of("null or empty");
     } else {
       final var illegalChars = new StringBuilder();
 
       for (var badCharacter : META_CHARS) {
 
         if (toCheck.contains(badCharacter)) {
-          deadInfo.append(badCharacter).append(", ");
+          illegalChars.append(badCharacter).append(", ");
         }
       }
       if (illegalChars.length() > 2) {

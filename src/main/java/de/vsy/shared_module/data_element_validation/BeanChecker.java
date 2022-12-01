@@ -69,10 +69,10 @@ public class BeanChecker {
     var deadInfo = new StringBuilder();
 
     if (personalData != null) {
-      checkResult= StringCheck.checkString(personalData.getForename());
+      checkResult = StringCheck.checkString(personalData.getFirstName());
       checkResult.ifPresent(s -> deadInfo.append("Invalid first name: ").append(s).append(". "));
 
-      checkResult= StringCheck.checkString(personalData.getSurname());
+      checkResult = StringCheck.checkString(personalData.getLastName());
       checkResult.ifPresent(s-> deadInfo.append("Invalid last name: ").append(s).append(". "));
     } else {
       return Optional.of("No client data specified.");
