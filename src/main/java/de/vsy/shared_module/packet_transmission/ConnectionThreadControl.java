@@ -23,7 +23,10 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
   private final ThreadPacketBufferManager bufferManager;
   private final Socket connectionSocket;
   private final ThreadStatusManipulator connectionSocketManipulator;
-  /** Signals leader role on socket connection, resulting in inverted setup of read and write threads */
+  /**
+   * Signals leader role on socket connection, resulting in inverted setup of read and write
+   * threads
+   */
   private final boolean leaderRole;
   private final UnconfirmedPacketTransmissionCache packetCache;
   private final List<Thread> connectionSocketThreads;

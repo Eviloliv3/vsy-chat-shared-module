@@ -16,10 +16,12 @@ public abstract class BasicClientPacketDispatcher implements MultiplePacketDispa
 
   /**
    * Instantiates a new ClientPacketDispatcher.
+   *
    * @param clientBoundBuffer the client bound buffer
    * @param serverBoundBuffer the server bound buffer
    */
-  public BasicClientPacketDispatcher(final PacketBuffer clientBoundBuffer, final PacketBuffer serverBoundBuffer) {
+  public BasicClientPacketDispatcher(final PacketBuffer clientBoundBuffer,
+      final PacketBuffer serverBoundBuffer) {
     this.clientBoundBuffer = clientBoundBuffer;
     this.serverBoundBuffer = serverBoundBuffer;
   }

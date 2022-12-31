@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 /**
  * Cache works based on CachedPackets and is intended to store Packet while no reception is sent by
- * another thread/process or application. 
+ * another thread/process or application.
  */
 public class UnconfirmedPacketTransmissionCache {
 

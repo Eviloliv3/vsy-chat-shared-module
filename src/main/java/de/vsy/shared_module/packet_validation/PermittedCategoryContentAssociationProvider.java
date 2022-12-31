@@ -4,11 +4,11 @@ package de.vsy.shared_module.packet_validation;
 import static java.util.Set.of;
 
 import de.vsy.shared_transmission.packet.content.PacketContent;
+import de.vsy.shared_transmission.packet.content.authentication.AccountCreationRequestDTO;
 import de.vsy.shared_transmission.packet.content.authentication.LoginRequestDTO;
 import de.vsy.shared_transmission.packet.content.authentication.LoginResponseDTO;
 import de.vsy.shared_transmission.packet.content.authentication.LogoutRequestDTO;
 import de.vsy.shared_transmission.packet.content.authentication.LogoutResponseDTO;
-import de.vsy.shared_transmission.packet.content.authentication.NewAccountRequestDTO;
 import de.vsy.shared_transmission.packet.content.authentication.ReconnectRequestDTO;
 import de.vsy.shared_transmission.packet.content.authentication.ReconnectResponseDTO;
 import de.vsy.shared_transmission.packet.content.chat.ChatPacketDTO;
@@ -33,28 +33,32 @@ import java.util.Map;
 import java.util.Set;
 
 public class PermittedCategoryContentAssociationProvider {
+
   protected static final Map<PacketCategory, Map<PacketType, Set<Class<? extends PacketContent>>>> ASSOCIATIONS;
 
-  static{
+  static {
     ASSOCIATIONS = new EnumMap<>(PacketCategory.class);
   }
 
-  private PermittedCategoryContentAssociationProvider(){}
+  private PermittedCategoryContentAssociationProvider() {
+  }
 
   public static Map<PacketCategory, Map<PacketType, Set<Class<? extends PacketContent>>>> getAssociations() {
-    Map<PacketCategory, Map<PacketType, Set<Class<? extends PacketContent>>>> fullAssociationMap = new EnumMap<>(PacketCategory.class);
+    Map<PacketCategory, Map<PacketType, Set<Class<? extends PacketContent>>>> fullAssociationMap = new EnumMap<>(
+        PacketCategory.class);
 
-    for(final var currentCategory : PacketCategory.values()){
+    for (final var currentCategory : PacketCategory.values()) {
       fullAssociationMap.put(currentCategory, getAssociations(currentCategory));
     }
     return fullAssociationMap;
   }
 
-  public static Map<PacketType, Set<Class<? extends PacketContent>>> getAssociations(final PacketCategory category){
+  public static Map<PacketType, Set<Class<? extends PacketContent>>> getAssociations(
+      final PacketCategory category) {
     var cachedAssociations = ASSOCIATIONS.get(category);
 
-    if(cachedAssociations == null && category != null){
-      cachedAssociations = switch(category){
+    if (cachedAssociations == null && category != null) {
+      cachedAssociations = switch (category) {
         case AUTHENTICATION -> setupAuthenticationValidation();
         case STATUS -> setupStatusValidation();
         case RELATION -> setupRelationValidation();
@@ -82,18 +86,22 @@ public class PermittedCategoryContentAssociationProvider {
   private static Map<PacketType, Set<Class<? extends PacketContent>>> setupStatusValidation() {
     Map<PacketType, Set<Class<? extends PacketContent>>> statusMapping = new HashMap<>();
     statusMapping.put(StatusType.CHAT_STATUS,
-        of(MessengerSetupDTO.class, MessengerTearDownDTO.class, ContactMessengerStatusDTO.class, ClientStatusChangeDTO.class));
+        of(MessengerSetupDTO.class, MessengerTearDownDTO.class, ContactMessengerStatusDTO.class,
+            ClientStatusChangeDTO.class));
     return statusMapping;
   }
 
   private static Map<PacketType, Set<Class<? extends PacketContent>>> setupAuthenticationValidation() {
     Map<PacketType, Set<Class<? extends PacketContent>>> authenticationMapping = new HashMap<>();
 
-    authenticationMapping.put(AuthenticationType.CLIENT_LOGIN, of(LoginRequestDTO.class, LoginResponseDTO.class));
+    authenticationMapping.put(AuthenticationType.CLIENT_LOGIN,
+        of(LoginRequestDTO.class, LoginResponseDTO.class));
     authenticationMapping.put(AuthenticationType.CLIENT_LOGOUT, of(LogoutRequestDTO.class,
         LogoutResponseDTO.class));
-    authenticationMapping.put(AuthenticationType.CLIENT_NEW_ACCOUNT, of(NewAccountRequestDTO.class));
-    authenticationMapping.put(AuthenticationType.CLIENT_RECONNECT, of(ReconnectRequestDTO.class, ReconnectResponseDTO.class));
+    authenticationMapping.put(AuthenticationType.CLIENT_NEW_ACCOUNT,
+        of(AccountCreationRequestDTO.class));
+    authenticationMapping.put(AuthenticationType.CLIENT_RECONNECT,
+        of(ReconnectRequestDTO.class, ReconnectResponseDTO.class));
 
     return authenticationMapping;
   }

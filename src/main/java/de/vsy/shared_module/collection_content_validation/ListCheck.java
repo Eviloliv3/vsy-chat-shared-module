@@ -4,11 +4,9 @@
 package de.vsy.shared_module.collection_content_validation;
 
 import de.vsy.shared_module.data_element_validation.BeanChecker;
-import de.vsy.shared_transmission.dto.CommunicatorDTO;
 import de.vsy.shared_transmission.packet.content.chat.TextMessageDTO;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Simple tool: List check.
@@ -19,34 +17,12 @@ public class ListCheck {
   }
 
   /**
-   * Check member list.
+   * Checks set of TextMessageDTO for invalid TextMessageDTO instances and creates an error String,
+   * indicating which elements contain invalid data.
    *
-   * @param listData the list dataManagement
-   * @return the string
-   */
-  public static Optional<String> checkMemberList(final Set<CommunicatorDTO> listData) {
-    var deadInfo = new StringBuilder();
-
-    if (listData != null) {
-
-      for (var currentCommunicator : listData) {
-        final var checkString = BeanChecker.checkBean(currentCommunicator);
-
-        checkString.ifPresent(
-            s -> deadInfo.append("; list position: ").append(currentCommunicator).append("/")
-                .append(s));
-      }
-    } else {
-      deadInfo.append("Contact list not specified.");
-    }
-    return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
-  }
-
-  /**
-   * Check message dataManagement list.
-   *
-   * @param listData the list dataManagement
-   * @return the string
+   * @param listData the list to check
+   * @return Optional containing error String if invalid elements were found; empty Optional
+   * otherwise
    */
   public static Optional<String> checkMessageDataList(final List<TextMessageDTO> listData) {
     var deadInfo = new StringBuilder();
@@ -63,6 +39,30 @@ public class ListCheck {
       }
     } else {
       deadInfo.append("No message list specified.");
+    }
+    return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
+  }
+
+  /**
+   * Checks set of CommunicatorDTO for invalid CommunicatorDTO instances and creates an error
+   * String, indicating which elements contain invalid data.
+   *
+   * @param listData the set to check
+   * @return Optional containing error String if invalid elements were found; empty Optional
+   * otherwise
+   */
+  public static Optional<String> checkMessageDataSet(final List<TextMessageDTO> listData) {
+    var deadInfo = new StringBuilder();
+
+    if (listData != null) {
+
+      for (var currentMessage : listData) {
+        final var checkString = BeanChecker.checkBean(currentMessage);
+
+        checkString.ifPresent(s -> deadInfo.append("\nErroneous message: ").append(s).append(". "));
+      }
+    } else {
+      deadInfo.append("No messages specified.");
     }
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }

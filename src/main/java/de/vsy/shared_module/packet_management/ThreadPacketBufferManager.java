@@ -39,6 +39,7 @@ public class ThreadPacketBufferManager {
 
   /**
    * Registers a new PacketBuffer for the specified bufferLabel, if no PacketBuffer exists.
+   *
    * @param bufferLabel ThreadPacketBufferLabel
    */
   public void registerPacketBuffer(final ThreadPacketBufferLabel bufferLabel) {

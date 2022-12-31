@@ -22,7 +22,8 @@ public class PacketCompiler {
     return PacketCompiler.originatorProvider;
   }
 
-  public static void addContentIdentificationProvider(ContentIdentificationProvider identificationProvider) {
+  public static void addContentIdentificationProvider(
+      ContentIdentificationProvider identificationProvider) {
     PacketCompiler.contentIdentificationProvider = identificationProvider;
   }
 
@@ -31,13 +32,13 @@ public class PacketCompiler {
    * determined by examining the specified request Packet. Best practice is to derive the
    * ContentIdentifier from the PacketContent.
    *
-   * @param data the PacketContent
+   * @param data    the PacketContent
    * @param request the request
    * @return Packet
-   * @throws NullPointerException   if one of the parameters is null, request argument has no
-   *                                 properties/sender entity/packet hash
-   * @throws IllegalStateException  if no OriginatingEntityProvider was set or no
-   *                                 ContentIdentificationProvider was set
+   * @throws NullPointerException  if one of the parameters is null, request argument has no
+   *                               properties/sender entity/packet hash
+   * @throws IllegalStateException if no OriginatingEntityProvider was set or no
+   *                               ContentIdentificationProvider was set
    */
   public static Packet createResponse(PacketContent data, Packet request) {
     var properties = request.getPacketProperties();
@@ -56,12 +57,13 @@ public class PacketCompiler {
    * @param requestPacketHash String
    * @return Packet
    * @throws IllegalStateException if no OriginatingEntityProvider was set or no
-   *                                ContentIdentificationProvider was set
+   *                               ContentIdentificationProvider was set
    */
   private static Packet compilePacket(CommunicationEndpoint sender, CommunicationEndpoint recipient,
       PacketContent data, String requestPacketHash) {
     var props = new PacketPropertiesBuilder().withSender(sender).withRecipient(recipient)
-        .withIdentifier(PacketCompiler.contentIdentificationProvider.getContentIdentifier(data)).build();
+        .withIdentifier(PacketCompiler.contentIdentificationProvider.getContentIdentifier(data))
+        .build();
     return new PacketBuilder().withContent(data).withProperties(props)
         .withRequestPacket(requestPacketHash).build();
   }
@@ -74,7 +76,7 @@ public class PacketCompiler {
    * @return Packet
    * @throws NullPointerException  if one of the arguments is null
    * @throws IllegalStateException if no OriginatingEntityProvider was set or no
-   *                                 ContentIdentificationProvider was set
+   *                               ContentIdentificationProvider was set
    */
   public static Packet createRequest(CommunicationEndpoint recipient, PacketContent data) {
     var sender = PacketCompiler.originatorProvider.getOriginatorEntity();
@@ -89,7 +91,7 @@ public class PacketCompiler {
    * @return Packet
    * @throws NullPointerException  if one of the arguments is null
    * @throws IllegalStateException if no OriginatingEntityProvider was set or no
-   *                                 ContentIdentificationProvider was set
+   *                               ContentIdentificationProvider was set
    */
   public static Packet createFollowUpRequest(CommunicationEndpoint recipient, PacketContent data,
       Packet request) {

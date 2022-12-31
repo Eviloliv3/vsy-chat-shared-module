@@ -4,10 +4,11 @@ import de.vsy.shared_module.data_element_validation.BeanChecker;
 import de.vsy.shared_module.packet_exception.PacketValidationException;
 import de.vsy.shared_module.packet_validation.content_validation.BasePacketContentValidator;
 import de.vsy.shared_transmission.packet.content.PacketContent;
-import de.vsy.shared_transmission.packet.content.authentication.NewAccountRequestDTO;
+import de.vsy.shared_transmission.packet.content.authentication.AccountCreationRequestDTO;
 import java.util.ArrayList;
 
-public class NewAccountRequestValidator extends BasePacketContentValidator<NewAccountRequestDTO> {
+public class NewAccountRequestValidator extends
+    BasePacketContentValidator<AccountCreationRequestDTO> {
 
   private static final String STANDARD_VALIDATION_MESSAGE = "Invalid account creation request. ";
 
@@ -16,9 +17,9 @@ public class NewAccountRequestValidator extends BasePacketContentValidator<NewAc
   }
 
   @Override
-  public NewAccountRequestDTO castAndValidateContent(PacketContent inputContent)
+  public AccountCreationRequestDTO castAndValidateContent(PacketContent inputContent)
       throws PacketValidationException {
-    final var newAccountContent = super.castContent(NewAccountRequestDTO.class, inputContent);
+    final var newAccountContent = super.castContent(AccountCreationRequestDTO.class, inputContent);
 
     final var errorStrings = new ArrayList<String>();
     var accountCreation = newAccountContent.getAccountCreationData();

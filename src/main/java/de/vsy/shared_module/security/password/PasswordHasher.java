@@ -4,8 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Calculates hash values from char arrays and provides methods to salt those hash values.
- * Input will be treated as UTF_8 coded chars. Standard hash algorithm is SHA-1, but can be adjusted.
+ * Calculates hash values from char arrays and provides methods to salt those hash values. Input
+ * will be treated as UTF_8 coded chars. Standard hash algorithm is SHA-1, but can be adjusted.
  */
 public class PasswordHasher {
 
@@ -37,8 +37,8 @@ public class PasswordHasher {
 
   /**
    * Helper function calculates the hash value for all currently existing values in MessageDigest.
-   * The returned byte array values are then converted to hex values by twos. The resulting hex
-   * char values are concatenated by a StringBuilder and then returned as a single String.
+   * The returned byte array values are then converted to hex values by twos. The resulting hex char
+   * values are concatenated by a StringBuilder and then returned as a single String.
    *
    * @return String
    */
@@ -56,7 +56,8 @@ public class PasswordHasher {
   }
 
   /**
-   * Calculates a hex String hash value for the specified char array, using the specified algorithm.
+   * Calculates a hex String hash value for the specified char array, using the specified
+   * algorithm.
    *
    * @param passwordChars char[]
    * @param digester      MessageDigest
@@ -76,8 +77,8 @@ public class PasswordHasher {
    * specified algorithm.
    *
    * @param hashedPassword byte[]
-   * @param salt          byte []
-   * @param digester      MessageDigest
+   * @param salt           byte []
+   * @param digester       MessageDigest
    * @return String
    * @throws NullPointerException if one of the arguments is null
    */

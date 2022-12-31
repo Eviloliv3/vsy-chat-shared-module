@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  * Wrapper for Packet, that provides a creation time, a cycle time and a cycle counter indicating
- * the time that has passed since the Wrapper creation. 
+ * the time that has passed since the Wrapper creation.
  */
 public class CachedPacket {
 

@@ -32,11 +32,11 @@ public class BeanChecker {
     var deadInfo = new StringBuilder();
 
     if (data != null) {
-      checkResult= checkData(data.getCommunicatorId());
+      checkResult = checkData(data.getCommunicatorId());
 
       checkResult.ifPresent(s -> deadInfo.append("Invalid communicator id").append(s).append(". "));
 
-      checkResult= StringCheck.checkString(data.getDisplayLabel());
+      checkResult = StringCheck.checkString(data.getDisplayLabel());
 
       checkResult.ifPresent(s -> deadInfo.append("Invalid display name: ").append(s).append(". "));
     } else {
@@ -51,10 +51,10 @@ public class BeanChecker {
     var deadInfo = new StringBuilder();
 
     if (authenticationData != null) {
-      checkResult= StringCheck.checkString(authenticationData.getUsername());
+      checkResult = StringCheck.checkString(authenticationData.getUsername());
 
       checkResult.ifPresent(s -> deadInfo.append("Invalid username: ").append(s).append(". "));
-      checkResult= StringCheck.checkString(authenticationData.getPassword());
+      checkResult = StringCheck.checkString(authenticationData.getPassword());
 
       checkResult.ifPresent(s -> deadInfo.append("Invalid password: ").append(s).append(". "));
     } else {
@@ -73,14 +73,15 @@ public class BeanChecker {
       checkResult.ifPresent(s -> deadInfo.append("Invalid first name: ").append(s).append(". "));
 
       checkResult = StringCheck.checkString(personalData.getLastName());
-      checkResult.ifPresent(s-> deadInfo.append("Invalid last name: ").append(s).append(". "));
+      checkResult.ifPresent(s -> deadInfo.append("Invalid last name: ").append(s).append(". "));
     } else {
       return Optional.of("No client data specified.");
     }
-    return deadInfo.length() > 0 ? Optional.of("Invalid personal data: " + deadInfo) : Optional.empty();
+    return deadInfo.length() > 0 ? Optional.of("Invalid personal data: " + deadInfo)
+        : Optional.empty();
   }
 
-  public static Optional<String> checkBean(final TextMessageDTO textMessage){
+  public static Optional<String> checkBean(final TextMessageDTO textMessage) {
     Optional<String> checkResult = checkBean((ChatPacketDTO) textMessage);
     final var deadInfo = new StringBuilder();
 
@@ -88,27 +89,29 @@ public class BeanChecker {
 
     checkResult = checkString(textMessage.getMessage());
     checkResult.ifPresent(s -> deadInfo.append("Invalid text message: ").append(s).append(". "));
-    return deadInfo.length() > 0 ? Optional.of("Invalid text message: " + deadInfo) : Optional.empty();
+    return deadInfo.length() > 0 ? Optional.of("Invalid text message: " + deadInfo)
+        : Optional.empty();
   }
 
-  private static Optional<String> checkBean(final ChatPacketDTO chatMessage){
+  private static Optional<String> checkBean(final ChatPacketDTO chatMessage) {
     Optional<String> checkResult;
     final var deadInfo = new StringBuilder();
 
-    if(chatMessage != null) {
-      checkResult= checkData(chatMessage.getOriginatorId());
+    if (chatMessage != null) {
+      checkResult = checkData(chatMessage.getOriginatorId());
       checkResult.ifPresent(s -> deadInfo.append("Invalid originator id: ").append(s).append(". "));
 
-      checkResult= checkData(chatMessage.getRecipientId());
+      checkResult = checkData(chatMessage.getRecipientId());
       checkResult.ifPresent(s -> deadInfo.append("Invalid recipient id: ").append(s).append(". "));
 
-      if(chatMessage.getContactType() == null){
+      if (chatMessage.getContactType() == null) {
         deadInfo.append("Missing contact type. ");
       }
-    }else{
+    } else {
       return Optional.of("No chat message specified.");
     }
-    return deadInfo.length() > 0 ? Optional.of("Invalid chat message: " + deadInfo) : Optional.empty();
+    return deadInfo.length() > 0 ? Optional.of("Invalid chat message: " + deadInfo)
+        : Optional.empty();
   }
 
   /**

@@ -1,7 +1,6 @@
 package de.vsy.shared_module.packet_management;
 
 import de.vsy.shared_transmission.packet.Packet;
-import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.LinkedBlockingDeque;
 import org.apache.logging.log4j.LogManager;

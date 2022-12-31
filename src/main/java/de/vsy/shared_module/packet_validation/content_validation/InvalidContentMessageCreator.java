@@ -12,6 +12,7 @@ public class InvalidContentMessageCreator {
   /**
    * Creates a String message signalling, which PacketContent type was received instead of the
    * expected type.
+   *
    * @param expectedType  the expected PacketContent type
    * @param actualContent the received PacketContent type
    * @return String

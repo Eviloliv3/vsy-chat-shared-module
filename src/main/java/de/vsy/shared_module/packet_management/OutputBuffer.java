@@ -19,6 +19,7 @@ public interface OutputBuffer {
 
   /**
    * Prepends the specified Packet, if it is not null and not already present.
+   *
    * @param output Packet
    */
   void prependPacket(Packet output);

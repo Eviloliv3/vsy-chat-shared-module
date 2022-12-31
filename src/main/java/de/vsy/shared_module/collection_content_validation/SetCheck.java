@@ -1,9 +1,9 @@
 package de.vsy.shared_module.collection_content_validation;
 
 import de.vsy.shared_module.data_element_validation.BeanChecker;
-import de.vsy.shared_transmission.packet.content.chat.TextMessageDTO;
-import java.util.List;
+import de.vsy.shared_transmission.dto.CommunicatorDTO;
 import java.util.Optional;
+import java.util.Set;
 
 public class SetCheck {
 
@@ -11,23 +11,27 @@ public class SetCheck {
   }
 
   /**
-   * Check message dataManagement list.
+   * Checks set of CommunicatorDTO for invalid CommunicatorDTO instances and creates an error
+   * String, indicating which elements contain invalid data.
    *
-   * @param listData the list dataManagement
-   * @return the string
+   * @param setData the set to check
+   * @return Optional containing error String if invalid elements were found; empty Optional
+   * otherwise
    */
-  public static Optional<String> checkMessageDataSet(final List<TextMessageDTO> listData) {
+  public static Optional<String> checkMemberList(final Set<CommunicatorDTO> setData) {
     var deadInfo = new StringBuilder();
 
-    if (listData != null) {
+    if (setData != null) {
 
-      for (var currentMessage : listData) {
-        final var checkString = BeanChecker.checkBean(currentMessage);
+      for (var currentCommunicator : setData) {
+        final var checkString = BeanChecker.checkBean(currentCommunicator);
 
-        checkString.ifPresent(s ->deadInfo.append("\nErroneous message: ").append(s).append(". "));
+        checkString.ifPresent(
+            s -> deadInfo.append("; element : ").append(currentCommunicator).append("/")
+                .append(s));
       }
     } else {
-      deadInfo.append("No messages specified.");
+      deadInfo.append("Contact list not specified.");
     }
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }

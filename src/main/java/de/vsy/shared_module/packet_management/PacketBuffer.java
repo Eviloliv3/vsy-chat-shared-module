@@ -4,6 +4,8 @@
 package de.vsy.shared_module.packet_management;
 
 import de.vsy.shared_transmission.packet.Packet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +24,7 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
     LOGGER = LogManager.getLogger();
   }
 
-  private final BlockingDeque<Packet> buffer;
+  private BlockingDeque<Packet> buffer;
 
   /**
    * Instantiates a new PacketBuffer.
@@ -33,25 +35,35 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
 
   @Override
   public void appendPacket(final Packet input) {
-    if (!this.buffer.contains(input)) {
-      this.buffer.addLast(input);
-    } else {
-      LOGGER.error("Packet empty or already buffered: {}", input);
-    }
+    this.buffer.addLast(input);
   }
 
   @Override
   public void prependPacket(final Packet input) {
-    if (!this.buffer.contains(input)) {
-      this.buffer.addFirst(input);
-    } else {
-      LOGGER.error("Packet empty or already buffered: {}", input);
-    }
+    this.buffer.addFirst(input);
   }
 
   @Override
   public Packet getPacket() throws InterruptedException {
     return this.buffer.poll(250, TimeUnit.MILLISECONDS);
+  }
+
+  /**
+   * Disclaimer: should not be used if multiple threads read from this buffer, because Packets may
+   * be read multiple times. Replaces current BlockingDeque with new one and returns remaining
+   * Packets from old queue in List.
+   *
+   * @return List containing remaining Packets
+   */
+  public List<Packet> freezeBuffer() {
+    BlockingDeque<Packet> currentBuffer = this.buffer;
+    this.buffer = new LinkedBlockingDeque<>();
+    List<Packet> currentBufferContent = new ArrayList<>(currentBuffer.size());
+
+    for (var currentPacket : this.buffer) {
+      currentBufferContent.add(currentPacket);
+    }
+    return currentBufferContent;
   }
 
   /**

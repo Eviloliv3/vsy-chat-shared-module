@@ -22,10 +22,13 @@ public class MapCheck {
   }
 
   /**
-   * Check dataManagement.
+   * Checks Map of Integer - TextMessageDTO for invalid entries. Entries can be invalid, if the
+   * Integer is no valid client id or the mapped TextMessageDTO list contains invalid
+   * TextMessageDTO. For each invalid entry and error String will be created.
    *
    * @param mapToCheck the map to check
-   * @return the string
+   * @return Optional containing error String if invalid entries were found; empty Optional
+   * otherwise
    */
   public static Optional<String> checkMessageHistory(
       final Map<Integer, List<TextMessageDTO>> mapToCheck) {
@@ -35,13 +38,22 @@ public class MapCheck {
       var checkString = IdCheck.checkData(contactMessages.getKey());
 
       checkString.ifPresent(deadInfo::append);
-      checkString = SetCheck.checkMessageDataSet(contactMessages.getValue());
+      checkString = ListCheck.checkMessageDataSet(contactMessages.getValue());
 
       checkString.ifPresent(s -> deadInfo.append("\nErroneous messages: ").append(s));
     }
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }
 
+  /**
+   * Checks Map of EligibleContactEntity - CommunicatorDTO for invalid entries. Entries can be
+   * invalid, if the EligibleContactEntity is no valid client id or the mapped CommunicatorDTO list
+   * contains invalid CommunicatorDTO. For each invalid entry and error String will be created.
+   *
+   * @param mapToCheck the map to check
+   * @return Optional containing error String if invalid entries were found; empty Optional
+   * otherwise
+   */
   public static Optional<String> checkActiveContacts(
       final Map<EligibleContactEntity, Set<CommunicatorDTO>> mapToCheck) {
     var deadInfo = new StringBuilder();
@@ -57,7 +69,6 @@ public class MapCheck {
         }
       }
     }
-
     return (deadInfo.length() > 0) ? Optional.of(deadInfo.toString()) : Optional.empty();
   }
 }

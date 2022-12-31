@@ -15,7 +15,8 @@ public class NonStaticPacketCompiler {
     this.originator = originator;
   }
 
-  public void addContentIdentificationProvider(ContentIdentificationProvider identificationProvider) {
+  public void addContentIdentificationProvider(
+      ContentIdentificationProvider identificationProvider) {
     this.contentIdentificationProvider = identificationProvider;
   }
 
@@ -24,13 +25,13 @@ public class NonStaticPacketCompiler {
    * determined by examining the specified request Packet. Best practice is to derive the
    * ContentIdentifier from the PacketContent.
    *
-   * @param data the PacketContent
+   * @param data    the PacketContent
    * @param request the request
    * @return Packet
-   * @throws NullPointerException   if one of the arguments is null or the request argument has no
-   *                                 properties/sender entity/packet hash
-   * @throws IllegalStateException  if no OriginatingEntityProvider was set or no
-   *                                 ContentIdentificationProvider was set
+   * @throws NullPointerException  if one of the arguments is null or the request argument has no
+   *                               properties/sender entity/packet hash
+   * @throws IllegalStateException if no OriginatingEntityProvider was set or no
+   *                               ContentIdentificationProvider was set
    */
   public Packet createResponse(PacketContent data, Packet request) {
     var properties = request.getPacketProperties();
@@ -48,7 +49,7 @@ public class NonStaticPacketCompiler {
    * @param requestPacketHash String
    * @return Packet
    * @throws IllegalStateException if no OriginatingEntityProvider was set or no
-   *                                ContentIdentificationProvider was set
+   *                               ContentIdentificationProvider was set
    */
   private Packet compilePacket(CommunicationEndpoint recipient, PacketContent data,
       String requestPacketHash) {
@@ -61,15 +62,14 @@ public class NonStaticPacketCompiler {
 
   /**
    * Creates a request Packet ready for dispatch, from the specified data. The originator will be
-   * set per instance.
-   * Best practice is to derive the ContentIdentifier from the PacketContent.
+   * set per instance. Best practice is to derive the ContentIdentifier from the PacketContent.
    *
    * @param recipient CommunicationEndpoint
    * @param data      PacketContent
    * @return Packet
    * @throws NullPointerException  if one of the arguments is null
    * @throws IllegalStateException if no OriginatingEntityProvider was set or no
-   *                                 ContentIdentificationProvider was set
+   *                               ContentIdentificationProvider was set
    */
   public Packet createRequest(CommunicationEndpoint recipient, PacketContent data) {
     return compilePacket(recipient, data, null);
@@ -85,7 +85,7 @@ public class NonStaticPacketCompiler {
    * @return Paket
    * @throws NullPointerException  if one of the parameters is null.
    * @throws IllegalStateException if no OriginatingEntityProvider was set or no
-   *                                ContentIdentificationProvider was set
+   *                               ContentIdentificationProvider was set
    */
   public Packet createCustomRecipientResponse(CommunicationEndpoint recipient, PacketContent data,
       Packet request) {
