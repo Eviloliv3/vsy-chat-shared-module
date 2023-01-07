@@ -4,15 +4,15 @@ import java.io.Serial;
 
 public class PacketProcessingException extends PacketHandlingException {
 
-  @Serial
-  private static final long serialVersionUID = -1383173866000208232L;
+    @Serial
+    private static final long serialVersionUID = -1383173866000208232L;
 
-  /**
-   * Instantiates a new PacketHandling exception.
-   *
-   * @param errorMessage the error message
-   */
-  public PacketProcessingException(String errorMessage) {
-    super(errorMessage);
-  }
+    /**
+     * Instantiates a new PacketHandling exception.
+     *
+     * @param errorMessage the error message
+     */
+    public PacketProcessingException(String errorMessage) {
+        super(errorMessage);
+    }
 }

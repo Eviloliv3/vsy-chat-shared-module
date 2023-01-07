@@ -5,5 +5,5 @@ import de.vsy.shared_transmission.packet.content.PacketContent;
 
 public interface ContentBasedProcessorFactory {
 
-  PacketProcessor createTypeProcessor(Class<? extends PacketContent> contentType);
+    PacketProcessor createTypeProcessor(Class<? extends PacketContent> contentType);
 }

@@ -5,5 +5,5 @@ import de.vsy.shared_transmission.packet.content.PacketContent;
 
 public interface PacketContentValidator<T extends PacketContent> {
 
-  T castAndValidateContent(PacketContent input) throws PacketValidationException;
+    T castAndValidateContent(PacketContent input) throws PacketValidationException;
 }

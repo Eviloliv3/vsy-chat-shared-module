@@ -8,20 +8,20 @@ import de.vsy.shared_transmission.packet.property.packet_identifier.ContentIdent
  */
 public interface SemanticPacketValidationProvider {
 
-  /**
-   * Content matches identifier.
-   *
-   * @param identifier the identifier
-   * @param content    the content
-   * @return true, if successful
-   */
-  boolean contentMatchesIdentifier(ContentIdentifier identifier, PacketContent content);
+    /**
+     * Content matches identifier.
+     *
+     * @param identifier the identifier
+     * @param content    the content
+     * @return true, if successful
+     */
+    boolean contentMatchesIdentifier(ContentIdentifier identifier, PacketContent content);
 
-  /**
-   * Type matches category.
-   *
-   * @param identifier the identifier
-   * @return true, if successful
-   */
-  boolean typeMatchesCategory(ContentIdentifier identifier);
+    /**
+     * Type matches category.
+     *
+     * @param identifier the identifier
+     * @return true, if successful
+     */
+    boolean typeMatchesCategory(ContentIdentifier identifier);
 }

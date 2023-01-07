@@ -5,10 +5,10 @@ package de.vsy.shared_module.thread_manipulation;
  */
 public interface ProcessingInterruptProvider {
 
-  /**
-   * Interruption condition met.
-   *
-   * @return true, if successful
-   */
-  boolean conditionNotMet();
+    /**
+     * Interruption condition met.
+     *
+     * @return true, if successful
+     */
+    boolean conditionNotMet();
 }

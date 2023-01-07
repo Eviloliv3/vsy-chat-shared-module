@@ -7,15 +7,15 @@ import de.vsy.shared_transmission.packet.content.authentication.ReconnectRespons
 
 public class ReconnectResponseValidator extends BasePacketContentValidator<ReconnectResponseDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid reconnect response. ";
+    private static final String STANDARD_VALIDATION_MESSAGE = "Invalid reconnect response. ";
 
-  public ReconnectResponseValidator() {
-    super(STANDARD_VALIDATION_MESSAGE);
-  }
+    public ReconnectResponseValidator() {
+        super(STANDARD_VALIDATION_MESSAGE);
+    }
 
-  @Override
-  public ReconnectResponseDTO castAndValidateContent(PacketContent inputContent)
-      throws PacketValidationException {
-    return super.castContent(ReconnectResponseDTO.class, inputContent);
-  }
+    @Override
+    public ReconnectResponseDTO castAndValidateContent(PacketContent inputContent)
+            throws PacketValidationException {
+        return super.castContent(ReconnectResponseDTO.class, inputContent);
+    }
 }

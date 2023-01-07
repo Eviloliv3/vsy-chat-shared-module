@@ -4,5 +4,5 @@ import de.vsy.shared_transmission.packet.property.communicator.CommunicationEndp
 
 public interface OriginatingEntityProvider {
 
-  CommunicationEndpoint getOriginatorEntity();
+    CommunicationEndpoint getOriginatorEntity();
 }

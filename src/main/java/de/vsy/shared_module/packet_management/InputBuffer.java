@@ -10,10 +10,10 @@ import de.vsy.shared_transmission.packet.Packet;
  */
 public interface InputBuffer {
 
-  /**
-   * Returns the next Packet.
-   *
-   * @return Packet or null if no Packet to be provided.
-   */
-  Packet getPacket() throws InterruptedException;
+    /**
+     * Returns the next Packet.
+     *
+     * @return Packet or null if no Packet to be provided.
+     */
+    Packet getPacket() throws InterruptedException;
 }

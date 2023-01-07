@@ -4,77 +4,74 @@ import de.vsy.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.packet.property.packet_category.PacketCategory;
 import de.vsy.shared_transmission.packet.property.packet_identifier.ContentIdentifier;
 import de.vsy.shared_transmission.packet.property.packet_type.PacketType;
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * The Class SemanticPacketValidator.
  */
 public class SemanticPacketValidator implements SemanticPacketValidationProvider {
 
-  private final Map<PacketCategory, Map<PacketType, Set<Class<? extends PacketContent>>>> contentTypeValidator;
+    private final Map<PacketCategory, Map<PacketType, Set<Class<? extends PacketContent>>>> contentTypeValidator;
 
-  public SemanticPacketValidator() {
-    this.contentTypeValidator = new EnumMap<>(PacketCategory.class);
-  }
-
-  /**
-   * Adds the identification validation provider.
-   *
-   * @param category          the category
-   * @param associationsToAdd the associations to add
-   */
-  public void addCategoryAssociations(PacketCategory category,
-      Map<PacketType, Set<Class<? extends PacketContent>>> associationsToAdd) {
-    if (category == null || associationsToAdd == null) {
-      throw new IllegalArgumentException(
-          "Argument null: category - " + category + "; associations - " + associationsToAdd);
+    public SemanticPacketValidator() {
+        this.contentTypeValidator = new EnumMap<>(PacketCategory.class);
     }
-    var existingAssociations = this.contentTypeValidator.computeIfAbsent(category,
-        cat -> new HashMap<>());
 
-    for (var typeEntry : associationsToAdd.entrySet()) {
-      var type = typeEntry.getKey();
+    /**
+     * Adds the identification validation provider.
+     *
+     * @param category          the category
+     * @param associationsToAdd the associations to add
+     */
+    public void addCategoryAssociations(PacketCategory category,
+                                        Map<PacketType, Set<Class<? extends PacketContent>>> associationsToAdd) {
+        if (category == null || associationsToAdd == null) {
+            throw new IllegalArgumentException(
+                    "Argument null: category - " + category + "; associations - " + associationsToAdd);
+        }
+        var existingAssociations = this.contentTypeValidator.computeIfAbsent(category,
+                cat -> new HashMap<>());
 
-      if (type != null) {
-        var associatedTypes = existingAssociations.computeIfAbsent(type, t -> new HashSet<>());
-        associatedTypes.addAll(typeEntry.getValue());
-        existingAssociations.put(type, associatedTypes);
-        this.contentTypeValidator.put(category, existingAssociations);
-      }
+        for (var typeEntry : associationsToAdd.entrySet()) {
+            var type = typeEntry.getKey();
+
+            if (type != null) {
+                var associatedTypes = existingAssociations.computeIfAbsent(type, t -> new HashSet<>());
+                associatedTypes.addAll(typeEntry.getValue());
+                existingAssociations.put(type, associatedTypes);
+                this.contentTypeValidator.put(category, existingAssociations);
+            }
+        }
     }
-  }
 
-  @Override
-  public boolean contentMatchesIdentifier(final ContentIdentifier identifier,
-      final PacketContent content) {
-    Map<PacketType, Set<Class<? extends PacketContent>>> categoryToTypeMapping;
-    Set<Class<? extends PacketContent>> typeToContentMapping;
+    @Override
+    public boolean contentMatchesIdentifier(final ContentIdentifier identifier,
+                                            final PacketContent content) {
+        Map<PacketType, Set<Class<? extends PacketContent>>> categoryToTypeMapping;
+        Set<Class<? extends PacketContent>> typeToContentMapping;
 
-    categoryToTypeMapping = this.contentTypeValidator.get(identifier.getPacketCategory());
+        categoryToTypeMapping = this.contentTypeValidator.get(identifier.getPacketCategory());
 
-    if (categoryToTypeMapping != null) {
-      typeToContentMapping = categoryToTypeMapping.get(identifier.getPacketType());
+        if (categoryToTypeMapping != null) {
+            typeToContentMapping = categoryToTypeMapping.get(identifier.getPacketType());
 
-      if (typeToContentMapping != null) {
-        return typeToContentMapping.contains(content.getClass());
-      }
+            if (typeToContentMapping != null) {
+                return typeToContentMapping.contains(content.getClass());
+            }
+        }
+        return false;
     }
-    return false;
-  }
 
-  @Override
-  public boolean typeMatchesCategory(final ContentIdentifier identifier) {
-    Map<PacketType, Set<Class<? extends PacketContent>>> categoryToTypeMapping;
+    @Override
+    public boolean typeMatchesCategory(final ContentIdentifier identifier) {
+        Map<PacketType, Set<Class<? extends PacketContent>>> categoryToTypeMapping;
 
-    categoryToTypeMapping = this.contentTypeValidator.get(identifier.getPacketCategory());
+        categoryToTypeMapping = this.contentTypeValidator.get(identifier.getPacketCategory());
 
-    if (categoryToTypeMapping != null) {
-      return categoryToTypeMapping.containsKey(identifier.getPacketType());
+        if (categoryToTypeMapping != null) {
+            return categoryToTypeMapping.containsKey(identifier.getPacketType());
+        }
+        return false;
     }
-    return false;
-  }
 }

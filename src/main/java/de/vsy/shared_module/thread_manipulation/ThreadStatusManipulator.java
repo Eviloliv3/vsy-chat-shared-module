@@ -10,20 +10,20 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class ThreadStatusManipulator {
 
-  private final AtomicBoolean threadAliveFlag;
+    private final AtomicBoolean threadAliveFlag;
 
-  /**
-   * Instantiates a new service killer.
-   */
-  public ThreadStatusManipulator() {
-    this.threadAliveFlag = new AtomicBoolean(true);
-  }
+    /**
+     * Instantiates a new service killer.
+     */
+    public ThreadStatusManipulator() {
+        this.threadAliveFlag = new AtomicBoolean(true);
+    }
 
-  public void terminateThreads() {
-    this.threadAliveFlag.set(false);
-  }
+    public void terminateThreads() {
+        this.threadAliveFlag.set(false);
+    }
 
-  public boolean areThreadsToTerminate() {
-    return this.threadAliveFlag.get();
-  }
+    public boolean areThreadsToTerminate() {
+        return this.threadAliveFlag.get();
+    }
 }

@@ -1,5 +1,5 @@
 package de.vsy.shared_module.packet_processing;
 
 public enum ProcessingConditionType {
-  AUTHENTICATED, NOT_AUTHENTICATED, ACTIVE_MESSENGER, NOT_ACTIVE_MESSENGER
+    AUTHENTICATED, NOT_AUTHENTICATED, ACTIVE_MESSENGER, NOT_ACTIVE_MESSENGER
 }

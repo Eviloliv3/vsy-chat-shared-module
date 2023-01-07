@@ -5,14 +5,14 @@ import de.vsy.shared_transmission.packet.content.error.ErrorDTO;
 
 public class ErrorTranslator {
 
-  private ErrorTranslator() {
-  }
-
-  public static String translate(final Translatable error) {
-
-    if (error instanceof final ErrorDTO errorData) {
-      return errorData.getErrorMessage();
+    private ErrorTranslator() {
     }
-    return null;
-  }
+
+    public static String translate(final Translatable error) {
+
+        if (error instanceof final ErrorDTO errorData) {
+            return errorData.getErrorMessage();
+        }
+        return null;
+    }
 }

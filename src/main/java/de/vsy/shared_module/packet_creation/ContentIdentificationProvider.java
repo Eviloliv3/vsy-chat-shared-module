@@ -5,11 +5,11 @@ import de.vsy.shared_transmission.packet.property.packet_identifier.ContentIdent
 
 public interface ContentIdentificationProvider {
 
-  /**
-   * Returns a Packet ContentIdentifier for the specified PacketContent.
-   *
-   * @param data PacketContent to be identified
-   * @return ContentIdentifier
-   */
-  ContentIdentifier getContentIdentifier(PacketContent data);
+    /**
+     * Returns a Packet ContentIdentifier for the specified PacketContent.
+     *
+     * @param data PacketContent to be identified
+     * @return ContentIdentifier
+     */
+    ContentIdentifier getContentIdentifier(PacketContent data);
 }

@@ -5,11 +5,11 @@ import de.vsy.shared_module.packet_exception.handler.BasicErrorResponseCreator;
 
 public class PacketHandlingExceptionCreator {
 
-  protected PacketHandlingExceptionCreator() {
-  }
+    protected PacketHandlingExceptionCreator() {
+    }
 
-  public static PacketHandlingExceptionProcessor getHandlerExceptionProcessor() {
-    return new PacketHandlingExceptionProcessor(BasicAnswerabilityCheck::checkPacketAnswerable,
-        new BasicErrorResponseCreator());
-  }
+    public static PacketHandlingExceptionProcessor getHandlerExceptionProcessor() {
+        return new PacketHandlingExceptionProcessor(BasicAnswerabilityCheck::checkPacketAnswerable,
+                new BasicErrorResponseCreator());
+    }
 }

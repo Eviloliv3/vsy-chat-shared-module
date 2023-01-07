@@ -4,7 +4,7 @@ import de.vsy.shared_transmission.dto.CommunicatorDTO;
 
 public interface ClientDataProvider {
 
-  int getClientId();
+    int getClientId();
 
-  CommunicatorDTO getCommunicatorData();
+    CommunicatorDTO getCommunicatorData();
 }

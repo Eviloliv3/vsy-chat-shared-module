@@ -5,29 +5,30 @@ import de.vsy.shared_module.packet_exception.PacketValidationException;
 import de.vsy.shared_module.packet_validation.content_validation.BasePacketContentValidator;
 import de.vsy.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.packet.content.authentication.LoginResponseDTO;
+
 import java.util.ArrayList;
 
 public class LoginResponseValidator extends BasePacketContentValidator<LoginResponseDTO> {
 
-  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid login response. ";
+    private static final String STANDARD_VALIDATION_MESSAGE = "Invalid login response. ";
 
-  public LoginResponseValidator() {
-    super(STANDARD_VALIDATION_MESSAGE);
-  }
-
-  @Override
-  public LoginResponseDTO castAndValidateContent(PacketContent inputContent)
-      throws PacketValidationException {
-    final var loginContent = super.castContent(LoginResponseDTO.class, inputContent);
-    final var errorStrings = new ArrayList<String>();
-    final var communicatorData = loginContent.getClientData();
-    var checkString = BeanChecker.checkBean(communicatorData);
-
-    checkString.ifPresent(errorStrings::add);
-
-    if (!errorStrings.isEmpty()) {
-      throw new PacketValidationException(super.createErrorMessage(errorStrings));
+    public LoginResponseValidator() {
+        super(STANDARD_VALIDATION_MESSAGE);
     }
-    return loginContent;
-  }
+
+    @Override
+    public LoginResponseDTO castAndValidateContent(PacketContent inputContent)
+            throws PacketValidationException {
+        final var loginContent = super.castContent(LoginResponseDTO.class, inputContent);
+        final var errorStrings = new ArrayList<String>();
+        final var communicatorData = loginContent.getClientData();
+        var checkString = BeanChecker.checkBean(communicatorData);
+
+        checkString.ifPresent(errorStrings::add);
+
+        if (!errorStrings.isEmpty()) {
+            throw new PacketValidationException(super.createErrorMessage(errorStrings));
+        }
+        return loginContent;
+    }
 }

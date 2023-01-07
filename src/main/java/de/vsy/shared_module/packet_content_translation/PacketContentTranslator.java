@@ -4,5 +4,5 @@ import de.vsy.shared_transmission.packet.content.Translatable;
 
 public interface PacketContentTranslator {
 
-  String translate(Translatable request);
+    String translate(Translatable request);
 }

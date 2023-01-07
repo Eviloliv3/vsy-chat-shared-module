@@ -6,16 +6,16 @@ import de.vsy.shared_transmission.packet.property.packet_category.PacketCategory
 
 public class ClientPacketSemanticsValidationCreator {
 
-  private ClientPacketSemanticsValidationCreator() {
-  }
-
-  public static SemanticPacketValidator createSemanticValidator() {
-    var packetValidator = new SemanticPacketValidator();
-
-    for (final var category : PacketCategory.values()) {
-      packetValidator.addCategoryAssociations(category,
-          PermittedCategoryContentAssociationProvider.getAssociations(category));
+    private ClientPacketSemanticsValidationCreator() {
     }
-    return packetValidator;
-  }
+
+    public static SemanticPacketValidator createSemanticValidator() {
+        var packetValidator = new SemanticPacketValidator();
+
+        for (final var category : PacketCategory.values()) {
+            packetValidator.addCategoryAssociations(category,
+                    PermittedCategoryContentAssociationProvider.getAssociations(category));
+        }
+        return packetValidator;
+    }
 }

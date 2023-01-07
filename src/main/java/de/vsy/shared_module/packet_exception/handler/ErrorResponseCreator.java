@@ -5,5 +5,5 @@ import de.vsy.shared_transmission.packet.Packet;
 
 public interface ErrorResponseCreator {
 
-  Packet createErrorResponsePacket(PacketHandlingException phe, Packet toProcess);
+    Packet createErrorResponsePacket(PacketHandlingException phe, Packet toProcess);
 }
