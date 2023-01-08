@@ -9,11 +9,12 @@ import java.util.concurrent.LinkedBlockingDeque;
 
 public class PacketTransmissionCache {
 
+    private static final int MAX_PACKET_BUFFERED = 5;
     private final static Logger LOGGER = LogManager.getLogger();
     private final Deque<Packet> transmissionCache;
 
     public PacketTransmissionCache() {
-        this.transmissionCache = new LinkedBlockingDeque<>(2);
+        this.transmissionCache = new LinkedBlockingDeque<>(MAX_PACKET_BUFFERED);
     }
 
     /**
