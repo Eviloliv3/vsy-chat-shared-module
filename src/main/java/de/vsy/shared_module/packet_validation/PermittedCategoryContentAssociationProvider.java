@@ -88,10 +88,12 @@ public class PermittedCategoryContentAssociationProvider {
                 of(LoginRequestDTO.class, LoginResponseDTO.class));
         authenticationMapping.put(AuthenticationType.CLIENT_LOGOUT, of(LogoutRequestDTO.class,
                 LogoutResponseDTO.class));
-        authenticationMapping.put(AuthenticationType.CLIENT_NEW_ACCOUNT,
+        authenticationMapping.put(AuthenticationType.CLIENT_ACCOUNT_CREATION,
                 of(AccountCreationRequestDTO.class));
         authenticationMapping.put(AuthenticationType.CLIENT_RECONNECT,
                 of(ReconnectRequestDTO.class, ReconnectResponseDTO.class));
+        authenticationMapping.put(AuthenticationType.CLIENT_ACCOUNT_DELETION,
+                of(AccountDeletionRequestDTO.class, AccountDeletionResponseDTO.class));
 
         return authenticationMapping;
     }

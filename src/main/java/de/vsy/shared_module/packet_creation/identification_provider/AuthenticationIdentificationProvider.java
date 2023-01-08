@@ -20,7 +20,7 @@ public class AuthenticationIdentificationProvider extends AbstractIdentification
         identifiers.put(ReconnectResponseDTO.class,
                 () -> new AuthenticationIdentifier(AuthenticationType.CLIENT_RECONNECT));
         identifiers.put(AccountCreationRequestDTO.class,
-                () -> new AuthenticationIdentifier(AuthenticationType.CLIENT_NEW_ACCOUNT));
+                () -> new AuthenticationIdentifier(AuthenticationType.CLIENT_ACCOUNT_CREATION));
         identifiers.put(AccountDeletionRequestDTO.class,
                 () -> new AuthenticationIdentifier(AuthenticationType.CLIENT_ACCOUNT_DELETION));
         identifiers.put(AccountDeletionResponseDTO.class,
