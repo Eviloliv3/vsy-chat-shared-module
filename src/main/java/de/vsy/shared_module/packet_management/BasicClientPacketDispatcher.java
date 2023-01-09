@@ -4,6 +4,7 @@
 package de.vsy.shared_module.packet_management;
 
 import de.vsy.shared_transmission.packet.Packet;
+import de.vsy.shared_transmission.packet.property.communicator.CommunicationEndpoint;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,10 +45,11 @@ public abstract class BasicClientPacketDispatcher implements MultiplePacketDispa
         if (toAppend == null) {
             throw new IllegalArgumentException("Empty Packets cannot be buffered.");
         }
-        final var recipient = toAppend.getPacketProperties().getRecipient();
-        final var recipientId = recipient.getEntityId();
+        final var properties = toAppend.getPacketProperties();
+        final var recipient = properties.getRecipient();
+        final var sender = properties.getSender();
 
-        if (recipient.getEntity().equals(CLIENT) && this.isClientBound(recipientId)) {
+        if (clientIsRecipient(sender, recipient)) {
             this.clientBoundBuffer.appendPacket(toAppend);
         } else {
             this.serverBoundBuffer.appendPacket(toAppend);
@@ -58,8 +60,9 @@ public abstract class BasicClientPacketDispatcher implements MultiplePacketDispa
      * Packet is client bound if: local client not authenticated; recipient is STANDARD_CLIENT_ID
      * recipientId equals clientId
      *
-     * @param recipientId the recipient id
+     * @param sender the sender entity
+     * @param recipient the recipient entity
      * @return true if client is recipient, else false
      */
-    protected abstract boolean isClientBound(final int recipientId);
+    protected abstract boolean clientIsRecipient(final CommunicationEndpoint sender, final CommunicationEndpoint recipient);
 }

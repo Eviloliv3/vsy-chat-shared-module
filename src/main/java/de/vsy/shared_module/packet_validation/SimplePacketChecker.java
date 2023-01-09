@@ -111,8 +111,8 @@ public class SimplePacketChecker implements PacketCheck {
 
             if (!this.validityCheckProvider.contentMatchesIdentifier(identifier, toCheck)) {
                 return Optional
-                        .of(response.append("PacketContent does not match ContentIdentifier:\n")
-                                .append(identifier).append(toCheck).toString());
+                        .of(response.append("ContentIdentifier does not match PacketContent:\n")
+                                .append(identifier).append(" -> ").append(toCheck).toString());
             }
         } else {
             return checkMessage;
