@@ -42,9 +42,9 @@ public class UnconfirmedPacketTransmissionCache {
      * Adds the cycle.
      */
     public void addCycle() {
+        this.accessLock.writeLock().lock();
 
         try {
-            this.accessLock.writeLock().lock();
 
             if (!this.cachedPackets.isEmpty()) {
 
@@ -102,9 +102,9 @@ public class UnconfirmedPacketTransmissionCache {
 
         if (toCache != null) {
             final var cachedPacket = new CachedPacket(toCache, this.cycleTimeMillis);
+            this.accessLock.writeLock().lock();
 
             try {
-                this.accessLock.writeLock().lock();
 
                 if (!this.cachedPackets.contains(cachedPacket)) {
                     this.cachedPackets.add(cachedPacket);
