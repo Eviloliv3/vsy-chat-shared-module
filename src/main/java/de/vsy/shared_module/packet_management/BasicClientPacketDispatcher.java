@@ -10,8 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Deque;
 
-import static de.vsy.shared_transmission.packet.property.communicator.EligibleCommunicationEntity.CLIENT;
-
 
 public abstract class BasicClientPacketDispatcher implements MultiplePacketDispatcher {
 
@@ -60,7 +58,7 @@ public abstract class BasicClientPacketDispatcher implements MultiplePacketDispa
      * Packet is client bound if: local client not authenticated; recipient is STANDARD_CLIENT_ID
      * recipientId equals clientId
      *
-     * @param sender the sender entity
+     * @param sender    the sender entity
      * @param recipient the recipient entity
      * @return true if client is recipient, else false
      */

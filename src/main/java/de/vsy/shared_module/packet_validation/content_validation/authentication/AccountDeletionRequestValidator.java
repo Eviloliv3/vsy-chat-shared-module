@@ -17,7 +17,6 @@ public class AccountDeletionRequestValidator extends
     @Override
     public AccountDeletionRequestDTO castAndValidateContent(PacketContent input)
             throws PacketValidationException {
-        final var accountCreation = super.castContent(AccountDeletionRequestDTO.class, input);
-        return accountCreation;
+        return super.castContent(AccountDeletionRequestDTO.class, input);
     }
 }

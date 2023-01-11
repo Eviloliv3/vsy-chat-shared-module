@@ -83,7 +83,7 @@ public class BeanChecker {
     }
 
     public static Optional<String> checkBean(final TextMessageDTO textMessage) {
-        Optional<String> checkResult = checkBean((ChatPacketDTO) textMessage);
+        Optional<String> checkResult = checkBean((ChatPacketDTO<?>) textMessage);
         final var deadInfo = new StringBuilder();
 
         checkResult.ifPresent(deadInfo::append);
@@ -94,7 +94,7 @@ public class BeanChecker {
                 : Optional.empty();
     }
 
-    private static Optional<String> checkBean(final ChatPacketDTO chatMessage) {
+    private static Optional<String> checkBean(final ChatPacketDTO<?> chatMessage) {
         Optional<String> checkResult;
         final var deadInfo = new StringBuilder();
 
@@ -118,10 +118,10 @@ public class BeanChecker {
     /**
      * Check bean.
      *
-     * @param data the dataManagement
-     * @return the string
+     * @param bean the bean
+     * @return Optional of error String; empty Optional
      */
-    public static String checkBean(final Object data) {
-        return "Unknown bean";
+    public static Optional<String> checkBean(final Object bean) {
+        return Optional.of("Unknown bean: " + bean);
     }
 }

@@ -60,10 +60,7 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
         BlockingDeque<Packet> currentBuffer = this.buffer;
         this.buffer = new LinkedBlockingDeque<>();
         List<Packet> currentBufferContent = new ArrayList<>(currentBuffer.size());
-
-        for (var currentPacket : this.buffer) {
-            currentBufferContent.add(currentPacket);
-        }
+        currentBufferContent.addAll(currentBuffer);
         return currentBufferContent;
     }
 
