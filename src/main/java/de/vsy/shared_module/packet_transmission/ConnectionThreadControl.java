@@ -106,11 +106,6 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
         LOGGER.info("Client connection terminated.");
     }
 
-    /**
-     * Returns the keep alive state.
-     *
-     * @return the keep alive state
-     */
     @Override
     public boolean connectionIsLive() {
         if (this.connectionSocket.isClosed()) {

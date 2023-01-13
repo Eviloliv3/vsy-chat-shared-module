@@ -9,19 +9,20 @@ import de.vsy.shared_transmission.packet.property.packet_identifier.ContentIdent
 public interface SemanticPacketValidationProvider {
 
     /**
-     * Content matches identifier.
+     * Returns a boolean indicating, if the specified ContentIdentifier matches the
+     * specified PacketContent's type.
      *
-     * @param identifier the identifier
-     * @param content    the content
-     * @return true, if successful
+     * @param identifier the ContentIdentifier
+     * @param content    the PacketContent
+     * @return true, if ContentIdentifier matches PacketContent, false otherwise
      */
     boolean contentMatchesIdentifier(ContentIdentifier identifier, PacketContent content);
 
     /**
-     * Type matches category.
+     * Returns a boolean indicating whether the specified ContentIdentifier is valid.
      *
-     * @param identifier the identifier
-     * @return true, if successful
+     * @param identifier the ContentIdentifier
+     * @return true, if ContentIdentifier is consistent, false otherwise
      */
     boolean typeMatchesCategory(ContentIdentifier identifier);
 }

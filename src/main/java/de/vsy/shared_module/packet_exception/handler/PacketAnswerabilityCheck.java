@@ -5,10 +5,10 @@ import de.vsy.shared_transmission.packet.Packet;
 public interface PacketAnswerabilityCheck {
 
     /**
-     * Checks whether the specified Packet is answerable.
+     * Checks whether a response Packet can be created for the specified Packet.
      *
-     * @param toCheck Packet
-     * @return True, if answerable; false otherwise.
+     * @param toCheck the Packet to check
+     * @return true, if answerable; false otherwise.
      */
     boolean checkPacketAnswerable(final Packet toCheck);
 }

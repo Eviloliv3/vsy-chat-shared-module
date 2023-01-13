@@ -4,5 +4,10 @@ import de.vsy.shared_transmission.packet.property.communicator.CommunicationEndp
 
 public interface OriginatingEntityProvider {
 
+    /**
+     * Provides CommunicationEndpoint used as sender entity for Packet creation.
+     *
+     * @return the CommunicationEndpoint
+     */
     CommunicationEndpoint getOriginatorEntity();
 }
