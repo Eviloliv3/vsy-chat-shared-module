@@ -85,7 +85,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
         this.connectionSocketManipulator.terminateThreads();
         this.cachedPacketResentTimer.cancel();
         closeSocket();
-        closeConnectionThreads();
+        shutdownConnectionThreads();
         LOGGER.info("Client connection termination finished.");
     }
 
@@ -104,7 +104,7 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
         }
     }
 
-    private void closeConnectionThreads(){
+    private void shutdownConnectionThreads(){
         for (var connectionThread : this.connectionSocketThreads) {
 
             if(connectionThread.isAlive()) {

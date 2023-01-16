@@ -44,7 +44,7 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
 
     @Override
     public Packet getPacket() throws InterruptedException {
-        return this.buffer.poll(250, TimeUnit.MILLISECONDS);
+        return this.buffer.take();
     }
 
     /**
