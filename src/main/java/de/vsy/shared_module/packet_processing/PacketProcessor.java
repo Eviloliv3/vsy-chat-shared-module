@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package de.vsy.shared_module.packet_processing;
 
 import de.vsy.shared_module.packet_exception.PacketProcessingException;

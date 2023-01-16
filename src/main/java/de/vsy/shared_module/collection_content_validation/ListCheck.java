@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package de.vsy.shared_module.collection_content_validation;
 
 import de.vsy.shared_module.data_element_validation.BeanChecker;

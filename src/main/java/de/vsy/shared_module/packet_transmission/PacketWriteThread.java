@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package de.vsy.shared_module.packet_transmission;
 
 import de.vsy.shared_module.packet_management.InputBuffer;
@@ -54,7 +52,7 @@ class PacketWriteThread extends ThreadContextRunnable {
     public void runWithContext() {
         Packet input;
 
-        while (!Thread.interrupted()) {
+        while (!(Thread.currentThread().isInterrupted())) {
             input = readNextPacket();
 
             if (input != null) {

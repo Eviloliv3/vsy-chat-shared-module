@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package de.vsy.shared_module.data_element_validation;
 
 import java.util.Optional;

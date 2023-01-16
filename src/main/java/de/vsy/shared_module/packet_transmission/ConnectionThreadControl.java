@@ -4,6 +4,7 @@ import de.vsy.shared_module.packet_management.ThreadPacketBufferLabel;
 import de.vsy.shared_module.packet_management.ThreadPacketBufferManager;
 import de.vsy.shared_module.packet_transmission.cache.UnconfirmedPacketTransmissionCache;
 import de.vsy.shared_module.thread_manipulation.ThreadStatusManipulator;
+import java.util.Arrays;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -83,27 +84,47 @@ public class ConnectionThreadControl implements ConnectionThreadSynchronizer {
         LOGGER.info("Client connection termination initiated.");
         this.connectionSocketManipulator.terminateThreads();
         this.cachedPacketResentTimer.cancel();
+        closeSocket();
+        closeConnectionThreads();
+        LOGGER.info("Client connection termination finished.");
+    }
 
-        try {
-            this.connectionSocket.close();
-        } catch (IOException ioe) {
-            Thread.currentThread().interrupt();
-            LOGGER.error("Socket could not be closed. Error:\n{}: {}",
-                    ioe.getClass().getSimpleName(), ioe.getMessage());
-        }
-
-        for (var connThread : this.connectionSocketThreads) {
-            connThread.interrupt();
-            LOGGER.info("Waiting for thread: {}:{}", connThread.getName(), connThread.getId());
+    private void closeSocket(){
+        if(!(this.connectionSocket.isClosed())) {
             try {
-                connThread.join(500);
-            } catch (InterruptedException e) {
-                LOGGER.error("{}:{} shutdown failed.", connThread.getName(), connThread.getId(), e);
+                this.connectionSocket.close();
+                LOGGER.info("Connection Socket closed.");
+            } catch (IOException ioe) {
+                Thread.currentThread().interrupt();
+                LOGGER.error("Socket could not be closed. Error:\n{}: {}",
+                    ioe.getClass().getSimpleName(), ioe.getMessage());
             }
-            LOGGER.info("{}:{} shutdown successfully.", connThread.getName(), connThread.getId());
+        }else{
+            LOGGER.info("Connection Socket closed already.");
+        }
+    }
+
+    private void closeConnectionThreads(){
+        for (var connectionThread : this.connectionSocketThreads) {
+
+            if(connectionThread.isAlive()) {
+                connectionThread.interrupt();
+                LOGGER.info("{}:{} interrupted.", connectionThread.getName(), connectionThread.getId());
+
+                try {
+                    connectionThread.join(500);
+                    LOGGER.info("{}:{} shutdown successfully.", connectionThread.getName(),
+                        connectionThread.getId());
+                } catch (InterruptedException e) {
+                    LOGGER.error("{}:{} may not be shutdown properly. {}", connectionThread.getName(), connectionThread.getId(),
+                        Arrays.asList(e.getStackTrace()));
+                }
+            }else {
+                LOGGER.info("{}:{} shutdown already.", connectionThread.getName(),
+                    connectionThread.getId());
+            }
         }
         this.connectionSocketThreads.clear();
-        LOGGER.info("Client connection terminated.");
     }
 
     @Override

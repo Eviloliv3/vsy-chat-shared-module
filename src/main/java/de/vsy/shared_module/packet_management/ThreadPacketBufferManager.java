@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package de.vsy.shared_module.packet_management;
 
 import java.util.EnumMap;

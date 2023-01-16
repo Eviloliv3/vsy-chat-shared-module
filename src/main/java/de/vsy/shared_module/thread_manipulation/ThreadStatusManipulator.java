@@ -1,6 +1,4 @@
-/*
- *
- */
+
 package de.vsy.shared_module.thread_manipulation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
