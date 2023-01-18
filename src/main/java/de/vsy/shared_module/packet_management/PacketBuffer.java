@@ -47,6 +47,10 @@ public class PacketBuffer implements InputBuffer, OutputBuffer {
         return this.buffer.take();
     }
 
+    public Packet getPacket(long maxWaitMilliseconds) throws InterruptedException {
+        return this.buffer.poll(maxWaitMilliseconds, TimeUnit.MILLISECONDS);
+    }
+
     /**
      * Disclaimer: should not be used if multiple threads read from this buffer, because Packets may
      * be read multiple times. Replaces current BlockingDeque with new one and returns remaining
