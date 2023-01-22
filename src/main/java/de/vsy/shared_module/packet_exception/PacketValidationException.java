@@ -10,7 +10,7 @@ public class PacketValidationException extends PacketHandlingException {
     /**
      * Instantiates a new PacketHandling exception.
      *
-     * @param errorMessage the error message
+     * @param errorMessage the notification message
      */
     public PacketValidationException(String errorMessage) {
         super(errorMessage);

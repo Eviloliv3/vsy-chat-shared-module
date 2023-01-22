@@ -16,11 +16,11 @@ public class ListCheck {
     }
 
     /**
-     * Checks set of TextMessageDTO for invalid TextMessageDTO instances and creates an error String,
+     * Checks set of TextMessageDTO for invalid TextMessageDTO instances and creates an notification String,
      * indicating which elements contain invalid data.
      *
      * @param listData the list to check
-     * @return Optional containing error String if invalid elements were found; empty Optional
+     * @return Optional containing notification String if invalid elements were found; empty Optional
      * otherwise
      */
     public static Optional<String> checkMessageDataList(final List<TextMessageDTO> listData) {
@@ -43,11 +43,11 @@ public class ListCheck {
     }
 
     /**
-     * Checks set of CommunicatorDTO for invalid CommunicatorDTO instances and creates an error
+     * Checks set of CommunicatorDTO for invalid CommunicatorDTO instances and creates an notification
      * String, indicating which elements contain invalid data.
      *
      * @param listData the set to check
-     * @return Optional containing error String if invalid elements were found; empty Optional
+     * @return Optional containing notification String if invalid elements were found; empty Optional
      * otherwise
      */
     public static Optional<String> checkMessageDataSet(final List<TextMessageDTO> listData) {

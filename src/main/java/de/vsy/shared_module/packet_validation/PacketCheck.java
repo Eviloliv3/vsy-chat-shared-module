@@ -16,7 +16,7 @@ public interface PacketCheck {
      * Checks the whole Packet, using the other specified methods.
      *
      * @param toCheck Packet
-     * @return Optional<String> if error found; empty Optional otherwise
+     * @return Optional<String> if notification found; empty Optional otherwise
      */
     Optional<String> checkPacket(Packet toCheck);
 
@@ -24,7 +24,7 @@ public interface PacketCheck {
      * Checks PacketContent.
      *
      * @param toCheck PacketContent
-     * @return Optional<String> if error found; empty Optional otherwise
+     * @return Optional<String> if notification found; empty Optional otherwise
      */
     Optional<String> checkPacketContent(PacketContent toCheck);
 
@@ -32,7 +32,7 @@ public interface PacketCheck {
      * Checks PacketProperties.
      *
      * @param toCheck PacketProperties
-     * @return Optional<String> if error found; empty Optional otherwise
+     * @return Optional<String> if notification found; empty Optional otherwise
      */
     Optional<String> checkPacketProperties(PacketProperties toCheck);
 }

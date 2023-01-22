@@ -31,9 +31,9 @@ public class PacketTransmissionCache {
     }
 
     /**
-     * Discards all cached Packets and adds the error packet instead.
+     * Discards all cached Packets and adds the notification packet instead.
      *
-     * @param error the error packet to transmit
+     * @param error the notification packet to transmit
      */
     public void putError(Packet error) {
         if (error != null) {

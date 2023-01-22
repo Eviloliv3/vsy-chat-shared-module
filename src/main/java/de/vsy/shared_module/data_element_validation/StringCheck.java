@@ -20,7 +20,7 @@ public class StringCheck {
      * Check string: not null && length > 3.
      *
      * @param toCheck the to check
-     * @return the error string
+     * @return the notification string
      */
     public static Optional<String> checkString(final String toCheck) {
         final var deadInfo = new StringBuilder();

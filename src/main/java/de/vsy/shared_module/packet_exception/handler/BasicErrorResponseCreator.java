@@ -3,7 +3,7 @@ package de.vsy.shared_module.packet_exception.handler;
 import de.vsy.shared_module.packet_creation.PacketCompiler;
 import de.vsy.shared_module.packet_exception.PacketHandlingException;
 import de.vsy.shared_transmission.packet.Packet;
-import de.vsy.shared_transmission.packet.content.error.ErrorDTO;
+import de.vsy.shared_transmission.packet.content.notification.ErrorDTO;
 
 public class BasicErrorResponseCreator implements ErrorResponseCreator {
 

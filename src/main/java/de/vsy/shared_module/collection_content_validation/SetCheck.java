@@ -12,11 +12,11 @@ public class SetCheck {
     }
 
     /**
-     * Checks set of CommunicatorDTO for invalid CommunicatorDTO instances and creates an error
+     * Checks set of CommunicatorDTO for invalid CommunicatorDTO instances and creates an notification
      * String, indicating which elements contain invalid data.
      *
      * @param setData the set to check
-     * @return Optional containing error String if invalid elements were found; empty Optional
+     * @return Optional containing notification String if invalid elements were found; empty Optional
      * otherwise
      */
     public static Optional<String> checkMemberList(final Set<CommunicatorDTO> setData) {

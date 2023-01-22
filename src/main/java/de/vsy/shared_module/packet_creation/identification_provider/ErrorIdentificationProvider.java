@@ -1,6 +1,6 @@
 package de.vsy.shared_module.packet_creation.identification_provider;
 
-import de.vsy.shared_transmission.packet.content.error.ErrorDTO;
+import de.vsy.shared_transmission.packet.content.notification.ErrorDTO;
 import de.vsy.shared_transmission.packet.property.packet_identifier.ErrorIdentifier;
 
 import static de.vsy.shared_transmission.packet.property.packet_type.ErrorType.SIMPLE_ERROR;

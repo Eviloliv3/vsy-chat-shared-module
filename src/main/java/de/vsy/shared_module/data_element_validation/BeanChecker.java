@@ -117,7 +117,7 @@ public class BeanChecker {
      * Check bean.
      *
      * @param bean the bean
-     * @return Optional of error String; empty Optional
+     * @return Optional of notification String; empty Optional
      */
     public static Optional<String> checkBean(final Object bean) {
         return Optional.of("Unknown bean: " + bean);

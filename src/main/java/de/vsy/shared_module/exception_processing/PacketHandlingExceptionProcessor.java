@@ -23,7 +23,7 @@ public class PacketHandlingExceptionProcessor {
     }
 
     /**
-     * Creates an error Packet or log entry from the specified data.
+     * Creates an notification Packet or log entry from the specified data.
      *
      * @param phe            PacketProcessingException
      * @param affectedPacket Packet

@@ -23,10 +23,10 @@ public class MapCheck {
     /**
      * Checks Map of Integer - TextMessageDTO for invalid entries. Entries can be invalid, if the
      * Integer is no valid client id or the mapped TextMessageDTO list contains invalid
-     * TextMessageDTO. For each invalid entry and error String will be created.
+     * TextMessageDTO. For each invalid entry and notification String will be created.
      *
      * @param mapToCheck the map to check
-     * @return Optional containing error String if invalid entries were found; empty Optional
+     * @return Optional containing notification String if invalid entries were found; empty Optional
      * otherwise
      */
     public static Optional<String> checkMessageHistory(
@@ -47,10 +47,10 @@ public class MapCheck {
     /**
      * Checks Map of EligibleContactEntity - CommunicatorDTO for invalid entries. Entries can be
      * invalid, if the EligibleContactEntity is no valid client id or the mapped CommunicatorDTO list
-     * contains invalid CommunicatorDTO. For each invalid entry and error String will be created.
+     * contains invalid CommunicatorDTO. For each invalid entry and notification String will be created.
      *
      * @param mapToCheck the map to check
-     * @return Optional containing error String if invalid entries were found; empty Optional
+     * @return Optional containing notification String if invalid entries were found; empty Optional
      * otherwise
      */
     public static Optional<String> checkActiveContacts(

@@ -3,7 +3,7 @@ package de.vsy.shared_module.packet_validation.content_validation.error;
 import de.vsy.shared_module.packet_exception.PacketValidationException;
 import de.vsy.shared_module.packet_validation.content_validation.BasePacketContentValidator;
 import de.vsy.shared_transmission.packet.content.PacketContent;
-import de.vsy.shared_transmission.packet.content.error.ErrorDTO;
+import de.vsy.shared_transmission.packet.content.notification.ErrorDTO;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ import static de.vsy.shared_module.data_element_validation.StringCheck.checkStri
 
 public class ErrorContentValidator extends BasePacketContentValidator<ErrorDTO> {
 
-    private static final String STANDARD_VALIDATION_MESSAGE = "Invalid error content. ";
+    private static final String STANDARD_VALIDATION_MESSAGE = "Invalid notification content. ";
 
     public ErrorContentValidator() {
         super(STANDARD_VALIDATION_MESSAGE);

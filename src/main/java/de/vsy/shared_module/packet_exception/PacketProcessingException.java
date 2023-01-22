@@ -10,7 +10,7 @@ public class PacketProcessingException extends PacketHandlingException {
     /**
      * Instantiates a new PacketHandling exception.
      *
-     * @param errorMessage the error message
+     * @param errorMessage the notification message
      */
     public PacketProcessingException(String errorMessage) {
         super(errorMessage);

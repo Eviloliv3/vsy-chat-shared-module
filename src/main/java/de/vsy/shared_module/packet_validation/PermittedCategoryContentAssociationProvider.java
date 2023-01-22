@@ -5,7 +5,7 @@ import de.vsy.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.packet.content.authentication.*;
 import de.vsy.shared_transmission.packet.content.chat.ChatPacketDTO;
 import de.vsy.shared_transmission.packet.content.chat.TextMessageDTO;
-import de.vsy.shared_transmission.packet.content.error.ErrorDTO;
+import de.vsy.shared_transmission.packet.content.notification.ErrorDTO;
 import de.vsy.shared_transmission.packet.content.relation.ContactRelationRequestDTO;
 import de.vsy.shared_transmission.packet.content.relation.ContactRelationResponseDTO;
 import de.vsy.shared_transmission.packet.content.status.ClientStatusChangeDTO;

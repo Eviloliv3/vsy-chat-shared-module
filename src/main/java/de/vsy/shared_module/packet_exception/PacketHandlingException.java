@@ -16,7 +16,7 @@ public class PacketHandlingException extends Exception {
     /**
      * Instantiates a new PacketHandling exception.
      *
-     * @param errorMessage the error message
+     * @param errorMessage the notification message
      */
     public PacketHandlingException(final String errorMessage) {
         super(errorMessage);
