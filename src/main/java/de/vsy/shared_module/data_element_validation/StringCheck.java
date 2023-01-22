@@ -1,8 +1,6 @@
 
 package de.vsy.shared_module.data_element_validation;
 
-import de.vsy.shared_utility.string_manipulation.StringShortener;
-
 import java.util.Optional;
 
 /**
@@ -30,17 +28,16 @@ public class StringCheck {
         if (toCheck == null || toCheck.isEmpty()) {
             return Optional.of("null or empty");
         } else {
-            final var illegalChars = new StringBuilder();
+            int illegalCharCounter = 0;
 
             for (var badCharacter : META_CHARS) {
 
                 if (toCheck.contains(badCharacter)) {
-                    illegalChars.append(badCharacter).append(", ");
+                    illegalCharCounter++;
                 }
             }
-            if (illegalChars.length() > 2) {
-                StringShortener.cutTrailingChars(illegalChars, 2);
-                deadInfo.append("Contains invalid characters: ").append(illegalChars);
+            if (illegalCharCounter > 0) {
+                deadInfo.append("Contains ").append(illegalCharCounter).append(" invalid characters");
                 return Optional.of(deadInfo.toString());
             }
         }
