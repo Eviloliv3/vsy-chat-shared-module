@@ -11,7 +11,7 @@ public class ErrorTranslator {
     public static String translate(final Translatable error) {
 
         if (error instanceof final ErrorDTO errorData) {
-            return errorData.getErrorMessage();
+            return errorData.getInformationString();
         }
         return null;
     }
