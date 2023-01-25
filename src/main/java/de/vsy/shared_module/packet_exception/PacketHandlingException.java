@@ -7,18 +7,18 @@ import java.io.Serial;
  */
 public class PacketHandlingException extends Exception {
 
-    /**
-     * The Constant serialVersionUID.
-     */
-    @Serial
-    private static final long serialVersionUID = -2546836659353793441L;
+  /**
+   * The Constant serialVersionUID.
+   */
+  @Serial
+  private static final long serialVersionUID = -2546836659353793441L;
 
-    /**
-     * Instantiates a new PacketHandling exception.
-     *
-     * @param errorMessage the notification message
-     */
-    public PacketHandlingException(final String errorMessage) {
-        super(errorMessage);
-    }
+  /**
+   * Instantiates a new PacketHandling exception.
+   *
+   * @param errorMessage the notification message
+   */
+  public PacketHandlingException(final String errorMessage) {
+    super(errorMessage);
+  }
 }

@@ -1,52 +1,51 @@
 package de.vsy.shared_module.packet_validation.content_validation.relation;
 
+import static de.vsy.shared_module.data_element_validation.IdCheck.checkData;
+
 import de.vsy.shared_module.data_element_validation.BeanChecker;
 import de.vsy.shared_module.packet_exception.PacketValidationException;
 import de.vsy.shared_module.packet_validation.content_validation.BasePacketContentValidator;
 import de.vsy.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.packet.content.relation.ContactRelationRequestDTO;
-
 import java.util.ArrayList;
 
-import static de.vsy.shared_module.data_element_validation.IdCheck.checkData;
-
 public class ContactRelationRequestValidator extends
-        BasePacketContentValidator<ContactRelationRequestDTO> {
+    BasePacketContentValidator<ContactRelationRequestDTO> {
 
-    private static final String STANDARD_VALIDATION_MESSAGE = "Invalid friendship request. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid friendship request. ";
 
-    public ContactRelationRequestValidator() {
-        super(STANDARD_VALIDATION_MESSAGE);
+  public ContactRelationRequestValidator() {
+    super(STANDARD_VALIDATION_MESSAGE);
+  }
+
+  @Override
+  public ContactRelationRequestDTO castAndValidateContent(PacketContent inputContent)
+      throws PacketValidationException {
+    final var errorStrings = new ArrayList<String>();
+    final var relationRequestContent = super.castContent(ContactRelationRequestDTO.class,
+        inputContent);
+    final var contactData = relationRequestContent.getRequestingClient();
+    final var contactType = relationRequestContent.getContactType();
+    final var recipientId = relationRequestContent.getRecipientId();
+    final var originatorId = relationRequestContent.getOriginatorId();
+    var checkString = BeanChecker.checkBean(contactData);
+
+    checkString.ifPresent(errorStrings::add);
+
+    if (contactType == null) {
+      errorStrings.add("No contact type specified. ");
     }
+    checkString = checkData(recipientId);
 
-    @Override
-    public ContactRelationRequestDTO castAndValidateContent(PacketContent inputContent)
-            throws PacketValidationException {
-        final var errorStrings = new ArrayList<String>();
-        final var relationRequestContent = super.castContent(ContactRelationRequestDTO.class,
-                inputContent);
-        final var contactData = relationRequestContent.getRequestingClient();
-        final var contactType = relationRequestContent.getContactType();
-        final var recipientId = relationRequestContent.getRecipientId();
-        final var originatorId = relationRequestContent.getOriginatorId();
-        var checkString = BeanChecker.checkBean(contactData);
+    checkString.ifPresent(errorStrings::add);
 
-        checkString.ifPresent(errorStrings::add);
+    checkString = checkData(originatorId);
 
-        if (contactType == null) {
-            errorStrings.add("No contact type specified. ");
-        }
-        checkString = checkData(recipientId);
+    checkString.ifPresent(errorStrings::add);
 
-        checkString.ifPresent(errorStrings::add);
-
-        checkString = checkData(originatorId);
-
-        checkString.ifPresent(errorStrings::add);
-
-        if (!errorStrings.isEmpty()) {
-            throw new PacketValidationException(super.createErrorMessage(errorStrings));
-        }
-        return relationRequestContent;
+    if (!errorStrings.isEmpty()) {
+      throw new PacketValidationException(super.createErrorMessage(errorStrings));
     }
+    return relationRequestContent;
+  }
 }

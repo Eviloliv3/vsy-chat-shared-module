@@ -1,4 +1,3 @@
-
 package de.vsy.shared_module.packet_management;
 
 import de.vsy.shared_transmission.packet.Packet;
@@ -8,10 +7,10 @@ import de.vsy.shared_transmission.packet.Packet;
  */
 public interface PacketDispatcher {
 
-    /**
-     * Uniform method to dispatch a single packet.
-     *
-     * @param output packet to dispatch
-     */
-    void dispatchPacket(Packet output);
+  /**
+   * Uniform method to dispatch a single packet.
+   *
+   * @param output packet to dispatch
+   */
+  void dispatchPacket(Packet output);
 }

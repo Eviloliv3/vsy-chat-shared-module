@@ -1,4 +1,3 @@
-
 package de.vsy.shared_module.data_element_validation;
 
 import java.util.Optional;
@@ -8,39 +7,39 @@ import java.util.Optional;
  */
 public class StringCheck {
 
-    /**
-     * The meta chars.
-     */
-    private static final String[] META_CHARS = {"/", "'", "°", "`", "|", "\\"};
+  /**
+   * The meta chars.
+   */
+  private static final String[] META_CHARS = {"/", "'", "°", "`", "|", "\\"};
 
-    private StringCheck() {
-    }
+  private StringCheck() {
+  }
 
-    /**
-     * Check string: not null && length > 3.
-     *
-     * @param toCheck the to check
-     * @return the notification string
-     */
-    public static Optional<String> checkString(final String toCheck) {
-        final var deadInfo = new StringBuilder();
+  /**
+   * Check string: not null && length > 3.
+   *
+   * @param toCheck the to check
+   * @return the notification string
+   */
+  public static Optional<String> checkString(final String toCheck) {
+    final var deadInfo = new StringBuilder();
 
-        if (toCheck == null || toCheck.isEmpty()) {
-            return Optional.of("null or empty");
-        } else {
-            int illegalCharCounter = 0;
+    if (toCheck == null || toCheck.isEmpty()) {
+      return Optional.of("null or empty");
+    } else {
+      int illegalCharCounter = 0;
 
-            for (var badCharacter : META_CHARS) {
+      for (var badCharacter : META_CHARS) {
 
-                if (toCheck.contains(badCharacter)) {
-                    illegalCharCounter++;
-                }
-            }
-            if (illegalCharCounter > 0) {
-                deadInfo.append("Contains ").append(illegalCharCounter).append(" invalid characters");
-                return Optional.of(deadInfo.toString());
-            }
+        if (toCheck.contains(badCharacter)) {
+          illegalCharCounter++;
         }
-        return Optional.empty();
+      }
+      if (illegalCharCounter > 0) {
+        deadInfo.append("Contains ").append(illegalCharCounter).append(" invalid characters");
+        return Optional.of(deadInfo.toString());
+      }
     }
+    return Optional.empty();
+  }
 }

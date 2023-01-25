@@ -6,17 +6,17 @@ import de.vsy.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.packet.content.authentication.AccountDeletionRequestDTO;
 
 public class AccountDeletionRequestValidator extends
-        BasePacketContentValidator<AccountDeletionRequestDTO> {
+    BasePacketContentValidator<AccountDeletionRequestDTO> {
 
-    private static final String STANDARD_VALIDATION_MESSAGE = "Invalid account deletion request. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid account deletion request. ";
 
-    public AccountDeletionRequestValidator() {
-        super(STANDARD_VALIDATION_MESSAGE);
-    }
+  public AccountDeletionRequestValidator() {
+    super(STANDARD_VALIDATION_MESSAGE);
+  }
 
-    @Override
-    public AccountDeletionRequestDTO castAndValidateContent(PacketContent input)
-            throws PacketValidationException {
-        return super.castContent(AccountDeletionRequestDTO.class, input);
-    }
+  @Override
+  public AccountDeletionRequestDTO castAndValidateContent(PacketContent input)
+      throws PacketValidationException {
+    return super.castContent(AccountDeletionRequestDTO.class, input);
+  }
 }

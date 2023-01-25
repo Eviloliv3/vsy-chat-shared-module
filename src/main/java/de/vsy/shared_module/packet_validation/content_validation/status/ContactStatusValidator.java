@@ -6,46 +6,45 @@ import de.vsy.shared_module.packet_exception.PacketValidationException;
 import de.vsy.shared_module.packet_validation.content_validation.BasePacketContentValidator;
 import de.vsy.shared_transmission.packet.content.PacketContent;
 import de.vsy.shared_transmission.packet.content.status.ContactStatusChangeDTO;
-
 import java.util.ArrayList;
 
 public class ContactStatusValidator extends BasePacketContentValidator<ContactStatusChangeDTO> {
 
-    private static final String STANDARD_VALIDATION_MESSAGE = "Invalid contact status notification. ";
+  private static final String STANDARD_VALIDATION_MESSAGE = "Invalid contact status notification. ";
 
-    public ContactStatusValidator() {
-        super(STANDARD_VALIDATION_MESSAGE);
+  public ContactStatusValidator() {
+    super(STANDARD_VALIDATION_MESSAGE);
+  }
+
+  @Override
+  public ContactStatusChangeDTO castAndValidateContent(PacketContent inputContent)
+      throws PacketValidationException {
+    final var errorStrings = new ArrayList<String>();
+    final var contactStatusContent = super.castContent(ContactStatusChangeDTO.class,
+        inputContent);
+    final var serviceType = contactStatusContent.getServiceType();
+    final var contactType = contactStatusContent.getContactType();
+    final var contactData = contactStatusContent.getContactData();
+    final var messageHistory = contactStatusContent.getMessages();
+    var checkString = BeanChecker.checkBean(contactData);
+
+    if (serviceType == null) {
+      errorStrings.add("No service type specified. ");
     }
 
-    @Override
-    public ContactStatusChangeDTO castAndValidateContent(PacketContent inputContent)
-            throws PacketValidationException {
-        final var errorStrings = new ArrayList<String>();
-        final var contactStatusContent = super.castContent(ContactStatusChangeDTO.class,
-                inputContent);
-        final var serviceType = contactStatusContent.getServiceType();
-        final var contactType = contactStatusContent.getContactType();
-        final var contactData = contactStatusContent.getContactData();
-        final var messageHistory = contactStatusContent.getMessages();
-        var checkString = BeanChecker.checkBean(contactData);
-
-        if (serviceType == null) {
-            errorStrings.add("No service type specified. ");
-        }
-
-        if (contactType == null) {
-            errorStrings.add("No contact type specified. ");
-        }
-
-        checkString.ifPresent(errorStrings::add);
-
-        checkString = ListCheck.checkMessageDataList(messageHistory);
-
-        checkString.ifPresent(errorStrings::add);
-
-        if (!errorStrings.isEmpty()) {
-            throw new PacketValidationException(super.createErrorMessage(errorStrings));
-        }
-        return contactStatusContent;
+    if (contactType == null) {
+      errorStrings.add("No contact type specified. ");
     }
+
+    checkString.ifPresent(errorStrings::add);
+
+    checkString = ListCheck.checkMessageDataList(messageHistory);
+
+    checkString.ifPresent(errorStrings::add);
+
+    if (!errorStrings.isEmpty()) {
+      throw new PacketValidationException(super.createErrorMessage(errorStrings));
+    }
+    return contactStatusContent;
+  }
 }

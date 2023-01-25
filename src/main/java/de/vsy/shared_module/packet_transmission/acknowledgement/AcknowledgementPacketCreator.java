@@ -6,15 +6,15 @@ import de.vsy.shared_transmission.packet.property.PacketPropertiesBuilder;
 
 public class AcknowledgementPacketCreator {
 
-    private AcknowledgementPacketCreator() {
-    }
+  private AcknowledgementPacketCreator() {
+  }
 
-    public static Packet createAcknowledgement(Packet receivedPacket) {
-        var receivedProperties = receivedPacket.getPacketProperties();
-        var properties = new PacketPropertiesBuilder().withSender(receivedProperties.getRecipient())
-                .withRecipient(receivedProperties.getSender())
-                .withIdentifier(new AcknowledgementIdentifier(AcknowledgementType.PACKET_RECEIVED)).build();
-        return new PacketBuilder().withProperties(properties)
-                .withRequestPacket(receivedPacket.getPacketHash()).build();
-    }
+  public static Packet createAcknowledgement(Packet receivedPacket) {
+    var receivedProperties = receivedPacket.getPacketProperties();
+    var properties = new PacketPropertiesBuilder().withSender(receivedProperties.getRecipient())
+        .withRecipient(receivedProperties.getSender())
+        .withIdentifier(new AcknowledgementIdentifier(AcknowledgementType.PACKET_RECEIVED)).build();
+    return new PacketBuilder().withProperties(properties)
+        .withRequestPacket(receivedPacket.getPacketHash()).build();
+  }
 }

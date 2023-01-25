@@ -7,13 +7,13 @@ import de.vsy.shared_transmission.packet.content.notification.ErrorDTO;
 
 public class BasicErrorResponseCreator implements ErrorResponseCreator {
 
-    @Override
-    public Packet createErrorResponsePacket(PacketHandlingException phe, Packet toProcess) {
-        final var errorData = createSimpleErrorData(phe, toProcess);
-        return PacketCompiler.createResponse(errorData, toProcess);
-    }
+  @Override
+  public Packet createErrorResponsePacket(PacketHandlingException phe, Packet toProcess) {
+    final var errorData = createSimpleErrorData(phe, toProcess);
+    return PacketCompiler.createResponse(errorData, toProcess);
+  }
 
-    protected ErrorDTO createSimpleErrorData(PacketHandlingException phe, Packet toProcess) {
-        return new ErrorDTO(phe.getMessage(), toProcess);
-    }
+  protected ErrorDTO createSimpleErrorData(PacketHandlingException phe, Packet toProcess) {
+    return new ErrorDTO(phe.getMessage(), toProcess);
+  }
 }
