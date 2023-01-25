@@ -14,7 +14,7 @@ public class NotificationTranslator {
 
   static {
     translators = new HashMap<>();
-    translators.put(ContactRelationResponseDTO.class, ClientRelatedTranslator::translate);
+    translators.put(ClientRelatedTranslatable.class, ClientRelatedTranslator::translate);
     translators.put(ContactRelationRequestDTO.class, ContactRelationRequestTranslator::translate);
     translators.put(ErrorDTO.class, ErrorTranslator::translate);
   }
