@@ -1,17 +1,28 @@
 package de.vsy.shared_module.packet_transmission;
 
+import de.vsy.shared_module.packet_creation.ContentIdentificationProviderImpl;
+import de.vsy.shared_module.packet_creation.PacketCompiler;
 import de.vsy.shared_module.packet_management.OutputBuffer;
 import de.vsy.shared_module.packet_management.ThreadPacketBufferLabel;
 import de.vsy.shared_module.packet_management.ThreadPacketBufferManager;
 import de.vsy.shared_module.packet_transmission.acknowledgement.AcknowledgementPacketCreator;
 import de.vsy.shared_module.packet_transmission.cache.UnconfirmedPacketTransmissionCache;
 import de.vsy.shared_transmission.packet.Packet;
+import de.vsy.shared_transmission.packet.PacketBuilder;
+import de.vsy.shared_transmission.packet.content.notification.SimpleInformationDTO;
+import de.vsy.shared_transmission.packet.property.PacketPropertiesBuilder;
+import de.vsy.shared_transmission.packet.property.communicator.CommunicationEndpoint;
 import de.vsy.shared_utility.logging.ThreadContextRunnable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import static de.vsy.shared_transmission.packet.property.communicator.CommunicationEndpoint.getClientEntity;
+import static de.vsy.shared_transmission.packet.property.communicator.CommunicationEndpoint.getServerEntity;
+import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_CLIENT_ID;
+import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_SERVER_ID;
 
 /**
  * Reads Packet from an ObjectInputStream and writes them to a PacketBuffer.
@@ -85,6 +96,7 @@ public class PacketReadThread extends ThreadContextRunnable {
         break;
       } catch (final ClassNotFoundException cnf) {
         LOGGER.error("Error! Invalid PacketType.\n{}", cnf.getMessage());
+        return createUnknownPacketResponse(cnf);
       }
 
       if (readObject instanceof Packet readPacket) {
@@ -111,5 +123,15 @@ public class PacketReadThread extends ThreadContextRunnable {
       this.packetCache.removePacket(input.getRequestPacketHash());
       LOGGER.trace("Response received: {}", input.getRequestPacketHash());
     }
+  }
+
+  protected Packet createUnknownPacketResponse(ClassNotFoundException cnf){
+    var errorContent = new SimpleInformationDTO("Unknown Packet formats will not be processed. " + cnf.getMessage());
+    var contentIdentifier = new ContentIdentificationProviderImpl();
+    var errorProperties = new PacketPropertiesBuilder().withSender(getServerEntity(STANDARD_SERVER_ID))
+            .withRecipient(getClientEntity(STANDARD_CLIENT_ID))
+            .withIdentifier(contentIdentifier.getContentIdentifier(errorContent))
+            .build();
+    return new PacketBuilder().withContent(errorContent).withProperties(errorProperties).build();
   }
 }
