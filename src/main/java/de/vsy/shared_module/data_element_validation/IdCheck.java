@@ -1,6 +1,6 @@
 package de.vsy.shared_module.data_element_validation;
 
-import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_CLIENT_BROADCAST_ID;
+import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_CLIENT_MULTICAST_ID;
 import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_CLIENT_ID;
 import static de.vsy.shared_utility.standard_value.StandardIdProvider.STANDARD_SERVER_ID;
 
@@ -24,7 +24,7 @@ public class IdCheck {
 
     if (toCheck != null && (toCheck > 15000 || toCheck == STANDARD_SERVER_ID
         || toCheck == STANDARD_CLIENT_ID
-        || toCheck == STANDARD_CLIENT_BROADCAST_ID)) {
+        || toCheck == STANDARD_CLIENT_MULTICAST_ID)) {
       return Optional.empty();
     } else {
       return Optional.of("Id not in valid integer interval: " + toCheck);
